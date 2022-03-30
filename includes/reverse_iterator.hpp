@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:59:30 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/03/30 19:21:42 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/03/30 19:33:31 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,40 @@ namespace ft {
 
 			// member functions
 			iterator_type base() const { return (_base); }
-		
+
+			reference 			operator*() const;
+			reverse_iterator	operator+(difference_type n) const;
+			reverse_iterator&	operator++();
+			reverse_iterator	operator++(int);
+			reverse_iterator&	operator+=(difference_type n);
+			reverse_iterator 	operator-(difference_type n) const;
+			reverse_iterator& 	operator--();
+			reverse_iterator  	operator--(int);
+			reverse_iterator&	operator-=(difference_type n);
+			pointer				operator->() const;
+			reference			operator[](difference_type n) const;
 	};
 
+	template <class Iterator>
+  	bool operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs);
+
+	template <class Iterator>
+ 	bool operator!=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs);
+
+	template <class Iterator>
+  	bool operator<(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs);
+
+	template <class Iterator>
+  	bool operator<=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs);
+
+	template <class Iterator>
+  	bool operator>(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs);
+
+	template <class Iterator>
+  	bool operator>=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs);
+
+	template <class Iterator>
+  	reverse_iterator<Iterator> operator+(typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator>& rev_it);
 }
 
 #endif
