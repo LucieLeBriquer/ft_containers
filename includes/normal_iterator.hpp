@@ -6,13 +6,14 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 16:18:53 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/04/02 16:18:53 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/04/02 16:44:08 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "iterator.hpp"
 
 namespace ft {
+
 	template<typename Iterator, typename Container>
     class normal_iterator
     {
@@ -157,18 +158,39 @@ namespace ft {
   	template<typename Iterator, typename Container>
     inline bool	operator<=(const normal_iterator<Iterator, Container>& lhs, const normal_iterator<Iterator, Container>& rhs)
     {
-		return lhs.base() <= rhs.base();
+		return (lhs.base() <= rhs.base());
 	}
 
   	template<typename IteratorL, typename IteratorR, typename Container>
     inline bool	operator>=(const normal_iterator<IteratorL, Container>& lhs, const normal_iterator<IteratorR, Container>& rhs)
     {
-		return lhs.base() >= rhs.base();
+		return (lhs.base() >= rhs.base());
 	}
 
 	template<typename Iterator, typename Container>
     inline bool	operator>=(const normal_iterator<Iterator, Container>& lhs, const normal_iterator<Iterator, Container>& rhs)
     {
-		return lhs.base() >= rhs.base();
+		return (lhs.base() >= rhs.base());
+	}
+
+	template<typename IteratorL, typename IteratorR, typename Container>
+	inline typename normal_iterator<IteratorL, Container>::difference_type operator-(const normal_iterator<IteratorL, Container>& lhs,
+	   																				const normal_iterator<IteratorR, Container>& rhs)
+	{
+		return (lhs.base() - rhs.base());
+	}
+
+	template<typename Iterator, typename Container>
+    inline typename normal_iterator<Iterator, Container>::difference_type	operator-(const normal_iterator<Iterator, Container>& lhs,
+	      																			const normal_iterator<Iterator, Container>& rhs)
+    {
+		return (lhs.base() - rhs.base());
+	}
+
+  	template<typename Iterator, typename Container>
+    inline normal_iterator<Iterator, Container>		operator+(typename normal_iterator<Iterator, Container>::difference_type n,
+																const normal_iterator<Iterator, Container>& iterator)
+    {
+		return (normal_iterator<Iterator, Container>(iterator.base() + n));
 	}
 }
