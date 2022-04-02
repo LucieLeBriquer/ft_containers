@@ -10,18 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iterators_traits.hpp"
+#ifndef ITERATOR_HPP
+# define ITERATOR_HPP
+# include "iterators_traits.hpp"
 
 namespace ft
 {
-	template<typename _Category, typename _Tp, typename _Distance = ptrdiff_t,
-           typename _Pointer = _Tp*, typename _Reference = _Tp&>
+	template<typename category, typename T, typename distance = ptrdiff_t,
+           typename pointerT = T*, typename referenceT = T&>
     struct iterator
     {
-      typedef _Category  iterator_category;
-      typedef _Tp        value_type;
-      typedef _Distance  difference_type;
-      typedef _Pointer   pointer;
-      typedef _Reference reference;
+      typedef category		iterator_category;
+      typedef T       		value_type;
+      typedef distance		difference_type;
+      typedef pointerT		pointer;
+      typedef referenceT	reference;
     };
 }
+
+#endif

@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "iterator.hpp"
+#ifndef NORMAL_ITERATOR_HPP
+# define NORMAL_ITERATOR_HPP
+# include "iterator.hpp"
 
 namespace ft {
 
@@ -174,23 +176,25 @@ namespace ft {
 	}
 
 	template<typename IteratorL, typename IteratorR, typename Container>
-	inline typename normal_iterator<IteratorL, Container>::difference_type operator-(const normal_iterator<IteratorL, Container>& lhs,
-	   																				const normal_iterator<IteratorR, Container>& rhs)
+	inline typename normal_iterator<IteratorL, Container>::difference_type 
+		operator-(const normal_iterator<IteratorL, Container>& lhs, const normal_iterator<IteratorR, Container>& rhs)
 	{
 		return (lhs.base() - rhs.base());
 	}
 
 	template<typename Iterator, typename Container>
-    inline typename normal_iterator<Iterator, Container>::difference_type	operator-(const normal_iterator<Iterator, Container>& lhs,
-	      																			const normal_iterator<Iterator, Container>& rhs)
+    inline typename normal_iterator<Iterator, Container>::difference_type
+		operator-(const normal_iterator<Iterator, Container>& lhs, const normal_iterator<Iterator, Container>& rhs)
     {
 		return (lhs.base() - rhs.base());
 	}
 
   	template<typename Iterator, typename Container>
-    inline normal_iterator<Iterator, Container>		operator+(typename normal_iterator<Iterator, Container>::difference_type n,
-																const normal_iterator<Iterator, Container>& iterator)
+    inline normal_iterator<Iterator, Container>	
+		operator+(typename normal_iterator<Iterator, Container>::difference_type n, const normal_iterator<Iterator, Container>& iterator)
     {
 		return (normal_iterator<Iterator, Container>(iterator.base() + n));
 	}
 }
+
+#endif
