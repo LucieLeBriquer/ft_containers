@@ -13,18 +13,18 @@
 #ifndef ITERATOR_HPP
 # define ITERATOR_HPP
 # include "iterators_traits.hpp"
+# include "enable_if.hpp"
 
 namespace ft
 {
-	template<typename category, typename T, typename distance = ptrdiff_t,
-           typename pointerT = T*, typename referenceT = T&>
+	template<typename T, typename distance = std::ptrdiff_t, typename pointerT = T*, typename referenceT = T&>
     struct iterator
     {
-      typedef category		iterator_category;
-      typedef T       		value_type;
-      typedef distance		difference_type;
-      typedef pointerT		pointer;
-      typedef referenceT	reference;
+      typedef std::random_access_iterator_tag		iterator_category;
+      typedef T       								value_type;
+      typedef distance								difference_type;
+      typedef pointerT								pointer;
+      typedef referenceT							reference;
     };
 }
 

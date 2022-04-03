@@ -24,19 +24,18 @@ namespace ft
 	{ typedef T type; };
 
 	// compare type equality
-
   	template<typename T1, typename T2>
     struct are_same
     {
       enum { value = 0 };
-      typedef false_type type;
+      typedef std::__false_type type;
     };
 
   	template<typename T>
     struct are_same<T, T>
     {
       enum { value = 1 };
-      typedef true_type type;
+      typedef std::__true_type type;
     };
 
 }

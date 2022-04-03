@@ -12,12 +12,12 @@
 
 #ifndef REVERSE_ITERATOR_HPP
 # define REVERSE_ITERATOR_HPP
+# include "iterator.hpp"
 
 namespace ft
 {
 	template<typename Iterator>
-    class reverse_iterator : public iterator<typename iterator_traits<Iterator>::iterator_category,
-											typename iterator_traits<Iterator>::value_type,
+    class reverse_iterator : public iterator<typename iterator_traits<Iterator>::value_type,
 		    								typename iterator_traits<Iterator>::difference_type,
 		      								typename iterator_traits<Iterator>::pointer,
                     						typename iterator_traits<Iterator>::reference>
@@ -45,7 +45,7 @@ namespace ft
 			reverse_iterator(iterator_type iterator) : _current(iterator) { }
 			reverse_iterator(const reverse_iterator & rev_iterator) : _current(rev_iterator._current) { }
 
-			template<typename Iter>	reverse_iterator(const reverse_iterator<Iter>& rev_it) : current(rev_it.base()) { }
+			template<typename Iter>	reverse_iterator(const reverse_iterator<Iter>& rev_it) : _current(rev_it.base()) { }
 
 			iterator_type			base() const	{ return (_current); }
 
@@ -89,23 +89,23 @@ namespace ft
 			
 			reverse_iterator	operator+(difference_type n) const
       		{
-				return (reverse_iterator(current - n));
+				return (reverse_iterator(_current - n));
 			}
 			
 			reverse_iterator&	operator+=(difference_type n)
       		{
-				current -= n;
+				_current -= n;
 				return (*this);
       		}
 
 			reverse_iterator	operator-(difference_type n) const
       		{
-				return (reverse_iterator(current + n));
+				return (reverse_iterator(_current + n));
 			}
 			
 			reverse_iterator&	operator-=(difference_type n)
       		{
-				current += n;
+				_current += n;
 				return (*this);
       		}
 			
@@ -119,7 +119,7 @@ namespace ft
 	template<typename Iterator>
 	inline bool	operator==(const reverse_iterator<Iterator>& iteratorL,	const reverse_iterator<Iterator>& iteratorR)
 	{
-		return (iteratorL.base() == iteratorR.base())
+		return (iteratorL.base() == iteratorR.base());
 	}
 
 	template<typename Iterator>
