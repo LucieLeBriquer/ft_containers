@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:35:09 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/07 19:08:16 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/07 19:09:54 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ namespace ft
 
 	// equal
   	template<bool b>
-    struct __equal
+    struct equal_aux
     {
 		template<typename It1, typename It2>
 		static bool equal(It1 first1, It1 last2, It2 first2)
@@ -50,7 +50,7 @@ namespace ft
     };
 
   	template<>
-    struct __equal<true>
+    struct equal_aux<true>
     {
 		template<typename T>
 		static bool equal(const T* first1, const T* last2, const T* first2)
@@ -62,25 +62,18 @@ namespace ft
     };
 
 	template<typename It1, typename It2>
-	bool equal_aux(It1 first1, It1 last2, It2 first2)
+    bool equal(It1 first1, It1 last2, It2 first2)
     {
-      typedef typename iterator_traits<It1>::value_type ValueType1;
-      typedef typename iterator_traits<It2>::value_type ValueType2;
-      const bool simple = ((is_integral<ValueType1>::value
-			      || is_pointer<ValueType1>::value)
-			     && is_pointer<It1>::value
-			     && is_pointer<It2>::value
-			     && are_same<ValueType1, ValueType2>::value);
+		typedef typename iterator_traits<It1>::value_type ValueType1;
+		typedef typename iterator_traits<It2>::value_type ValueType2;
+		const bool simple = ((is_integral<ValueType1>::value
+					|| is_pointer<ValueType1>::value)
+					&& is_pointer<It1>::value
+					&& is_pointer<It2>::value
+					&& are_same<ValueType1, ValueType2>::value);
 
-      return (__equal<simple>::equal(first1, last2, first2));
-    }
-
-
-	template<typename IT1, typename IT2>
-    bool equal(IT1 first1, IT1 last2, IT2 first2)
-    {
-		return (equal_aux(first1, last2, first2));
-    }
+		return (equal_aux<simple>::equal(first1, last2, first2));
+		}
 }
 
 #endif
