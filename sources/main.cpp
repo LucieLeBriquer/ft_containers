@@ -42,6 +42,7 @@ int	main(void)
 	std::vector<int>::iterator	it;
 	std::vector<int>::iterator	it2;
 	ft::is_integral<int> t;
+	std::pair<int, float>	p;
 
 
 	std::vector<int>	v(10);
