@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/04/02 17:46:49 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/07 18:21:22 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,16 @@
 #define SIZE 60
 
 #include <typeinfo>
+#include <type_traits>
+#include "is_integral.hpp"
 
 int	main(void)
 {
 	std::vector<int>::iterator	it;
+	ft::is_integral<int> t;
+	ft::is_integral<float> t2;
+	std::cout << t.value << std::endl;
+	std::cout << t2.value << std::endl;
 
 	std::vector<int>	v(10);
 
