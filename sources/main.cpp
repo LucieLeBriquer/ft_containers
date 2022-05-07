@@ -34,6 +34,7 @@
 #include <typeinfo>
 #include <type_traits>
 #include "is_integral.hpp"
+#include "equal.hpp"
 #include <algorithm>
 
 int	main(void)
@@ -41,15 +42,13 @@ int	main(void)
 	std::vector<int>::iterator	it;
 	std::vector<int>::iterator	it2;
 	ft::is_integral<int> t;
-	ft::is_integral<float> t2;
-	std::cout << t.value << std::endl;
-	std::cout << t2.value << std::endl;
 
 
 	std::vector<int>	v(10);
 	std::vector<int>	v2(11);
 
 	std::cout << std::equal(v.begin(), v.end(), v2.begin()) << std::endl;
+	std::cout << ft::equal(v.begin(), v.end(), v2.begin()) << std::endl;
 
 	it = v.begin();
 	while (it != v.end())
