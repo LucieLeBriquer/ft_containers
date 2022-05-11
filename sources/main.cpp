@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/07 18:32:12 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:44:52 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	main(void)
 {
 	std::vector<int>::iterator	it;
 	std::vector<int>::iterator	it2;
+	std::string	str1 = "coucou";
+	std::string	str2 = "cougou";
 	ft::is_integral<int> t;
 	std::pair<int, float>	p;
 
@@ -50,6 +52,7 @@ int	main(void)
 
 	std::cout << std::equal(v.begin(), v.end(), v2.begin()) << std::endl;
 	std::cout << ft::equal(v.begin(), v.end(), v2.begin()) << std::endl;
+	std::cout << ft::equal(str1.c_str(), str1.c_str() + 6, str2.c_str()) << std::endl;
 
 	it = v.begin();
 	while (it != v.end())

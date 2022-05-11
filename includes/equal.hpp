@@ -34,7 +34,6 @@ namespace ft
 		typedef __true_type type;
     };
 
-
 	// equal
   	template<bool b>
     struct equal_aux
@@ -48,7 +47,7 @@ namespace ft
 		return (true);
 		}
     };
-
+	
   	template<>
     struct equal_aux<true>
     {
