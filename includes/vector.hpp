@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/11 14:36:17 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:52:45 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,15 @@ namespace ft
 		}
 
 	public:
-		
+		// to delete
+		void	show(void) const
+		{
+			for (size_type i = 0; i < _size; i++)
+				std::cout << *(_base + i) << " ";
+			std::cout << _size << "/" << _capacity << std::endl;
+		}
+
+
 		// constructors and destructor
       	explicit vector(void) : _base(NULL), _capacity(0), _size(0) { }
 		
@@ -66,10 +74,11 @@ namespace ft
 			assign(n, val);
 		}
 
-		template <class InputIterator, ft::enable_if< !ft::is_integral<InputIterator>::value > = false>
-		vector(InputIterator first, InputIterator last):
+		template <class It, ft::enable_if< !ft::is_integral<It>::value > = true>
+		vector(It first, It last):
 			_base(NULL), _capacity(0), _size(0)
 		{
+			std::cout << "[Vector] range constructor" << std::endl;
 			size_type	len;
 
 			len = last - first;
@@ -92,6 +101,7 @@ namespace ft
 
 		// iterators
 
+
 		// capacity
 
 		void	reserve(size_type n)
@@ -104,22 +114,26 @@ namespace ft
 			_base = _alloc.allocate(_capacity);
 			for (size_type i = 0; i < _size; i++)
 				_alloc.construct(_base + i, *(copy + i));
-			
-			for (size_type i = 0; i < _size; i++)
-				std::cout << *(_base + i) << " ";
-			std::cout << _size << "/" << _capacity << std::endl;
 		}
 
 		// element access
 
 		// modifiers
-		template <class InputIterator, ft::enable_if< !ft::is_integral<InputIterator>::value > = false>
-  		void assign(InputIterator first, InputIterator last)
+		template <class It, ft::enable_if< !ft::is_integral<It>::value > = true>
+  		void assign(It first, It last)
 		{
 			size_type	len;
+			size_type	i = 0;
 
 			len = last - first;
 			reserve(len);
+			clear();
+			while (first != last)
+			{
+				_alloc.construct(_base + i, *first);
+				i++;
+				first++;
+			}
 		}
 		
 		void assign(size_type n, const value_type& val)

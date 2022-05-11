@@ -42,7 +42,8 @@
 
 int	main(void)
 {
-	NSP::vector<int>	v(3,10);
-	v.reserve(30);
+	std::vector<int>	v(3,10);
+	NSP::vector<int>	v2(v.begin(), v.end());
+	v2.show();
 	return (0);
 }
