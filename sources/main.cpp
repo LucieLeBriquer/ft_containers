@@ -56,8 +56,10 @@ int	main(void)
 	std::cout << ft::equal(str1.c_str(), str1.c_str() + 6, str2.c_str()) << std::endl;
 	ft::pair<int, float> p2(2, 3.45);
 	std::cout << p2.first << " " << p2.second << std::endl;
+	std::cout << (p2 == p) << std::endl;
 	p2 = p;
 	std::cout << p2.first << " " << p2.second << std::endl;
+	std::cout << (p2 == p) << std::endl;
 
 	it = v.begin();
 	while (it != v.end())

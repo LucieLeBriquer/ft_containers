@@ -38,6 +38,42 @@ namespace ft
 			return (*this);
 		}
 	};
+
+	template <class T1, class T2>
+	bool operator==(const pair<T1,T2> &p1, const pair<T1,T2> &p2)
+	{
+		return (p1.first == p2.first && p1.second == p2.second);
+	}
+
+	template <class T1, class T2>
+	bool operator!=(const pair<T1,T2> &p1, const pair<T1,T2> &p2)
+	{
+		return (!(p1 == p2));
+	}
+
+	template <class T1, class T2>
+	bool operator<(const pair<T1,T2> &p1, const pair<T1,T2> &p2)
+	{
+		return (p1.first < p2.first || (!(p2.first < p1.first) && p1.second < p2.second));
+	}
+
+	template <class T1, class T2>
+	bool operator<=(const pair<T1,T2> &p1, const pair<T1,T2> &p2)
+	{
+		return (!(p2 < p1));
+	}
+
+	template <class T1, class T2>
+	bool operator>(const pair<T1,T2> &p1, const pair<T1,T2> &p2)
+	{
+		return (p2 < p1);
+	}
+
+	template <class T1, class T2>
+	bool operator>=(const pair<T1,T2> &p1, const pair<T1,T2> &p2)
+	{
+		return (!(p1 < p2));
+	}
 }
 
 #endif
