@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 18:35:09 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/07 19:09:54 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/11 11:40:48 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ namespace ft
 					&& are_same<ValueType1, ValueType2>::value);
 
 		return (equal_aux<simple>::equal(first1, last2, first2));
-		}
+	}
 }
 
 #endif
