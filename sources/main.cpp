@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/11 12:28:03 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:21:21 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 
 int	main(void)
 {
-	std::vector<int>	v;
+	NSP::vector<int>	v(3,10);
+	v.reserve(30);
 	return (0);
 }

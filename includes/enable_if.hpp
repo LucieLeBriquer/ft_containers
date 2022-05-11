@@ -16,7 +16,7 @@
 
 namespace ft
 {
-	template<bool, typename>
+	template<bool B, typename T = void>
 	struct enable_if 
 	{ };
 
