@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/11 14:52:45 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/11 14:57:33 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ namespace ft
 			assign(n, val);
 		}
 
-		template <class It, ft::enable_if< !ft::is_integral<It>::value > = true>
+		template <class It,  typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = NULL>
 		vector(It first, It last):
 			_base(NULL), _capacity(0), _size(0)
 		{
@@ -119,7 +119,7 @@ namespace ft
 		// element access
 
 		// modifiers
-		template <class It, ft::enable_if< !ft::is_integral<It>::value > = true>
+		template <class It, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = NULL>
   		void assign(It first, It last)
 		{
 			size_type	len;

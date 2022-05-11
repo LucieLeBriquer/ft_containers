@@ -17,28 +17,19 @@ namespace ft
 {
 	template<typename T, T v> struct integral_constant
     {
-		static constexpr T				value = v;
+		static const T					value = v;
 		typedef T						value_type;
 		typedef integral_constant<T, v>	type;
-		constexpr operator value_type() const noexcept { return value; }
 	};
 
-	template<typename T, T v> constexpr T integral_constant<T, v>::value;
+	template<typename T, T v> const T integral_constant<T, v>::value;
 
   	typedef integral_constant<bool, true>     true_type;
 	typedef integral_constant<bool, false>    false_type;
 
-	// remove volatile and const
-	template<typename T> struct remove_volatile { typedef T type; };
-  	template<typename T> struct remove_volatile<T volatile> { typedef T type; };
-
+	// remove const
 	template<typename T> struct remove_const { typedef T type; };
 	template<typename T> struct remove_const<T const> { typedef T type; };
-
-  	template<typename T> struct remove_cv
-    {
-      typedef typename remove_const<typename remove_volatile<T>::type>::type     type;
-    };
 
 	// define all integral types
 	template<typename> struct is_integral_helper : public false_type { };
@@ -60,7 +51,7 @@ namespace ft
 
 	// is integral
 	template<typename T>
-	struct is_integral : public is_integral_helper<typename remove_cv<T>::type>::type { };
+	struct is_integral : public is_integral_helper<typename remove_const<T>::type>::type { };
 }
 
 #endif
