@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/11 12:11:01 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/11 12:28:03 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,6 @@
 
 int	main(void)
 {
-	if (ISFT)
-		std::cout << "=== USING FT ===" << std::endl << std::endl;
-	else
-		std::cout << "=== USING STD ===" << std::endl << std::endl;
-	NSP::pair<int, float> p = NSP::make_pair(3, 'a');
-	std::cout << p.first << " " << p.second << std::endl;
+	std::vector<int>	v;
 	return (0);
 }

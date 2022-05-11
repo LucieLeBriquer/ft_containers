@@ -13,12 +13,10 @@
 #ifndef EQUAL_HPP
 # define EQUAL_HPP
 # include "is_integral.hpp"
+# include "type_traits.hpp"
 
 namespace ft
 {
-	// type traits
-	struct __true_type { };
-	struct __false_type { };
 
 	template<typename T>
     struct is_pointer

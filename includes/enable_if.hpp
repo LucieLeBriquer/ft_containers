@@ -12,6 +12,7 @@
 
 #ifndef ENABLE_IF_HPP
 # define ENABLE_IF_HPP
+# include "type_traits.hpp"
 
 namespace ft
 {
@@ -21,21 +22,23 @@ namespace ft
 
 	template<typename T>
 	struct enable_if<true, T>
-	{ typedef T type; };
+	{
+		typedef T type;
+	};
 
 	// compare type equality
   	template<typename T1, typename T2>
     struct are_same
     {
-      enum { value = 0 };
-      typedef std::__false_type type;
+    	enum { value = 0 };
+    	typedef __false_type type;
     };
 
   	template<typename T>
     struct are_same<T, T>
     {
-      enum { value = 1 };
-      typedef std::__true_type type;
+    	enum { value = 1 };
+    	typedef __true_type type;
     };
 
 }
