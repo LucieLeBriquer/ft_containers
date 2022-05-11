@@ -36,6 +36,7 @@
 #include "is_integral.hpp"
 #include "equal.hpp"
 #include <algorithm>
+#include "pair.hpp"
 
 int	main(void)
 {
@@ -44,7 +45,7 @@ int	main(void)
 	std::string	str1 = "coucou";
 	std::string	str2 = "cougou";
 	ft::is_integral<int> t;
-	std::pair<int, float>	p;
+	ft::pair<int, float>	p(4,2.5);
 
 
 	std::vector<int>	v(10);
@@ -53,6 +54,10 @@ int	main(void)
 	std::cout << std::equal(v.begin(), v.end(), v2.begin()) << std::endl;
 	std::cout << ft::equal(v.begin(), v.end(), v2.begin()) << std::endl;
 	std::cout << ft::equal(str1.c_str(), str1.c_str() + 6, str2.c_str()) << std::endl;
+	ft::pair<int, float> p2(2, 3.45);
+	std::cout << p2.first << " " << p2.second << std::endl;
+	p2 = p;
+	std::cout << p2.first << " " << p2.second << std::endl;
 
 	it = v.begin();
 	while (it != v.end())
