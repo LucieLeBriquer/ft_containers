@@ -34,7 +34,7 @@ $(OBJS_DIR)%.o	: $(SRCS_DIR)%.cpp
 			@$(CC) $(MAIN_INC) -c $< -o $@
 			@echo "$(_CLEAR)"
 
-all			: $(NAME) #$(NAME_STL)
+all			: $(NAME) $(NAME_STL)
 
 $(NAME)		: $(OBJS) $(INCS) $(MAIN)
 			@$(CC) $(OBJS) $(MAIN_INC) $(MAIN) -o $(NAME)

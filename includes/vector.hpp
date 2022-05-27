@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/27 15:07:55 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:34:10 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,25 @@ namespace ft
 				i *= 2;
 			return (i);
 		}
+		
+		class OutOfRange : public std::exception
+		{
+			public:
+				virtual const char *what() const throw() 
+				{
+					return ("ft::vector : out of range");
+				}
+		};
 
 	public:
-		// to delete
-		void	show(void) const
-		{
-			for (size_type i = 0; i < _size; i++)
-				std::cout << *(_base + i) << " ";
-			std::cout << "[" << _size << "/" << _capacity << "]" << std::endl;
-		}
-
+	
 		// constructors and destructor
       	explicit vector(void) : _base(NULL), _capacity(0), _size(0) { }
 		
 		explicit vector(size_type n, const value_type& val = value_type()) :
 			_base(NULL), _capacity(0), _size(0)
 		{
-			std::cout << "[Vector] assign constructor" << std::endl;
+			//std::cout << "[Vector] assign constructor" << std::endl;
 			assign(n, val);
 		}
 
@@ -77,7 +79,7 @@ namespace ft
 		vector(It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0):
 			_base(NULL), _capacity(0), _size(0)
 		{
-			std::cout << "[Vector] range constructor" << std::endl;
+			//std::cout << "[Vector] range constructor" << std::endl;
 			size_type	len;
 
 			len = last - first;
@@ -87,7 +89,7 @@ namespace ft
 
 		vector(const vector& v)
 		{
-			std::cout << "[Vector] copy constructor" << std::endl;
+			//std::cout << "[Vector] copy constructor" << std::endl;
 			*this = v;
 		}
 
@@ -101,6 +103,7 @@ namespace ft
 		vector	&operator=(const vector& v)
 		{
 			assign(v.begin(), v.end());
+			return (*this);
 		}
 
 		// iterators
@@ -172,6 +175,11 @@ namespace ft
 			_size = n;
 		}
 
+		size_type capacity() const
+		{
+			return (_capacity);
+		}
+
 		bool empty() const
 		{
 			return (_size == 0);
@@ -190,6 +198,29 @@ namespace ft
 		}
 
 		// element access
+		reference operator[](size_type n)
+		{
+			return (*(_base + n));
+		}
+		
+		const_reference operator[](size_type n) const
+		{
+			return (*(_base + n));
+		}
+
+		reference at (size_type n)
+		{
+			if (n >= _size)
+				throw OutOfRange();
+			return (*(_base + n));
+		}
+		
+		const_reference at (size_type n) const
+		{
+			if (n >= _size)
+				throw OutOfRange();
+			return (*(_base + n));
+		}
 
 		// modifiers
 		template <class It>

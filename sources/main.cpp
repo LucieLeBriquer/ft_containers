@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/27 15:08:32 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:19:05 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,35 @@
 #include <algorithm>
 #include "pair.hpp"
 
+template<class T>
+void	show(NSP::vector<T> v)
+{
+	for (size_t i = 0; i < v.size(); i++)
+		std::cout << v[i] << " ";
+	std::cout << "[" << v.size() << "/" << v.capacity() << "]" << std::endl;
+}
+
 int	main(void)
 {
-	std::vector<float>	v(15,10);
+	NSP::vector<float>	v(15,10);
 	v[0] = 1;
 	v[1] = 2;
 	v[2] = 3;
 	NSP::vector<float>	v2(v.begin(), v.end());
 	NSP::vector<float>	v3(v.rbegin(), v.rend());
-	v2.show();
-	v3.show();
+
+	show(v2);
+	show(v3);
 	v2.resize(10);
 	v3.resize(20, 1.3);
-	v2.show();
-	v3.show();
+	show(v2);
+	show(v3);
+	try {
+		std::cout << v3.at(50) << std::endl;
+	}
+	catch(const std::exception &e)
+	{
+		std::cerr << e.what() << std::endl;
+	}
 	return (0);
 }
