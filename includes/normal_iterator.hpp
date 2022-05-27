@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 16:18:53 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/04/02 16:44:08 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:50:31 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ namespace ft {
     class normal_iterator
     {
 		protected:
-		Iterator	_current;
+			Iterator	_current;
 
 		typedef iterator_traits<Iterator>		_traitsType;
 

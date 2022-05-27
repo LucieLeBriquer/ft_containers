@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/27 14:43:18 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:59:27 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ namespace ft
 
 		vector(const vector& v)
 		{
-
+			std::cout << "[Vector] copy constructor" << std::endl;
+			*this = v;
 		}
 
 		virtual ~vector()
@@ -97,8 +98,51 @@ namespace ft
 			_alloc.deallocate(_base, _size);
 		}
 
+		vector	&operator=(const vector& v)
+		{
+			assign(v.begin(), v.end());
+		}
 
 		// iterators
+		iterator begin()
+		{
+			return (iterator(_base));
+		}
+		
+		const_iterator begin() const
+		{
+			return (const_iterator(_base));
+		}
+
+		iterator end()
+		{
+			return (iterator(_base + _size));
+		}
+		
+		const_iterator end() const
+		{
+			return (const_iterator(_base + _size));
+		}
+
+		reverse_iterator rbegin()
+		{
+			return (reverse_iterator(iterator(_base + _size)));
+		}
+		
+		const_reverse_iterator rbegin() const
+		{
+			return (const_reverse_iterator(iterator(_base + _size)));
+		}
+
+		reverse_iterator rend()
+		{
+			return (reverse_iterator(iterator(_base)));
+		}
+		
+		const_reverse_iterator rend() const
+		{
+			return (const_reverse_iterator(iterator(_base)));
+		}
 
 
 		// capacity
