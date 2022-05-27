@@ -57,12 +57,13 @@ int	main(void)
 	NSP::vector<float>	v2(v.begin(), v.end());
 	NSP::vector<float>	v3(v.rbegin(), v.rend());
 
-	show(v2);
-	show(v3);
+	//show(v2);
+	//show(v3);
+	std::cerr << "yo" << std::endl;
 	v2.resize(10);
 	v3.resize(20, 1.3);
-	show(v2);
-	show(v3);
+	//show(v2);
+	//show(v3);
 	std::cout << "front = " << v2.front() << "  back = " << v2.back() << std::endl;
 	std::cout << "front = " << v3.front() << "  back = " << v3.back() << std::endl;
 	try {
