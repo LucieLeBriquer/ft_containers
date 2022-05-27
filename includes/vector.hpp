@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/11 14:57:33 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:43:18 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "enable_if.hpp"
 # include "is_integral.hpp"
 # include <memory>
-#include <iostream>
+# include <iostream>
 
 namespace ft
 {
@@ -63,7 +63,6 @@ namespace ft
 			std::cout << _size << "/" << _capacity << std::endl;
 		}
 
-
 		// constructors and destructor
       	explicit vector(void) : _base(NULL), _capacity(0), _size(0) { }
 		
@@ -74,8 +73,8 @@ namespace ft
 			assign(n, val);
 		}
 
-		template <class It,  typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = NULL>
-		vector(It first, It last):
+		template <class It>
+		vector(It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0):
 			_base(NULL), _capacity(0), _size(0)
 		{
 			std::cout << "[Vector] range constructor" << std::endl;
@@ -86,7 +85,7 @@ namespace ft
 			assign(first, last);
 		}
 
-		vector (const vector& v)
+		vector(const vector& v)
 		{
 
 		}
@@ -107,7 +106,7 @@ namespace ft
 		void	reserve(size_type n)
 		{
 			pointer	copy = _base;
-
+			
 			if (_capacity >= n)
 				return ;
 			_capacity = _closestPow2(n);	
@@ -119,8 +118,8 @@ namespace ft
 		// element access
 
 		// modifiers
-		template <class It, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = NULL>
-  		void assign(It first, It last)
+		template <class It>
+  		void assign(It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0)
 		{
 			size_type	len;
 			size_type	i = 0;
@@ -134,6 +133,7 @@ namespace ft
 				i++;
 				first++;
 			}
+			_size = i;
 		}
 		
 		void assign(size_type n, const value_type& val)
@@ -151,8 +151,7 @@ namespace ft
 				_alloc.destroy(_base + i);
 			_size = 0;
 		}
-
-
+		
     };
 }
 

@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/11 14:21:21 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/27 14:40:08 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@
 
 int	main(void)
 {
-	std::vector<int>	v(3,10);
-	NSP::vector<int>	v2(v.begin(), v.end());
+	std::vector<float>	v(3,10);
+	NSP::vector<float>	v2(v.begin(), v.end());
 	v2.show();
 	return (0);
 }
