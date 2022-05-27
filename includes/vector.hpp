@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/27 15:34:10 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:46:00 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,20 +208,40 @@ namespace ft
 			return (*(_base + n));
 		}
 
-		reference at (size_type n)
+		reference at(size_type n)
 		{
 			if (n >= _size)
 				throw OutOfRange();
 			return (*(_base + n));
 		}
 		
-		const_reference at (size_type n) const
+		const_reference at(size_type n) const
 		{
 			if (n >= _size)
 				throw OutOfRange();
 			return (*(_base + n));
 		}
 
+		reference front()
+		{
+			return (*(_base));
+		}
+		
+		const_reference front() const
+		{
+			return (*(_base));
+		}
+		
+		reference back()
+		{
+			return (*(_base + _size - 1));
+		}
+		
+		const_reference back() const
+		{
+			return (*(_base + _size - 1));
+		}
+		
 		// modifiers
 		template <class It>
   		void assign(It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0)
@@ -250,14 +270,45 @@ namespace ft
 				_alloc.construct(_base + i, val);
 		}
 
+		void push_back(const value_type& val)
+		{
+			reserve(_size + 1);
+			_alloc.construct(_base + _size, val);
+			_size++;
+		}
+		
+		void pop_back()
+		{
+			if (_size == 0)
+				return;
+			_alloc.destroy(_base + _size - 1);
+			_size--;
+		}
+
+		iterator	insert(iterator position, const value_type& val);
+		void		insert(iterator position, size_type n, const value_type& val);
+		template <class It>
+    	void		insert(iterator position, It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0);
+		
+		iterator 	erase(iterator position);
+		iterator	erase(iterator first, iterator last);
+		void 		swap(vector& x);
+
 		void clear()
 		{
 			for (size_type i = 0; i < _size; i++)
 				_alloc.destroy(_base + i);
 			_size = 0;
 		}
+
+		// allocator
+		allocator_type get_allocator() const
+		{
+			return (allocator_type());// or _alloc ??
+		}
 		
     };
+	// Non-member function overloads
 }
 
 #endif

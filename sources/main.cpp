@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/27 15:19:05 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:38:01 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	main(void)
 	v3.resize(20, 1.3);
 	show(v2);
 	show(v3);
+	std::cout << "front = " << v2.front() << "  back = " << v2.back() << std::endl;
+	std::cout << "front = " << v3.front() << "  back = " << v3.back() << std::endl;
 	try {
 		std::cout << v3.at(50) << std::endl;
 	}
