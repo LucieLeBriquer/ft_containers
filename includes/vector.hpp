@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/27 14:59:27 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/27 15:07:55 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ namespace ft
 		{
 			for (size_type i = 0; i < _size; i++)
 				std::cout << *(_base + i) << " ";
-			std::cout << _size << "/" << _capacity << std::endl;
+			std::cout << "[" << _size << "/" << _capacity << "]" << std::endl;
 		}
 
 		// constructors and destructor
@@ -146,6 +146,36 @@ namespace ft
 
 
 		// capacity
+		size_type size() const
+		{
+			return (_size);
+		}
+		
+		size_type max_size() const
+		{
+			return (_alloc.max_size());
+		}
+
+		void resize(size_type n, value_type val = value_type())
+		{
+			reserve(n);
+			if (n > _size)
+			{
+				for (size_type i = _size; i < n; i++)
+					_alloc.construct(_base + i, val);
+			}
+			else
+			{
+				for (size_type i = n; i < _size; i++)
+					_alloc.destroy(_base + i);
+			}
+			_size = n;
+		}
+
+		bool empty() const
+		{
+			return (_size == 0);
+		}
 
 		void	reserve(size_type n)
 		{
