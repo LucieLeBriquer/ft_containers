@@ -59,7 +59,6 @@ int	main(void)
 
 	//show(v2);
 	//show(v3);
-	std::cerr << "yo" << std::endl;
 	v2.resize(10);
 	v3.resize(20, 1.3);
 	//show(v2);
