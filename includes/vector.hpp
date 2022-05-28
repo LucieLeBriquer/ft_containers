@@ -291,7 +291,7 @@ namespace ft
 			return (iterator(position));
 		}
 
-		void		insert(iterator position, size_type n, const value_type& val)
+		void	insert(iterator position, size_type n, const value_type& val)
 		{
 			vector			copy(position, end());
 
@@ -307,7 +307,22 @@ namespace ft
 		}
 
 		template <class It>
-    	void		insert(iterator position, It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0);
+    	void	insert(iterator position, It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0)
+		{
+			vector			copy(position, end());
+			difference_type	n = last - first;
+
+			reserve(_size + n);
+			_size += n;
+			for (size_type i = 0; i < n; i++)
+			{
+				_alloc.destroy(position.base() + i);
+				_alloc.construct(position.base() + i, *(first + i));
+			}
+			for (size_type i = 0; i < copy.size(); i++)
+				_alloc.construct(position.base() + n + i, copy[i]);
+
+		}
 		
 		iterator 	erase(iterator position);
 		iterator	erase(iterator first, iterator last);
