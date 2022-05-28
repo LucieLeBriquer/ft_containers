@@ -12,7 +12,7 @@
 
 #ifndef MAP_HPP
 # define MAP_HPP
-# include "tree.hpp"
+# include "binarySearchTree.hpp"
 # include "normal_iterator.hpp"
 # include "reverse_iterator.hpp"
 # include "enable_if.hpp"
@@ -24,15 +24,20 @@ namespace ft
 		class Alloc = std::allocator< ft::pair<const Key,T> > >
 	class map
 	{
-	private:
-		ft::tree<Key, T, Compare, Alloc>	_tree;
-
     public:
 		typedef Key						key_type;
 		typedef T						mapped_type;
 		typedef ft::pair<const Key,T>	value_type;
 		typedef Compare					key_compare;
 		typedef Alloc					allocator_type;
+
+	private:
+		typedef	ft::binarySearchTree<value_type, Compare, Alloc>	bst;
+		bst				_tree;
+		allocator_type	_alloc;
+		key_compare		_comp;
+
+	public:
 
 		class value_compare
 		{
@@ -51,8 +56,8 @@ namespace ft
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef typename allocator_type::reference			reference;
 		typedef typename allocator_type::const_reference	const_reference;
-      	typedef normal_iterator<pointer, vector>			iterator;
-      	typedef normal_iterator<const_pointer, vector>		const_iterator;
+      	typedef normal_iterator<pointer, map>				iterator;
+      	typedef normal_iterator<const_pointer, map>			const_iterator;
       	typedef reverse_iterator<const_iterator>			const_reverse_iterator;
       	typedef reverse_iterator<iterator>					reverse_iterator;
       	typedef size_t										size_type;
@@ -60,7 +65,7 @@ namespace ft
 
 		// constructors
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
-			_tree(ft::redBlackTree<Key, T, Compare, Alloc>(comp, alloc));
+			_tree(bst(comp, alloc))
 		{
 			//
 		}
@@ -69,7 +74,10 @@ namespace ft
   		map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type())
 		{
-			//
+			(void)first;
+			(void)last;
+			(void)comp;
+			(void)alloc;
 		}
 
 		map(const map& x)
@@ -85,7 +93,8 @@ namespace ft
 		// overload operator
 		map	&operator=(const map& x)
 		{
-			_tree = x._tree;
+			//_tree = x._tree;
+			(void)x;
 		}
 
 		// iterators

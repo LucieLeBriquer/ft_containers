@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "vector.hpp"
+#include "map.hpp"
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -35,5 +36,6 @@
 int		main(void)
 {
 	std::map<int, float> map0;
+	ft::map<int, float> map1;
 
 }
