@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/27 15:46:00 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/28 13:45:18 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,8 +285,27 @@ namespace ft
 			_size--;
 		}
 
-		iterator	insert(iterator position, const value_type& val);
-		void		insert(iterator position, size_type n, const value_type& val);
+		iterator	insert(iterator position, const value_type& val)
+		{
+			insert(position, 1, val);
+			return (iterator(position));
+		}
+
+		void		insert(iterator position, size_type n, const value_type& val)
+		{
+			vector			copy(position, end());
+
+			reserve(_size + n);
+			_size += n;
+			for (size_type i = 0; i < n; i++)
+			{
+				_alloc.destroy(position.base() + i);
+				_alloc.construct(position.base() + i, val);
+			}
+			for (size_type i = 0; i < copy.size(); i++)
+				_alloc.construct(position.base() + n + i, copy[i]);
+		}
+
 		template <class It>
     	void		insert(iterator position, It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0);
 		

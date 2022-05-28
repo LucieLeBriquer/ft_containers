@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/27 15:38:01 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/28 13:51:15 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,8 @@ int	main(void)
 	{
 		std::cerr << e.what() << std::endl;
 	}
+
+	v2.insert(v2.begin() + 2, 3, 100.0);
+	show(v2);
 	return (0);
 }
