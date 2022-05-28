@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/28 14:03:02 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/28 14:26:33 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,7 +365,66 @@ namespace ft
 		}
 		
     };
+
 	// Non-member function overloads
+
+	template <class T>
+	bool operator==(const vector<T>& v1, const vector<T>& v2)
+	{
+		if (v1.size() != v2.size())
+			return (false);
+		
+		for (typename vector<T>::size_type i = 0; i < v1.size(); i++)
+		{
+			if (v1[i] != v2[i])
+				return (false);
+		}
+		return (true);
+	}
+
+	template <class T>
+	bool operator!=(const vector<T>& v1, const vector<T>& v2)
+	{
+		return (!(v1 == v2));
+	}
+
+	template <class T>
+	bool operator<(const vector<T>& v1, const vector<T>& v2)
+	{
+		for (typename vector<T>::size_type i = 0; i < v1.size() && i < v2.size(); i++)
+		{
+			if (v2[i] < v1[i])
+				return (false);
+			if (v1[i] < v2[i])
+				return (true);
+		}
+		return (false);
+	}
+
+	template <class T>
+	bool operator<=(const vector<T>& v1, const vector<T>& v2)
+	{
+		return (!(v2 < v1));
+	}
+
+	template <class T>
+	bool operator>(const vector<T>& v1, const vector<T>& v2)
+	{
+		return (v2 < v1);
+	}
+
+	template <class T>
+	bool operator>=(const vector<T>& v1, const vector<T>& v2)
+	{
+
+		return (!(v1 < v2));
+	}
+
+	template <class T>
+	void swap(vector<T>& x, vector<T>& y)
+	{
+		x.swap(y);
+	}
 }
 
 #endif

@@ -83,5 +83,7 @@ int	main(void)
 	v2.swap(v3);
 	show(v2);
 	show(v3);
+	std::cout << (v2 == v2) << " " << (v2 < v2) << " " << (v2 != v2) << " " << (v2 >= v2) << std::endl;
+	std::cout << (v2 == v3) << " " << (v2 < v3) << " " << (v2 != v3) << " " << (v2 >= v3) << std::endl;
 	return (0);
 }
