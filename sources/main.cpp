@@ -78,5 +78,10 @@ int	main(void)
 	show(v2);
 	v2.erase(v2.end() - 7, v2.end());
 	show(v2);
+
+	std::cout << std::endl;
+	v2.swap(v3);
+	show(v2);
+	show(v3);
 	return (0);
 }

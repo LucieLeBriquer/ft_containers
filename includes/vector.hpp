@@ -327,7 +327,7 @@ namespace ft
 		{
 			return (erase(position, position + 1));
 		}
-		
+
 		iterator	erase(iterator first, iterator last)
 		{
 			vector			copy(last, end());
@@ -342,7 +342,14 @@ namespace ft
 				_alloc.construct(first.base() + i, copy[i]);
 			return (last);
 		}
-		void 		swap(vector& x);
+
+		void 		swap(vector& x)
+		{
+			vector	copy(*this);
+
+			*this = x;
+			x = copy;
+		}
 
 		void clear()
 		{
@@ -354,7 +361,7 @@ namespace ft
 		// allocator
 		allocator_type get_allocator() const
 		{
-			return (allocator_type());// or _alloc ??
+			return (allocator_type());
 		}
 		
     };
