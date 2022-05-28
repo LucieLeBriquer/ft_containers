@@ -76,5 +76,7 @@ int	main(void)
 	show(v2);
 	v2.insert(v2.begin(), v.begin(), v.begin() + 3);
 	show(v2);
+	v2.erase(v2.end() - 7, v2.end());
+	show(v2);
 	return (0);
 }

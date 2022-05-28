@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/28 13:45:18 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/28 14:03:02 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,11 +321,27 @@ namespace ft
 			}
 			for (size_type i = 0; i < copy.size(); i++)
 				_alloc.construct(position.base() + n + i, copy[i]);
-
 		}
 		
-		iterator 	erase(iterator position);
-		iterator	erase(iterator first, iterator last);
+		iterator 	erase(iterator position)
+		{
+			return (erase(position, position + 1));
+		}
+		
+		iterator	erase(iterator first, iterator last)
+		{
+			vector			copy(last, end());
+			difference_type	n = last - first;
+			difference_type toDelete = end() - first;
+			difference_type	toCopy = end() - last;
+
+			_size -= n;
+			for (size_type i = 0; i < toDelete; i++)
+				_alloc.destroy(first.base() + i);
+			for (size_type i = 0; i < toCopy; i++)
+				_alloc.construct(first.base() + i, copy[i]);
+			return (last);
+		}
 		void 		swap(vector& x);
 
 		void clear()
