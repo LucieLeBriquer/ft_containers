@@ -1,4 +1,4 @@
-CC			= clang++ #-std=c++98 -Wall -Wextra -Werror 
+CC			= clang++ -std=c++98 #-Wall -Wextra -Werror 
 RM			= rm -rf
 
 NAME_SHORT	= containers

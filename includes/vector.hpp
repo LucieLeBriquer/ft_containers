@@ -18,6 +18,7 @@
 # include "is_integral.hpp"
 # include <memory>
 # include <iostream>
+# include <cstddef>
 
 namespace ft
 {
@@ -37,13 +38,13 @@ namespace ft
       	typedef reverse_iterator<const_iterator>			const_reverse_iterator;
       	typedef reverse_iterator<iterator>					reverse_iterator;
       	typedef size_t										size_type;
-      	typedef ptrdiff_t									difference_type;
+      	typedef std::ptrdiff_t								difference_type;
 		
 	protected:
 		pointer					_base;
 		size_type				_capacity;
 		size_type				_size;
-		allocator_type			_alloc = allocator_type();
+		allocator_type			_alloc;
 
 		static size_type	_closestPow2(size_type n)
 		{
@@ -66,10 +67,10 @@ namespace ft
 	public:
 	
 		// constructors and destructor
-      	explicit vector(void) : _base(NULL), _capacity(0), _size(0) { }
+      	explicit vector(void) : _base(NULL), _capacity(0), _size(0), _alloc(allocator_type()) { }
 		
 		explicit vector(size_type n, const value_type& val = value_type()) :
-			_base(NULL), _capacity(0), _size(0)
+			_base(NULL), _capacity(0), _size(0), _alloc(allocator_type())
 		{
 			//std::cout << "[Vector] assign constructor" << std::endl;
 			assign(n, val);
@@ -87,7 +88,7 @@ namespace ft
 			assign(first, last);
 		}
 
-		vector(const vector& v)
+		vector(const vector& v) : _base(NULL), _capacity(0), _size(0),  _alloc(allocator_type())
 		{
 			//std::cout << "[Vector] copy constructor" << std::endl;
 			*this = v;
@@ -102,6 +103,7 @@ namespace ft
 
 		vector	&operator=(const vector& v)
 		{
+			_alloc = v._alloc;
 			assign(v.begin(), v.end());
 			return (*this);
 		}
@@ -200,12 +202,12 @@ namespace ft
 		// element access
 		reference operator[](size_type n)
 		{
-			return (*(_base + n));
+			return (reference(*(_base + n)));
 		}
 		
 		const_reference operator[](size_type n) const
 		{
-			return (*(_base + n));
+			return (const_reference(*(_base + n)));
 		}
 
 		reference at(size_type n)
@@ -247,18 +249,16 @@ namespace ft
   		void assign(It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0)
 		{
 			size_type	len;
-			size_type	i = 0;
 
 			len = last - first;
 			reserve(len);
 			clear();
 			while (first != last)
 			{
-				_alloc.construct(_base + i, *first);
-				i++;
+				_alloc.construct(_base + _size, *first);
+				_size++;
 				first++;
 			}
-			_size = i;
 		}
 		
 		void assign(size_type n, const value_type& val)

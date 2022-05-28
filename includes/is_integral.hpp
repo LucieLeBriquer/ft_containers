@@ -38,8 +38,6 @@ namespace ft
 	template<> struct is_integral_helper<char> : public true_type { };
 	template<> struct is_integral_helper<signed char> : public true_type { };
 	template<> struct is_integral_helper<unsigned char> : public true_type { };
-	template<> struct is_integral_helper<char16_t> : public true_type { };
-	template<> struct is_integral_helper<char32_t> : public true_type { };
 	template<> struct is_integral_helper<short> : public true_type { };
 	template<> struct is_integral_helper<unsigned short> : public true_type { };
 	template<> struct is_integral_helper<int> : public true_type { };
