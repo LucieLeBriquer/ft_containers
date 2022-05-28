@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/28 13:51:15 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/28 16:00:21 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,52 +38,51 @@
 #include "equal.hpp"
 #include <algorithm>
 #include "pair.hpp"
+#include <list>
 
-template<class T>
-void	show(NSP::vector<T> v)
+#define TESTED_TYPE int
+
+#define T_SIZE_TYPE typename NSP::vector<T>::size_type
+
+template <typename T>
+void    printSize(NSP::vector<T> const &vct, bool print_content = true)
 {
-	for (size_t i = 0; i < v.size(); i++)
-		std::cout << v[i] << " ";
-	std::cout << "[" << v.size() << "/" << v.capacity() << "]" << std::endl;
+    const T_SIZE_TYPE size = vct.size();
+    const T_SIZE_TYPE capacity = vct.capacity();
+    const std::string isCapacityOk = (capacity >= size) ? "OK" : "KO";
+    // Cannot limit capacity's max value because it's implementation dependent
+
+    std::cout << "size: " << size << std::endl;
+    std::cout << "capacity: " << isCapacityOk << std::endl;
+    std::cout << "max_size: " << vct.max_size() << std::endl;
+    if (print_content)
+    {
+        typename NSP::vector<T>::const_iterator it = vct.begin();
+        typename NSP::vector<T>::const_iterator ite = vct.end();
+        std::cout << std::endl << "Content is:" << std::endl;
+        for (; it != ite; ++it)
+            std::cout << "- " << *it << std::endl;
+    }
+    std::cout << "###############################################" << std::endl;
 }
 
-int	main(void)
+int     main(void)
 {
-	NSP::vector<float>	v(15,10);
-	v[0] = 1;
-	v[1] = 2;
-	v[2] = 3;
-	NSP::vector<float>	v2(v.begin(), v.end());
-	NSP::vector<float>	v3(v.rbegin(), v.rend());
+    std::list<TESTED_TYPE> lst;
+    std::list<TESTED_TYPE>::iterator lst_it;
+    for (int i = 1; i < 5; ++i)
+        lst.push_back(i * 3);
 
-	show(v2);
-	show(v3);
-	v2.resize(10);
-	v3.resize(20, 1.3);
-	show(v2);
-	show(v3);
-	std::cout << "front = " << v2.front() << "  back = " << v2.back() << std::endl;
-	std::cout << "front = " << v3.front() << "  back = " << v3.back() << std::endl;
-	try {
-		std::cout << v3.at(50) << std::endl;
-	}
-	catch(const std::exception &e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
+    NSP::vector<TESTED_TYPE> vct(lst.begin(), lst.end());
+    printSize(vct);
 
-	v2.insert(v2.begin() + 2, 3, 100.0);
-	show(v2);
-	v2.insert(v2.begin(), v.begin(), v.begin() + 3);
-	show(v2);
-	v2.erase(v2.end() - 7, v2.end());
-	show(v2);
+    lst_it = lst.begin();
+    for (int i = 1; lst_it != lst.end(); ++i)
+        *lst_it++ = i * 5;
+    vct.assign(lst.begin(), lst.end());
+    printSize(vct);
 
-	std::cout << std::endl;
-	v2.swap(v3);
-	show(v2);
-	show(v3);
-	std::cout << (v2 == v2) << " " << (v2 < v2) << " " << (v2 != v2) << " " << (v2 >= v2) << std::endl;
-	std::cout << (v2 == v3) << " " << (v2 < v3) << " " << (v2 != v3) << " " << (v2 >= v3) << std::endl;
-	return (0);
+    vct.insert(vct.end(), lst.rbegin(), lst.rend());
+    printSize(vct);
+    return (0);
 }

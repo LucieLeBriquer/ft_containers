@@ -6,14 +6,14 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 16:18:53 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/27 14:50:31 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/28 15:23:29 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NORMAL_ITERATOR_HPP
 # define NORMAL_ITERATOR_HPP
 # include "iterator.hpp"
-
+# include <iostream>
 namespace ft {
 
 	template<typename Iterator, typename Container>

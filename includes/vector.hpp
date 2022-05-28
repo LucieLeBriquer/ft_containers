@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/28 14:26:33 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/28 15:57:35 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,18 @@
 # include <memory>
 # include <iostream>
 # include <cstddef>
+# include <stdexcept>
+# include <sstream>
 
 namespace ft
 {
-  	template<typename T>
+  	template< typename T, typename Alloc = std::allocator<T> >
 	class vector
     {
 
     public:
     	typedef T											value_type;
-      	typedef std::allocator<T>							allocator_type;
+      	typedef Alloc										allocator_type;
     	typedef typename allocator_type::pointer			pointer;
     	typedef typename allocator_type::const_pointer		const_pointer;
       	typedef typename allocator_type::reference			reference;
@@ -54,15 +56,17 @@ namespace ft
 				i *= 2;
 			return (i);
 		}
-		
-		class OutOfRange : public std::exception
+
+		std::string			_msgOutOfRange(size_type n) const
 		{
-			public:
-				virtual const char *what() const throw() 
-				{
-					return ("ft::vector : out of range");
-				}
-		};
+			std::stringstream	ss;
+
+			ss << "ft::vector::_M_range_check: __n (which is ";
+			ss << n;
+			ss << ") >= this->size() (which is ";
+			ss << _size << ")";
+			return (ss.str());
+		}
 
 	public:
 	
@@ -72,7 +76,6 @@ namespace ft
 		explicit vector(size_type n, const value_type& val = value_type()) :
 			_base(NULL), _capacity(0), _size(0), _alloc(allocator_type())
 		{
-			//std::cout << "[Vector] assign constructor" << std::endl;
 			assign(n, val);
 		}
 
@@ -80,17 +83,11 @@ namespace ft
 		vector(It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0):
 			_base(NULL), _capacity(0), _size(0)
 		{
-			//std::cout << "[Vector] range constructor" << std::endl;
-			size_type	len;
-
-			len = last - first;
-			reserve(len);
 			assign(first, last);
 		}
 
 		vector(const vector& v) : _base(NULL), _capacity(0), _size(0),  _alloc(allocator_type())
 		{
-			//std::cout << "[Vector] copy constructor" << std::endl;
 			*this = v;
 		}
 
@@ -103,7 +100,6 @@ namespace ft
 
 		vector	&operator=(const vector& v)
 		{
-			_alloc = v._alloc;
 			assign(v.begin(), v.end());
 			return (*this);
 		}
@@ -213,14 +209,14 @@ namespace ft
 		reference at(size_type n)
 		{
 			if (n >= _size)
-				throw OutOfRange();
+				throw std::out_of_range(_msgOutOfRange(n).c_str());
 			return (*(_base + n));
 		}
 		
 		const_reference at(size_type n) const
 		{
 			if (n >= _size)
-				throw OutOfRange();
+				throw std::out_of_range(_msgOutOfRange(n).c_str());
 			return (*(_base + n));
 		}
 
@@ -248,16 +244,21 @@ namespace ft
 		template <class It>
   		void assign(It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0)
 		{
-			size_type	len;
+			size_type	len = 0;
+			It			save = first;
 
-			len = last - first;
-			reserve(len);
-			clear();
 			while (first != last)
 			{
-				_alloc.construct(_base + _size, *first);
-				_size++;
 				first++;
+				len++;
+			}
+			reserve(len);
+			clear();
+			while (save != last)
+			{
+				_alloc.construct(_base + _size, *save);
+				_size++;
+				save++;
 			}
 		}
 		
@@ -287,40 +288,52 @@ namespace ft
 
 		iterator	insert(iterator position, const value_type& val)
 		{
+			size_type	offset = position - begin();
+
 			insert(position, 1, val);
-			return (iterator(position));
+			return (iterator(_base + offset));
 		}
 
 		void	insert(iterator position, size_type n, const value_type& val)
 		{
-			vector			copy(position, end());
+			size_type	offset = position - begin();
+			vector		copy(begin() + offset, end());
 
 			reserve(_size + n);
 			_size += n;
 			for (size_type i = 0; i < n; i++)
 			{
-				_alloc.destroy(position.base() + i);
-				_alloc.construct(position.base() + i, val);
+				_alloc.destroy(_base + offset + i);
+				_alloc.construct(_base + offset + i, val);
 			}
 			for (size_type i = 0; i < copy.size(); i++)
-				_alloc.construct(position.base() + n + i, copy[i]);
+				_alloc.construct(_base + offset + n + i, copy[i]);
 		}
 
 		template <class It>
     	void	insert(iterator position, It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0)
 		{
-			vector			copy(position, end());
-			difference_type	n = last - first;
+			size_type	n = 0;
+			size_type	offset = position - begin();
+			vector		copy(begin() + offset, end());
+			It			save = first;
 
+			while (first != last)
+			{
+				first++;
+				n++;
+			}
 			reserve(_size + n);
 			_size += n;
+			for (size_type i = 0; i < copy.size(); i++)
+				_alloc.destroy(_base + offset + i);
 			for (size_type i = 0; i < n; i++)
 			{
-				_alloc.destroy(position.base() + i);
-				_alloc.construct(position.base() + i, *(first + i));
+				_alloc.construct(_base + offset + i, *save);
+				save++;
 			}
 			for (size_type i = 0; i < copy.size(); i++)
-				_alloc.construct(position.base() + n + i, copy[i]);
+				_alloc.construct(_base + offset + n + i, copy[i]);
 		}
 		
 		iterator 	erase(iterator position)
@@ -330,25 +343,41 @@ namespace ft
 
 		iterator	erase(iterator first, iterator last)
 		{
-			vector			copy(last, end());
-			difference_type	n = last - first;
-			difference_type toDelete = end() - first;
-			difference_type	toCopy = end() - last;
+			vector		copy(last, end());
+			size_type	n = 0;
+			size_type	toDelete = end() - first;
+			size_type	toCopy = end() - last;
+			iterator	save = first;
 
+			while (first != last)
+			{
+				first++;
+				n++;
+			}
 			_size -= n;
 			for (size_type i = 0; i < toDelete; i++)
-				_alloc.destroy(first.base() + i);
+				_alloc.destroy(save.base() + i);
 			for (size_type i = 0; i < toCopy; i++)
-				_alloc.construct(first.base() + i, copy[i]);
-			return (last);
+				_alloc.construct(save.base() + i, copy[i]);
+			return (save);
 		}
 
 		void 		swap(vector& x)
 		{
-			vector	copy(*this);
+			pointer			base = _base;
+			size_type		capacity = _capacity;
+			size_type		size = _size;
+			allocator_type	alloc = _alloc;
 
-			*this = x;
-			x = copy;
+			_base = x._base;
+			_capacity = x._capacity;
+			_size = x._size;
+			_alloc = x._alloc;
+
+			x._base = base;
+			x._capacity = capacity;
+			x._size = size;
+			x._alloc = alloc;
 		}
 
 		void clear()
@@ -398,7 +427,7 @@ namespace ft
 			if (v1[i] < v2[i])
 				return (true);
 		}
-		return (false);
+		return (v1.size() < v2.size());
 	}
 
 	template <class T>
