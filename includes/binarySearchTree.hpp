@@ -38,7 +38,7 @@ namespace ft
 
 			~binarySearchTree()
 			{
-				// delete every node
+				deleteAll(_node);
 			}
 
 			Node	*research(const T& val)
@@ -85,6 +85,15 @@ namespace ft
 				}
 				node->right = insert(val, node->right, comp);
 				return (node);
+			}
+
+			static void	deleteAll(Node *node)
+			{
+				if (node == NULL)
+					return ;
+				deleteAll(node->left);
+				deleteAll(node->right);
+				delete node;
 			}
 	};
 }
