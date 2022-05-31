@@ -52,9 +52,18 @@ int		main(void)
 	bst.insert(ft::make_pair<int, std::string>(2, "deux"));
 	bst.insert(ft::make_pair<int, std::string>(1, "un"));
 	bst.insert(ft::make_pair<int, std::string>(3, "trois"));
-	bst.insert(ft::make_pair<int, std::string>(3, "blegh"));
+	bst.insert(ft::make_pair<int, std::string>(4, "deuttx"));
+	bst.insert(ft::make_pair<int, std::string>(5, "utrn"));
+	bst.insert(ft::make_pair<int, std::string>(6, "trotrbis"));
+	bst.insert(ft::make_pair<int, std::string>(8, "derbtux"));
+	bst.insert(ft::make_pair<int, std::string>(7, "unbrtrbt"));
+	bst.insert(ft::make_pair<int, std::string>(9, "troisze"));
+	bst.insert(ft::make_pair<int, std::string>(10, "blegh"));
 	std::cout << bst.research(ft::make_pair<int, std::string>(1, ""))->value.second << std::endl;
 	std::cout << bst.research(ft::make_pair<int, std::string>(2, ""))->value.second << std::endl;
 	std::cout << bst.research(ft::make_pair<int, std::string>(3, ""))->value.second << std::endl;
+
+	bst.remove(ft::make_pair<int, std::string>(4, ""));
+	std::cout << bst.research(ft::make_pair<int, std::string>(4, "")) << std::endl;
 	
 }
