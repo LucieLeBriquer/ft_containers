@@ -49,11 +49,9 @@ namespace ft
 			void	insert(const T &val)
 			{
 				_node = insert(val, _node, _cmp);
-				std::cout << _node << " ";
-				std::cout << _node->left << " ";
-				std::cout << _node->right << std::endl;
 			}
 
+			// static member functions
 			static bool	areEqual(const Compare &comp, const T &value1, const T &value2)
 			{
 				return (!(comp(value1, value2) || comp(value2, value1)));
@@ -76,7 +74,10 @@ namespace ft
 				if (node == NULL)
 					return (new Node(val));
 				if (areEqual(comp, val, node->value))
+				{
+					node->value = val;
 					return (node);
+				}
 				if (comp(val, node->value))
 				{
 					node->left = insert(val, node->left, comp);

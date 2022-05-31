@@ -52,6 +52,7 @@ int		main(void)
 	bst.insert(ft::make_pair<int, std::string>(2, "deux"));
 	bst.insert(ft::make_pair<int, std::string>(1, "un"));
 	bst.insert(ft::make_pair<int, std::string>(3, "trois"));
+	bst.insert(ft::make_pair<int, std::string>(3, "blegh"));
 	std::cout << bst.research(ft::make_pair<int, std::string>(1, ""))->value.second << std::endl;
 	std::cout << bst.research(ft::make_pair<int, std::string>(2, ""))->value.second << std::endl;
 	std::cout << bst.research(ft::make_pair<int, std::string>(3, ""))->value.second << std::endl;
