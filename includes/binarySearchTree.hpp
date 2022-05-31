@@ -41,6 +41,13 @@ namespace ft
 				deleteAll(_node);
 			}
 
+			binarySearchTree	&operator=(const binarySearchTree &bst)
+			{
+				deleteAll(_node);
+				deepCopy(bst._node);
+				_cmp = bst._cmp;
+			}
+
 			Node	*research(const T& val)
 			{
 				return (research(val, _node, _cmp));
@@ -57,6 +64,15 @@ namespace ft
 			}
 
 			// static member functions
+			void	deepCopy(Node *node)
+			{
+				if (!node)
+					return ;
+				insert(node->value);
+				deepCopy(node->left);
+				deepCopy(node->right);
+			}
+
 			static bool	areEqual(const Compare &comp, const T &value1, const T &value2)
 			{
 				return (!(comp(value1, value2) || comp(value2, value1)));
@@ -173,6 +189,7 @@ namespace ft
 				deleteAll(node->right);
 				delete node;
 			}
+
 	};
 }
 

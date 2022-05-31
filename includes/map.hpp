@@ -65,7 +65,7 @@ namespace ft
 
 		// constructors
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
-			_tree(bst(comp, alloc))
+			_tree(bst(comp))
 		{
 			//
 		}
@@ -93,8 +93,9 @@ namespace ft
 		// overload operator
 		map	&operator=(const map& x)
 		{
-			//_tree = x._tree;
-			(void)x;
+			_comp = x._comp;
+			_alloc = x._alloc;
+			_tree = x._tree;
 		}
 
 		// iterators
@@ -113,7 +114,18 @@ namespace ft
 		size_type max_size() const;
 
 		// element access
-		mapped_type	&operator[](const key_type& k);
+		mapped_type	&operator[](const key_type& k)
+		{
+			value_type	defaultPair = ft::make_pair<const Key, T>(k, T());
+			Node<value_type>		*node = _tree.research(defaultPair);
+
+			if (!node)
+			{
+				_tree.insert(defaultPair);
+				return (T());
+			}
+			return (node->value.second);
+		}
 
 		//modifiers
 
