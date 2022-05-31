@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/28 16:17:06 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/31 18:26:37 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,27 @@
 #endif
 #define SIZE 60
 
+namespace ft
+{
+	template<typename K, typename T>
+	struct test
+	{
+		bool operator()(const ft::pair<K, T> & a, const ft::pair<K, T> & b) const
+		{
+			return (a.first < b.first);
+		}
+	};
+}
+
 int		main(void)
 {
-	std::map<int, float> map0;
-	ft::map<int, float> map1;
+	ft::binarySearchTree< ft::pair<int, std::string>, ft::test<int, std::string> > bst;
 
+	bst.insert(ft::make_pair<int, std::string>(2, "deux"));
+	bst.insert(ft::make_pair<int, std::string>(1, "un"));
+	bst.insert(ft::make_pair<int, std::string>(3, "trois"));
+	std::cout << bst.research(ft::make_pair<int, std::string>(1, ""))->value.second << std::endl;
+	std::cout << bst.research(ft::make_pair<int, std::string>(2, ""))->value.second << std::endl;
+	std::cout << bst.research(ft::make_pair<int, std::string>(3, ""))->value.second << std::endl;
+	
 }

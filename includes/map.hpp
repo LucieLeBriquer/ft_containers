@@ -32,7 +32,7 @@ namespace ft
 		typedef Alloc					allocator_type;
 
 	private:
-		typedef	ft::binarySearchTree<value_type, Compare, Alloc>	bst;
+		typedef	ft::binarySearchTree<value_type, Compare>	bst;
 		bst				_tree;
 		allocator_type	_alloc;
 		key_compare		_comp;

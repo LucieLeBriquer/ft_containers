@@ -22,24 +22,23 @@ namespace ft
 		typedef T   value_type;
 
 		value_type	value;
-		Node*		parent;
 		Node*		left;
 		Node*		right;
 
 		// constructor
-		Node() : value(value_type()), parent(NULL), left(NULL), right(NULL)
+		Node() : value(value_type()), left(NULL), right(NULL)
 		{
 			return ;
 		}
 
-		Node(Node* parent, Node* left = NULL, Node* right = NULL) :
-			value(value_type()), parent(parent), left(left), right(right)
+		Node(Node* left = NULL, Node* right = NULL) :
+			value(value_type()), left(left), right(right)
 		{
 			return ;
 		}
 		
-		Node(const value_type& val, Node* parent = NULL, Node* left = NULL, Node* right = NULL) :
-			value(val), parent(parent), left(left), right(right)
+		Node(const value_type& val, Node* left = NULL, Node* right = NULL) :
+			value(val), left(left), right(right)
 		{
 			return ;
 		}
@@ -57,18 +56,10 @@ namespace ft
 			if (*this != node)
 			{
 				this->value = node.value;
-				this->parent = node.parent;
 				this->left = node.left;
 				this->right = node.right;
 			}
 			return (*this);
-		}
-
-		bool operator==(const Node& node)
-		{
-			if (value == node.value)
-				return (true);
-			return (false);
 		}
     };
 
