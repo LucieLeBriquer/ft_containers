@@ -1,2 +1,2 @@
 # to fix
-- probleme avec operateur []
+- correction -> arbre doit rester equilibre
