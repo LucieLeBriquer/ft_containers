@@ -6,4 +6,5 @@ pour Map :
 - parcours préfixe pour avoir la map triée
 - _current = _tree
 - changer les opérations `++`, `--` etc
+/!\
 - correction -> arbre doit rester equilibre
