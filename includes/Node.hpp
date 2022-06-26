@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:12:47 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/28 17:12:47 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/31 21:19:06 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,29 @@ namespace ft
 		}
     };
 
+	template <typename T>
+	Node<T>	*getNext(Node<T> *node)
+	{
+		Node<T>	*curr;
+		if (!node || !(node->right))
+			return (NULL);
+		curr = node->right;
+		while (curr->left)
+			curr = curr->left;
+		return (curr);
+	}
+
+	template <typename T>
+	Node<T>	*getPrev(Node<T> *node)
+	{
+		Node<T>	*curr;
+		if (!node || !(node->left))
+			return (NULL);
+		curr = node->left;
+		while (curr->right)
+			curr = curr->right;
+		return (curr);
+	}
 }
 
 #endif

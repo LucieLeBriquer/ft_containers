@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/31 18:26:37 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:55:56 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ int		main(void)
 	std::cout << bst.research(ft::make_pair<int, std::string>(2, ""))->value.second << std::endl;
 	std::cout << bst.research(ft::make_pair<int, std::string>(3, ""))->value.second << std::endl;
 
-	bst.remove(ft::make_pair<int, std::string>(4, ""));
+	bst.remove(ft::make_pair<int, std::string>(5, ""));
 	std::cout << bst.research(ft::make_pair<int, std::string>(4, "")) << std::endl;
 	
+	ft::map<char, int>	mymap;
+
+	mymap.insert(ft::pair<char,int>('a',100));
 }

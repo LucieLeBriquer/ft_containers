@@ -6,17 +6,18 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/28 16:53:37 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:51:05 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
-# include "binarySearchTree.hpp"
 # include "normal_iterator.hpp"
 # include "reverse_iterator.hpp"
 # include "enable_if.hpp"
 # include "is_integral.hpp"
+# include "equal.hpp"
+# include "pair.hpp"
 
 namespace ft
 {
@@ -32,7 +33,7 @@ namespace ft
 		typedef Alloc					allocator_type;
 
 	private:
-		typedef	ft::binarySearchTree<value_type, Compare>	bst;
+		//typedef	ft::binarySearchTree<value_type, Compare>	bst;
 		bst				_tree;
 		allocator_type	_alloc;
 		key_compare		_comp;
@@ -67,6 +68,7 @@ namespace ft
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
 			_tree(bst(comp))
 		{
+			(void)alloc;
 			//
 		}
 
@@ -116,8 +118,8 @@ namespace ft
 		// element access
 		mapped_type	&operator[](const key_type& k)
 		{
-			value_type	defaultPair = ft::make_pair<const Key, T>(k, T());
-			Node<value_type>		*node = _tree.research(defaultPair);
+			value_type			defaultPair = ft::make_pair<const Key, T>(k, T());
+			Node<value_type>	*node = _tree.research(defaultPair);
 
 			if (!node)
 			{
@@ -129,7 +131,18 @@ namespace ft
 
 		//modifiers
 
-		pair<iterator,bool> insert(const value_type& val);
+		pair<iterator,bool> insert(const value_type& val)
+		{
+			pair<iterator, bool>	ret;
+			Node<value_type>		*node;
+
+			node = _tree.research(val);
+			if (node)
+				return (ft::make_pair<iterator, bool>(node, false));
+			_tree.insert(val);
+			node = _tree.research(val);
+			return (ft::make_pair<iterator, bool>(node, true)); 
+		}
 		iterator	insert(iterator position, const value_type& val);
 		
 		template <class InputIterator>
