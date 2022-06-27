@@ -35,40 +35,12 @@
 
 int		main(void)
 {
-	/*ft::RedBlackTree<int, ft::less<int> >	tree;
-
-	tree.insert(1);
-	tree.printTree();
-	tree.insert(40);
-	tree.printTree();
-	tree.insert(65);
-	tree.printTree();
-	tree.insert(60);
-	tree.printTree();
-	tree.insert(75);
-	tree.printTree();
-	tree.insert(57);
-	tree.printTree();
-	tree.test();
-	tree.remove(40);
-  	tree.printTree();*/
-/*
-	
-	ft::pair<int, std::string>	pair2(3, "couocu");
-	ft::pair<int, std::string>	pair3(1, "ferg");
-
-	ft::RedBlackTree<ft::pair<int, std::string>, ft::lessKey< ft::pair<int, std::string> > >	treeMap;
-
-	treeMap.insert(pair1);
-	treeMap.insert(pair2);
-	treeMap.insert(pair3);
-	treeMap.printTree();*/
-
-	ft::map<char, std::string>	map;
-	ft::pair<char, std::string>	pair3('1', "ferg");
-	ft::pair<char, std::string>	pair1('a', "rgeg");
-	pair1 = pair3;
-	pair1.first = 'n';
-	std::cout << typeid(pair1).name() << std::endl;
+	ft::map<int, std::string>	map;
+	ft::pair<int, std::string>	pair1(5, "lucie");
+	ft::pair<int, std::string>	pair2(3, "jonathan");
+	ft::pair<int, std::string>	pair3(1, "lise");
 	map.insert(pair3);
+	map.insert(pair2);
+	map.insert(pair1);
+	map.print();
 }

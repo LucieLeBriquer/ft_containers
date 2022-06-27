@@ -158,6 +158,12 @@ namespace ft
 		// allocator
 		allocator_type	get_allocator() const;
 
+		// to delete
+		void	print(void) const
+		{
+			_tree.test();
+		}
+
 	};
 }
 

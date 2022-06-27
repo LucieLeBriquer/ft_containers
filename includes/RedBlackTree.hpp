@@ -442,7 +442,7 @@ namespace ft
 			}
 
 			// for map iterator
-			NodeP	nextNode(const NodeP node) const
+			NodeP	nextNode(NodeP node) const
 			{
 				NodeP	cur;
 
@@ -457,7 +457,7 @@ namespace ft
 				return (cur);
 			}
 
-			NodeP	prevNode(const NodeP node) const
+			NodeP	prevNode(NodeP node) const
 			{
 				NodeP	cur;
 
@@ -478,7 +478,7 @@ namespace ft
 
 				while (cur != _leaf && cur != NULL)
 				{
-					std::cout << (cur->value).second << std::endl;
+					std::cout << (cur->value).first << "->" << (cur->value).second << std::endl;
 					cur = nextNode(cur);
 				}
 			}
@@ -489,7 +489,7 @@ namespace ft
 
 				while (cur != _leaf && cur != NULL)
 				{
-					std::cout << (cur->value).second << std::endl;
+					std::cout << (cur->value).first << "->" << (cur->value).second << std::endl;
 					cur = prevNode(cur);
 				}
 			}
@@ -497,6 +497,7 @@ namespace ft
 			void	test(void) const
 			{
 				_test(_minimum(_root));
+				std::cout << std::endl;
 				_testR(_maximum(_root));
 			}
 
