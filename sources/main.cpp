@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/06/27 12:07:52 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/06/27 19:29:15 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,20 @@
 # define ISFT 1
 #endif
 #define SIZE 60
-#include <typeinfo>
 
 int		main(void)
 {
 	ft::map<int, std::string>	map;
-	ft::pair<int, std::string>	pair1(5, "lucie");
-	ft::pair<int, std::string>	pair2(3, "jonathan");
-	ft::pair<int, std::string>	pair3(1, "lise");
+	ft::pair<int, std::string>	pair1(150, "lucie");
+	ft::pair<int, std::string>	pair2(2, "jonathan");
+	ft::pair<int, std::string>	pair3(100, "lise");
+	ft::map<int, std::string>::iterator	it;
+
 	map.insert(pair3);
 	map.insert(pair2);
 	map.insert(pair1);
+	map.insert(pair1);
+	it = map.begin();
+	std::cout << *(it).first << std::endl;
 	map.print();
 }

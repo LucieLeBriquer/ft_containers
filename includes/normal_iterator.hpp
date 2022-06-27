@@ -14,15 +14,16 @@
 # define NORMAL_ITERATOR_HPP
 # include "iterator.hpp"
 # include <iostream>
-namespace ft {
 
+namespace ft
+{
 	template<typename Iterator, typename Container>
     class normal_iterator
     {
 		protected:
 			Iterator	_current;
 
-		typedef iterator_traits<Iterator>		_traitsType;
+			typedef iterator_traits<Iterator> _traitsType;
 
 		public:
 			typedef Iterator									iterator_type;

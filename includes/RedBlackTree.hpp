@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:12:47 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/06/27 16:41:09 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/06/27 18:41:05 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "pair.hpp"
 # define BLACK 0
 # define RED 1
-#	include <typeinfo>
 
 namespace ft 
 {
@@ -236,21 +235,6 @@ namespace ft
 				newRoot->parent = toRemove->parent;
 			}
 
-			// min/max functions
-			NodeP	_minimum(NodeP node) const
-			{
-				while (node->left != _leaf)
-					node = node->left;
-				return (node);
-			}
-
-			NodeP	_maximum(NodeP node) const
-			{
-				while (node->right != _leaf)
-					node = node->right;
-				return (node);
-			}
-			
 			// rotations
 			void	_rotateLeft(NodeP node)
 			{
@@ -328,6 +312,32 @@ namespace ft
 				// free everything;
 			}
 
+			// min/max functions
+			NodeP	minimum(NodeP node) const
+			{
+				while (node->left != _leaf)
+					node = node->left;
+				return (node);
+			}
+
+			NodeP	maximum(NodeP node) const
+			{
+				while (node->right != _leaf)
+					node = node->right;
+				return (node);
+			}
+
+			NodeP	minimum(void) const
+			{
+				return (minimum(_root));
+			}
+
+			NodeP	maximum(void) const
+			{
+				return (maximum(_root));
+			}
+
+			// search in tree
 			NodeP	search(const value_type value) const
 			{
 				return (_searchNode(_root, value));
@@ -373,7 +383,7 @@ namespace ft
 				}
 				else
 				{
-					copy = _minimum(toDelete->right);
+					copy = minimum(toDelete->right);
 					color = copy->color;
 					toFix = copy->right;
 					if (copy->parent == toDelete)
@@ -447,7 +457,7 @@ namespace ft
 				NodeP	cur;
 
 				if (node->right != _leaf)
-					return (_minimum(node->right));
+					return (minimum(node->right));
 				cur = node->parent;
 				while (cur != _leaf && cur != NULL && node == cur->right)
 				{
@@ -462,7 +472,7 @@ namespace ft
 				NodeP	cur;
 
 				if (node->left != _leaf)
-					return (_maximum(node->left));
+					return (maximum(node->left));
 				cur = node->parent;
 				while (cur != _leaf && cur != NULL && node == cur->left)
 				{
@@ -496,11 +506,15 @@ namespace ft
 			
 			void	test(void) const
 			{
-				_test(_minimum(_root));
+				_test(minimum(_root));
 				std::cout << std::endl;
-				_testR(_maximum(_root));
+				_testR(maximum(_root));
 			}
 
+			NodeP	getRoot(void) const
+			{
+				return (_root);
+			}
 	};
 }
 
