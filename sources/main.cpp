@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/06/26 19:27:30 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/06/27 12:07:52 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,18 @@ int		main(void)
 	ft::RedBlackTree<int>	tree;
 
 	tree.insert(1);
-	tree.insert(3);
-	tree.insert(2);
-
+	tree.printTree();
+	tree.insert(40);
+	tree.printTree();
+	tree.insert(65);
+	tree.printTree();
+	tree.insert(60);
+	tree.printTree();
+	tree.insert(75);
+	tree.printTree();
+	tree.insert(57);
+	tree.printTree();
+	tree.test();
+	tree.remove(40);
+  	tree.printTree();
 }
