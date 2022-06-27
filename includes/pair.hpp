@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/11 11:49:47 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/11 12:00:03 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/06/27 16:07:10 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,32 @@ namespace ft
 	template<typename T1, typename T2>
     struct pair
     {
-    	typedef T1	first_type;
-    	typedef T2	second_type;
+		public:
+	
+			typedef T1	first_type;
+			typedef T2	second_type;
 
-      	T1	first;
-    	T2	second;
+			T1	first;
+			T2	second;
 
-    	pair() : first(), second() { }
+			pair() : first(first_type()), second(second_type()) { }
 
-		template<class U, class V>
-		pair(const pair<U,V>& pr) : first(pr.first), second(pr.second) { }
+			template<class U, class V>
+			pair(const pair<U,V> &p) : first(p.first), second(p.second) { }
 
-    	pair(const T1& a, const T2& b) : first(a), second(b) { }
-		
-		pair& operator=(const pair& pr)
-		{
-			first = pr.first;
-			second = pr.second;
-			return (*this);
-		}
+			pair(const T1 &a, const T2 &b) : first(a), second(b) { }
+			
+			pair& operator=(const pair &p)
+			{
+				if (this != &p)
+				{
+					first = p.first;
+					second = p.second;
+				}
+				return (*this);
+			}
 	};
-
+	
 	template <class T1, class T2>
 	bool operator==(const pair<T1,T2> &p1, const pair<T1,T2> &p2)
 	{
@@ -76,7 +81,7 @@ namespace ft
 	}
 
 	template <class T1,class T2>
-	pair<T1,T2> make_pair (T1 x, T2 y)
+	pair<T1,T2> make_pair(T1 x, T2 y)
 	{
 		return (pair<T1,T2>(x,y));
 	}

@@ -11,8 +11,7 @@
 /* ************************************************************************** */
 
 #include "vector.hpp"
-//#include "map.hpp"
-#include "RedBlackTree.hpp"
+#include "map.hpp"
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -32,11 +31,11 @@
 # define ISFT 1
 #endif
 #define SIZE 60
-
+#include <typeinfo>
 
 int		main(void)
 {
-	ft::RedBlackTree<int>	tree;
+	/*ft::RedBlackTree<int, ft::less<int> >	tree;
 
 	tree.insert(1);
 	tree.printTree();
@@ -52,5 +51,24 @@ int		main(void)
 	tree.printTree();
 	tree.test();
 	tree.remove(40);
-  	tree.printTree();
+  	tree.printTree();*/
+/*
+	
+	ft::pair<int, std::string>	pair2(3, "couocu");
+	ft::pair<int, std::string>	pair3(1, "ferg");
+
+	ft::RedBlackTree<ft::pair<int, std::string>, ft::lessKey< ft::pair<int, std::string> > >	treeMap;
+
+	treeMap.insert(pair1);
+	treeMap.insert(pair2);
+	treeMap.insert(pair3);
+	treeMap.printTree();*/
+
+	ft::map<char, std::string>	map;
+	ft::pair<char, std::string>	pair3('1', "ferg");
+	ft::pair<char, std::string>	pair1('a', "rgeg");
+	pair1 = pair3;
+	pair1.first = 'n';
+	std::cout << typeid(pair1).name() << std::endl;
+	map.insert(pair3);
 }

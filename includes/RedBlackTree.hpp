@@ -6,15 +6,17 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:12:47 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/06/27 12:50:28 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/06/27 16:41:09 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDBLACKTREE_HPP
 # define REDBLACKTREE_HPP
 # include "equal.hpp"
+# include "pair.hpp"
 # define BLACK 0
 # define RED 1
+#	include <typeinfo>
 
 namespace ft 
 {
@@ -30,16 +32,45 @@ namespace ft
 		int			color;
 	};
 	
-	template <typename T>
+	template <typename T, class Compare>
 	class RedBlackTree
 	{
 		private:
+			/*
+			**		TYPEDEF
+			*/
 			typedef T value_type;
 			typedef	Node<T> *NodeP;
+
+			/*
+			**		MEMBER OBJECTS
+			*/
 			NodeP	_root;
 			NodeP	_leaf;
+			Compare	_comp;
 
-			void	_fillNewNode(NodeP node, value_type value, int color)
+			/*
+			**		PRIVATE MEMBER FUNCTIONS
+			*/
+
+			// comparisons functions
+			bool	_isLess(value_type const value1, value_type const value2) const
+			{
+				return (_comp(value1, value2));
+			}
+
+			bool	_isGreater(value_type const value1, const value_type value2) const
+			{
+				return (_comp(value2, value1));
+			}
+
+			bool	_areEqual(const value_type value1, const value_type value2) const
+			{
+				return (!(_isLess(value1, value2) || _isLess(value2, value1)));
+			}
+
+			// create nodes
+			void	_fillNewNode(NodeP node, const value_type value, const int color)
 			{
 				node->parent = NULL;
 				node->value = value;
@@ -55,15 +86,17 @@ namespace ft
 				node->color = BLACK;
 			}
 
-			NodeP	_searchNode(NodeP node, value_type value)
+			// search key in tree
+			NodeP	_searchNode(NodeP node, const value_type value) const
 			{
-				if (node == _leaf || value == node->value)
+				if (node == _leaf || _areEqual(value, node->value))
 					return (node);
-				if (value < node->value)
+				if (_isLess(value, node->value))
 					return (_searchNode(node->left, value));
 				return (_searchNode(node->right, value));
 			}
 
+			// insertion and delete fix
 			void	_insertionUpdate(NodeP node)
 			{
 				NodeP	cur;
@@ -203,20 +236,22 @@ namespace ft
 				newRoot->parent = toRemove->parent;
 			}
 
-			NodeP	_minimum(NodeP node)
+			// min/max functions
+			NodeP	_minimum(NodeP node) const
 			{
 				while (node->left != _leaf)
 					node = node->left;
 				return (node);
 			}
 
-			NodeP	_maximum(NodeP node)
+			NodeP	_maximum(NodeP node) const
 			{
 				while (node->right != _leaf)
 					node = node->right;
 				return (node);
 			}
 			
+			// rotations
 			void	_rotateLeft(NodeP node)
 			{
 				NodeP	save;
@@ -273,7 +308,7 @@ namespace ft
 					}
 
 					std::string sColor = root->color ? "RED" : "BLACK";
-					std::cout << root->value << "(" << sColor << ")" << std::endl;
+					std::cout << root->value.first << " " << root->value.second << "(" << sColor << ")" << std::endl;
 					_printTreeRec(root->left, indent, false);
 					_printTreeRec(root->right, indent, true);
 				}
@@ -281,7 +316,7 @@ namespace ft
 
 		public:
 			// constructors
-			RedBlackTree()
+			RedBlackTree() : _comp(Compare())
 			{
 				_leaf = new Node<T>;
 				_newLeaf(_leaf);
@@ -293,12 +328,12 @@ namespace ft
 				// free everything;
 			}
 
-			NodeP	search(value_type value)
+			NodeP	search(const value_type value) const
 			{
 				return (_searchNode(_root, value));
 			}
 
-			void	remove(value_type value)
+			void	remove(const value_type value)
 			{
 				NodeP	toDelete;
 				NodeP	copy;
@@ -309,12 +344,12 @@ namespace ft
 				toDelete = _leaf;
 				while (node != _leaf)
 				{
-					if (node->value == value)
+					if (_areEqual(value, node->value))
 					{
 						toDelete = node;
 						break;
 					}
-					if (node->value <= value)
+					if (_isLess(value, node->value))
 						node = node->right;
 					else
 						node = node->left;
@@ -360,7 +395,7 @@ namespace ft
 				
 			}
 
-			void	insert(value_type value)
+			void	insert(const value_type value)
 			{
 				NodeP	node = new Node<T>;
 				NodeP	cur;
@@ -373,7 +408,7 @@ namespace ft
 				while (root != _leaf)
 				{
 					cur = root;
-					if (node->value < cur->value)
+					if (_isLess(node->value, cur->value))
 						root = root->left;
 					else
 						root = root->right;
@@ -382,7 +417,7 @@ namespace ft
 				node->parent = cur;
 				if (cur == NULL)
 					_root = node;
-				else if (node->value < cur->value)
+				else if (_isLess(node->value, cur->value))
 					cur->left = node;
 				else
 					cur->right = node;
@@ -400,14 +435,14 @@ namespace ft
 			}
 
 			// to delete
-			void	printTree(void)
+			void	printTree(void) const
 			{
 				_printTreeRec(_root, "", true);
 				std::cout << std::endl;
 			}
 
-			// for tree iterator
-			NodeP	nextNode(NodeP node)
+			// for map iterator
+			NodeP	nextNode(const NodeP node) const
 			{
 				NodeP	cur;
 
@@ -422,7 +457,7 @@ namespace ft
 				return (cur);
 			}
 
-			NodeP	prevNode(NodeP node)
+			NodeP	prevNode(const NodeP node) const
 			{
 				NodeP	cur;
 
@@ -437,20 +472,32 @@ namespace ft
 				return (cur);
 			}
 
-			void	_test(NodeP node)
+			void	_test(const NodeP node) const
 			{
 				NodeP	cur = node;
 
 				while (cur != _leaf && cur != NULL)
 				{
-					std::cout << cur->value << std::endl;
+					std::cout << (cur->value).second << std::endl;
 					cur = nextNode(cur);
 				}
 			}
+
+			void	_testR(const NodeP node) const
+			{
+				NodeP	cur = node;
+
+				while (cur != _leaf && cur != NULL)
+				{
+					std::cout << (cur->value).second << std::endl;
+					cur = prevNode(cur);
+				}
+			}
 			
-			void	test(void)
+			void	test(void) const
 			{
 				_test(_minimum(_root));
+				_testR(_maximum(_root));
 			}
 
 	};

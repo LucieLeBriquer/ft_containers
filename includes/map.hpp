@@ -18,6 +18,7 @@
 # include "is_integral.hpp"
 # include "equal.hpp"
 # include "pair.hpp"
+# include "RedBlackTree.hpp"
 
 namespace ft
 {
@@ -28,17 +29,9 @@ namespace ft
     public:
 		typedef Key						key_type;
 		typedef T						mapped_type;
-		typedef ft::pair<const Key,T>	value_type;
+		typedef ft::pair<Key, T>		value_type;
 		typedef Compare					key_compare;
 		typedef Alloc					allocator_type;
-
-	private:
-		//typedef	ft::binarySearchTree<value_type, Compare>	bst;
-		bst				_tree;
-		allocator_type	_alloc;
-		key_compare		_comp;
-
-	public:
 
 		class value_compare
 		{
@@ -47,12 +40,21 @@ namespace ft
 				value_compare(Compare c) : _comp(c) { }
 
 			public:
-			bool operator()(const value_type& x, const value_type& y) const
-			{
-				return _comp(x.first, y.first);
-			}
+				//constructors
+				value_compare() : _comp(Compare()) { }
+
+				bool operator()(const value_type& x, const value_type& y) const
+				{
+					return (_comp(x.first, y.first));
+				}
 		};
 
+	private:
+		RedBlackTree<value_type, value_compare>	_tree;
+		allocator_type							_alloc;
+		key_compare								_comp;
+
+	public:
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef typename allocator_type::reference			reference;
@@ -66,10 +68,9 @@ namespace ft
 
 		// constructors
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
-			_tree(bst(comp))
+			_tree(RedBlackTree<value_type, value_compare>()), _alloc(alloc), _comp(comp)
 		{
-			(void)alloc;
-			//
+			return ;
 		}
 
 		template <class InputIterator>
@@ -97,7 +98,7 @@ namespace ft
 		{
 			_comp = x._comp;
 			_alloc = x._alloc;
-			_tree = x._tree;
+			//_tree = x._tree;
 		}
 
 		// iterators
@@ -116,32 +117,17 @@ namespace ft
 		size_type max_size() const;
 
 		// element access
-		mapped_type	&operator[](const key_type& k)
+		mapped_type	&operator[](const key_type &k)
 		{
-			value_type			defaultPair = ft::make_pair<const Key, T>(k, T());
-			Node<value_type>	*node = _tree.research(defaultPair);
-
-			if (!node)
-			{
-				_tree.insert(defaultPair);
-				return (T());
-			}
-			return (node->value.second);
+			(void)k;
 		}
 
 		//modifiers
 
-		pair<iterator,bool> insert(const value_type& val)
+		pair<iterator,bool> insert(const value_type &val)
 		{
-			pair<iterator, bool>	ret;
-			Node<value_type>		*node;
-
-			node = _tree.research(val);
-			if (node)
-				return (ft::make_pair<iterator, bool>(node, false));
 			_tree.insert(val);
-			node = _tree.research(val);
-			return (ft::make_pair<iterator, bool>(node, true)); 
+			return (ft::make_pair<iterator, bool>(iterator(), true));
 		}
 		iterator	insert(iterator position, const value_type& val);
 		
