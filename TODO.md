@@ -9,3 +9,8 @@ pour Map :
 /!\
 - correction -> arbre doit rester equilibre
 - tout mettre sous forme copelienne
+
+ft::RedBlackTree<ft::pair<int, std::string >, ft::map<int, std::string, ft::less<int>, std::allocator<ft::pair<const int, std::string > > >::value_compare>::NodeP'
+(aka 'Node<ft::pair<int, std::string > > *')
+to 'ft::map<int, std::string, ft::less<int>, std::allocator<ft::pair<const int, std::string > > >::iterator'
+(aka 'normal_iterator<RedBlackIterator<pair<int, std::string >, ft::map<int, std::string, ft::less<int>, std::allocator<ft::pair<const int, std::string > > >::value_compare>, ft::map<int, std::string, ft::less<int>, std::allocator<ft::pair<const int, std::string > > > >

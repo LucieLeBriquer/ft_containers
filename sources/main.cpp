@@ -45,6 +45,6 @@ int		main(void)
 	map.insert(pair1);
 	map.insert(pair1);
 	it = map.begin();
-	std::cout << *(it).first << std::endl;
+	//std::cout << *(it).first << std::endl;
 	map.print();
 }

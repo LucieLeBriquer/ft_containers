@@ -29,6 +29,11 @@ namespace ft
 		Node		*right;
 		Node		*parent;
 		int			color;
+
+		Node() : value(value_type()), left(NULL), right(NULL), parent(NULL), color(BLACK)
+		{
+			return ;
+		}
 	};
 	
 	template <typename T, class Compare>
@@ -44,9 +49,9 @@ namespace ft
 			/*
 			**		MEMBER OBJECTS
 			*/
-			NodeP	_root;
-			NodeP	_leaf;
-			Compare	_comp;
+			NodeP		_root;
+			NodeP		_leaf;
+			Compare		_comp;
 
 			/*
 			**		PRIVATE MEMBER FUNCTIONS
@@ -76,13 +81,6 @@ namespace ft
 				node->left = _leaf;
 				node->right = _leaf;
 				node->color = color;
-			}
-
-			void	_newLeaf(NodeP node)
-			{
-				node->left = NULL;
-				node->right = NULL;
-				node->color = BLACK;
 			}
 
 			// search key in tree
@@ -303,13 +301,26 @@ namespace ft
 			RedBlackTree() : _comp(Compare())
 			{
 				_leaf = new Node<T>;
-				_newLeaf(_leaf);
 				_root = _leaf;
+			}
+
+			RedBlackTree(const RedBlackTree &tree)
+			{
+				*this = tree;
 			}
 
 			~RedBlackTree()
 			{
 				// free everything;
+			}
+
+			RedBlackTree	&operator=(const RedBlackTree &tree)
+			{
+				if (this != &tree)
+				{
+
+				}
+				return (*this);
 			}
 
 			// min/max functions
@@ -320,16 +331,16 @@ namespace ft
 				return (node);
 			}
 
+			NodeP	minimum(void) const
+			{
+				return (minimum(_root));
+			}
+
 			NodeP	maximum(NodeP node) const
 			{
 				while (node->right != _leaf)
 					node = node->right;
 				return (node);
-			}
-
-			NodeP	minimum(void) const
-			{
-				return (minimum(_root));
 			}
 
 			NodeP	maximum(void) const

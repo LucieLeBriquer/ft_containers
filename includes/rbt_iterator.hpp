@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/06/27 19:32:49 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/06/29 18:19:37 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,71 +17,72 @@
 
 namespace ft
 {
-	template <typename T>
+	template <typename T, class Compare>
 	class RedBlackIterator
     {
 		protected:
+			typedef RedBlackTree<T, Compare> Tree;
 			typedef Node<T> *NodeP;
-			NodeP	_current;
+			Tree	_tree;
+			NodeP	_node;
 
 		public:
-			typedef NodeP										iterator_type;
 			typedef typename std::random_access_iterator_tag	iterator_category;
-			typedef typename T									value_type;
+			typedef T											value_type;
 			typedef typename std::ptrdiff_t						difference_type;
-			typedef typename T&   								pointer;
-			typedef typename T*									reference;
+			typedef T&   										pointer;
+			typedef T*											reference;
 
 			// constructors
-			RedBlackIterator() : _current(NodeP()) { }
-			RedBlackIterator(const NodeP& node) : _current(node) { }
+			RedBlackIterator() : _tree(Tree()), _node(_tree.getRoot()) { }
+			RedBlackIterator(const Tree& tree) : _tree(tree), _node(_tree.getRoot()) { }
+			RedBlackIterator(const Tree& tree, const NodeP &node) : _tree(tree), _node(node) { }
+			RedBlackIterator(const RedBlackIterator &rbtIt) : _tree(rbtIt._tree), _node(rbtIt._node) { }
 
-			reference 			operator*() const { return _current->value; }
-			pointer 			operator->() const { return &(_current->value); }
+			RedBlackIterator	&operator=(const RedBlackIterator &rbtIt)
+			{
+				if (this != &rbtIt)
+				{
+					_tree = rbtIt._tree;
+					_node = rbtIt._node;
+				}
+				return (*this);
+			}
+
+			reference 			operator*() const { return (_node->value); }
+			pointer 			operator->() const { return (&(_node->value)); }
 			
 			RedBlackIterator&	operator++()
 			{
 				RedBlackIterator	copy(*this);
-				_current = RedBlackTree::nextNode(_current);
+				_node = _tree.nextNode(_node);
 				return (copy);
 			}
 
 			RedBlackIterator	operator++(int) 
 			{
-				_current = RedBlackTree::nextNode(_current);
+				_node = _tree.nextNode(_node);
 				return (*this);
 			}
 
 			RedBlackIterator&	operator--() 
 			{
 				RedBlackIterator	copy(*this);
-				_current = RedBlackTree::prevNode(_current);
+				_node = _tree.prevNode(_node);
 				return (copy);
 			}
 
 			RedBlackIterator	operator--(int) 
 			{
-				_current = RedBlackTree::prevNode(_current);
+				_node = _tree.prevNode(_node);
 				return (*this);
 			}
 
-			iterator_type		base() const
+			NodeP	base() const
 			{
-				return (_current);
+				return (_node);
 			}
 	};
-
-	template <typename T>
-	bool operator==(const RedBlackIterator<T>& it1, const RedBlackIterator<T>& it2)
-    {
-		return (it1.base() == it2.base());
-	}
-
-	template <typename T>
-	bool operator==(const RedBlackIterator<T>& it1, const RedBlackIterator<T>& it2)
-    {
-		return (it1.base() != it2.base());
-	}
 }
 
 #endif

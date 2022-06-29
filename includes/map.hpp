@@ -54,16 +54,18 @@ namespace ft
 		key_compare								_comp;
 
 	public:
-		typedef typename allocator_type::pointer						pointer;
-		typedef typename allocator_type::const_pointer					const_pointer;
-		typedef typename allocator_type::reference						reference;
-		typedef typename allocator_type::const_reference				const_reference;
-      	typedef normal_iterator< RedBlackIterator<value_type>, map >	iterator;
-      	typedef normal_iterator< RedBlackIterator<value_type>, map >	const_iterator;
-      	typedef reverse_iterator<const_iterator>						const_reverse_iterator;
-      	typedef reverse_iterator<iterator>								reverse_iterator;
-      	typedef size_t													size_type;
-      	typedef std::ptrdiff_t											difference_type;
+		typedef typename allocator_type::pointer			pointer;
+		typedef typename allocator_type::const_pointer		const_pointer;
+		typedef typename allocator_type::reference			reference;
+		typedef typename allocator_type::const_reference	const_reference;
+      	typedef size_t										size_type;
+      	typedef std::ptrdiff_t								difference_type;
+
+		typedef	RedBlackIterator<value_type, value_compare>	rbtIterator;
+      	typedef normal_iterator< rbtIterator, map >			iterator;
+      	typedef normal_iterator< rbtIterator, map >			const_iterator;
+      	typedef reverse_iterator<const_iterator>			const_reverse_iterator;
+      	typedef reverse_iterator<iterator>					reverse_iterator;
 
 		// constructors
 		explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
@@ -97,13 +99,13 @@ namespace ft
 		{
 			_comp = x._comp;
 			_alloc = x._alloc;
-			//_tree = x._tree;
+			_tree = x._tree;
 		}
 
 		// iterators
 		iterator begin()
 		{
-			return (iterator(_tree.minimum()));
+			return (iterator(rbtIterator(_tree, _tree.minimum())));
 		}
 		
 		const_iterator begin() const;
