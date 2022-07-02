@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/06/27 19:29:15 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/06/29 19:01:06 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,24 @@
 
 int		main(void)
 {
-	ft::map<int, std::string>	map;
-	ft::pair<int, std::string>	pair1(150, "lucie");
-	ft::pair<int, std::string>	pair2(2, "jonathan");
-	ft::pair<int, std::string>	pair3(100, "lise");
-	ft::map<int, std::string>::iterator	it;
+	NSP::map<int, std::string>	map;
+	NSP::pair<int, std::string>	pair1(150, "lucie");
+	NSP::pair<int, std::string>	pair2(2, "jonathan");
+	NSP::pair<int, std::string>	pair3(100, "lise");
+	NSP::map<int, std::string>::iterator	it;
+	NSP::map<int, std::string>::iterator	end;
 
 	map.insert(pair3);
 	map.insert(pair2);
 	map.insert(pair1);
-	map.insert(pair1);
 	it = map.begin();
-	//std::cout << *(it).first << std::endl;
-	map.print();
+	int i = 0;
+	while (it != map.end())
+	{
+		std::cout << i << " " << it->first << " : " << it->second << std::endl;
+		it++;
+		i++;
+	}
+	std::cout << i << std::endl;
+	//map.print();
 }

@@ -30,8 +30,8 @@ namespace ft
 			typedef typename std::random_access_iterator_tag	iterator_category;
 			typedef T											value_type;
 			typedef typename std::ptrdiff_t						difference_type;
-			typedef T&   										pointer;
-			typedef T*											reference;
+			typedef T*   										pointer;
+			typedef T&											reference;
 
 			// constructors
 			RedBlackIterator() : _tree(Tree()), _node(_tree.getRoot()) { }
@@ -49,7 +49,7 @@ namespace ft
 				return (*this);
 			}
 
-			reference 			operator*() const { return (_node->value); }
+			reference 			operator*() const { return (*_node); }
 			pointer 			operator->() const { return (&(_node->value)); }
 			
 			RedBlackIterator&	operator++()
@@ -78,11 +78,49 @@ namespace ft
 				return (*this);
 			}
 
-			NodeP	base() const
+			const NodeP&		base() const 
 			{
 				return (_node);
 			}
+
 	};
+
+	// comparisons
+	template <typename T, class Compare>
+	inline bool operator==(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
+	{
+		return (lhs.base() == rhs.base());
+	}
+
+	template <typename T, class Compare>
+	inline bool operator!=(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
+	{
+		return (lhs.base() != rhs.base());
+	}
+
+	template <typename T, class Compare>
+	inline bool operator<(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
+	{
+		return (lhs.base() < rhs.base());
+	}
+
+	template <typename T, class Compare>
+	inline bool operator<=(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
+	{
+		return (lhs.base() <= rhs.base());
+	}
+
+	template <typename T, class Compare>
+	inline bool operator>(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
+	{
+		return (lhs.base() > rhs.base());
+	}
+	
+	template <typename T, class Compare>
+	inline bool operator>=(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
+	{
+		return (lhs.base() >= rhs.base());
+	}
 }
 
 #endif

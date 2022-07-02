@@ -62,8 +62,8 @@ namespace ft
       	typedef std::ptrdiff_t								difference_type;
 
 		typedef	RedBlackIterator<value_type, value_compare>	rbtIterator;
-      	typedef normal_iterator< rbtIterator, map >			iterator;
-      	typedef normal_iterator< rbtIterator, map >			const_iterator;
+      	typedef rbtIterator									iterator;
+      	typedef rbtIterator									const_iterator;
       	typedef reverse_iterator<const_iterator>			const_reverse_iterator;
       	typedef reverse_iterator<iterator>					reverse_iterator;
 
@@ -108,13 +108,40 @@ namespace ft
 			return (iterator(rbtIterator(_tree, _tree.minimum())));
 		}
 		
-		const_iterator begin() const;
-		iterator end();
-		const_iterator end() const;
-		reverse_iterator rbegin();
-		const_reverse_iterator rbegin() const;
-		reverse_iterator rend();
-		const_reverse_iterator rend() const;
+		const_iterator begin() const
+		{
+			return (const_iterator(rbtIterator(_tree, _tree.minimum())));
+		}
+
+		iterator end()
+		{
+			return (iterator(rbtIterator(_tree, _tree.getLeaf())));
+		}
+
+		const_iterator end() const
+		{
+			return (const_iterator(rbtIterator(_tree, _tree.getLeaf())));
+		}
+		
+		reverse_iterator rbegin()
+		{
+			return (reverse_iterator(rbtIterator(_tree, _tree.getLeaf())));
+		}
+
+		const_reverse_iterator rbegin() const
+		{
+			return (const_reverse_iterator(rbtIterator(_tree, _tree.getLeaf())));
+		}
+
+		reverse_iterator rend()
+		{
+			return (reverse_iterator(rbtIterator(_tree, _tree.minimum())));
+		}
+
+		const_reverse_iterator rend() const
+		{
+			return (const_reverse_iterator(rbtIterator(_tree, _tree.minimum())));
+		}
 
 		// capacity
 		bool empty() const;

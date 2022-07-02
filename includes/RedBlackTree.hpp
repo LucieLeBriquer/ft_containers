@@ -318,7 +318,9 @@ namespace ft
 			{
 				if (this != &tree)
 				{
-
+					_root = tree._root;
+					_leaf = tree._leaf;
+					_comp = tree._comp;
 				}
 				return (*this);
 			}
@@ -475,6 +477,8 @@ namespace ft
 					node = cur;
 					cur = cur->parent;
 				}
+				if (cur == NULL)
+					cur = _leaf;
 				return (cur);
 			}
 
@@ -490,6 +494,8 @@ namespace ft
 					node = cur;
 					cur = cur->parent;
 				}
+				if (cur == NULL)
+					cur = _leaf;
 				return (cur);
 			}
 
@@ -497,7 +503,7 @@ namespace ft
 			{
 				NodeP	cur = node;
 
-				while (cur != _leaf && cur != NULL)
+				while (cur != _leaf)
 				{
 					std::cout << (cur->value).first << "->" << (cur->value).second << std::endl;
 					cur = nextNode(cur);
@@ -508,7 +514,7 @@ namespace ft
 			{
 				NodeP	cur = node;
 
-				while (cur != _leaf && cur != NULL)
+				while (cur != _leaf)
 				{
 					std::cout << (cur->value).first << "->" << (cur->value).second << std::endl;
 					cur = prevNode(cur);
@@ -525,6 +531,11 @@ namespace ft
 			NodeP	getRoot(void) const
 			{
 				return (_root);
+			}
+
+			NodeP	getLeaf(void) const
+			{
+				return (_leaf);
 			}
 	};
 }
