@@ -19,6 +19,12 @@
 
 namespace ft 
 {
+	/*template<typename T>
+	T	*__addressof(T &r)
+	{
+		return (__builtin_addressof(r));
+	}*/
+
     template <typename T>
     struct Node
     {
@@ -33,6 +39,11 @@ namespace ft
 		Node() : value(value_type()), left(NULL), right(NULL), parent(NULL), color(BLACK)
 		{
 			return ;
+		}
+
+		T	*valuePtr()
+		{
+			return (&value);
 		}
 	};
 	

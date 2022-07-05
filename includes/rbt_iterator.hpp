@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/06/29 18:19:37 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/05 13:01:35 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ namespace ft
 			NodeP	_node;
 
 		public:
-			typedef typename std::random_access_iterator_tag	iterator_category;
-			typedef T											value_type;
-			typedef typename std::ptrdiff_t						difference_type;
-			typedef T*   										pointer;
-			typedef T&											reference;
+			typedef T								value_type;
+			typedef T&								reference;
+			typedef T*   							pointer;
+			typedef std::bidirectional_iterator_tag	iterator_category;
+			typedef std::ptrdiff_t					difference_type;
+
+			typedef RedBlackIterator<T, Compare>	self;
 
 			// constructors
 			RedBlackIterator() : _tree(Tree()), _node(_tree.getRoot()) { }
@@ -49,8 +51,15 @@ namespace ft
 				return (*this);
 			}
 
-			reference 			operator*() const { return (*_node); }
-			pointer 			operator->() const { return (&(_node->value)); }
+			reference 			operator*() const
+			{
+				return (*(_node->valuePtr()));
+			}
+
+			pointer 			operator->() const
+			{
+				return (_node->valuePtr());
+			}
 			
 			RedBlackIterator&	operator++()
 			{
@@ -60,7 +69,7 @@ namespace ft
 
 			RedBlackIterator	operator++(int) 
 			{
-				RedBlackIterator	newIt(_tree, _tree.nextNode(_node));
+				RedBlackIterator	newIt = *this;
 
 				_node = _tree.nextNode(_node);
 				return (newIt);
@@ -74,7 +83,7 @@ namespace ft
 
 			RedBlackIterator	operator--(int) 
 			{
-				RedBlackIterator	newIt(_tree, _tree.prevNode(_node));
+				RedBlackIterator	newIt = *this;;
 				
 				_node = _tree.prevNode(_node);
 				return (newIt);
@@ -85,6 +94,15 @@ namespace ft
 				return (_node);
 			}
 
+			friend bool	operator==(const RedBlackIterator &it1, const RedBlackIterator &it2)
+			{
+				return (it1._node == it2._node);
+			}
+
+			friend bool	operator!=(const RedBlackIterator &it1, const RedBlackIterator &it2)
+			{
+				return (it1._node != it2._node);
+			}
 	};
 
 	// comparisons

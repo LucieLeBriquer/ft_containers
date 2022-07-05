@@ -99,6 +99,7 @@ namespace ft
 			_comp = x._comp;
 			_alloc = x._alloc;
 			_tree = x._tree;
+			return (*this);
 		}
 
 		// iterators
@@ -191,13 +192,15 @@ namespace ft
 		pair<iterator,iterator>				equal_range(const key_type& k);
 
 		// allocator
-		allocator_type	get_allocator() const;
+		allocator_type	get_allocator() const
+		{
+			return (allocator_type(_alloc));
+		}
 
 		// to delete
 		void	print(void) const
 		{
 			_tree.print();
-			
 		}
 
 	};
