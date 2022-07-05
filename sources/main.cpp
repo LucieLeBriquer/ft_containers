@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/06/29 19:01:06 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/05 12:32:08 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,30 +77,26 @@ int     main(void)
 {
     const int size = 5;
     NSP::vector<int> vct(size);
-    NSP::vector<int>::iterator it_ = vct.begin();
-    NSP::vector<int>::reverse_iterator it(it_);
+    NSP::vector<int>::reverse_iterator it = vct.rbegin();
+    NSP::vector<int>::const_reverse_iterator ite = vct.rbegin();
 
     for (int i = 0; i < size; ++i)
-        vct[i] = (i + 1) * 5;
-    printSize(vct);
+        it[i] = (size - i) * 5;
 
-    //std::cout << (it_ == it.base()) << std::endl;
-    //std::cout << (it_ == (it + 3).base()) << std::endl;
-	std::cout << *it << std::endl;
-	std::cout << *it_ << std::endl;
+    it = it + 5;
+    it = 1 + it;
+    it = it - 4;
+    std::cout << *(it += 2) << std::endl;
+    std::cout << *(it -= 1) << std::endl;
 
-    std::cout << *(it.base() + 1) << std::endl;
-    std::cout << *(it - 3) << std::endl;
-    std::cout << *(it - 3).base() << std::endl;
-    it -= 3;
-    std::cout << *it.base() << std::endl;
+    *(it -= 2) = 42;
+    *(it += 2) = 21;
 
-    std::cout << "TEST OFFSET" << std::endl;
-    std::cout << *(it) << std::endl;
-    std::cout << *(it).base() << std::endl;
-    std::cout << *(it - 0) << std::endl;
-    std::cout << *(it - 0).base() << std::endl;
-    std::cout << *(it - 1).base() << std::endl;
+    std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
 
+    std::cout << "(it == const_it): " << (ite == it) << std::endl;
+    std::cout << "(const_ite - it): " << (ite - it) << std::endl;
+    std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+	
     return (0);
 }

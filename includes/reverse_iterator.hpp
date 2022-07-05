@@ -42,35 +42,34 @@ namespace ft
 		
 		public:
 			reverse_iterator() : _current() { }	
-			reverse_iterator(const reverse_iterator &rev_iterator) : _current(rev_iterator._current) {
-				std::cout << "construc from a reverse iterator" << std::endl;
-			}
-			reverse_iterator(iterator_type iterator) : _current(--iterator) {
-				std::cout << "constructor from a classic iterator" << std::endl;
-			}
+			reverse_iterator(iterator_type iterator) : _current(iterator) {	}
+			reverse_iterator(const reverse_iterator &rev_iterator) : _current(rev_iterator._current) { }
+			
+			template<typename Iter>
+			reverse_iterator(const reverse_iterator<Iter>& rev_it) : _current(rev_it.base()) { }
 
 			reverse_iterator	&operator=(const reverse_iterator &rev_iterator)
 			{
-				std::cout << "here3" << std::endl,
 				_current = rev_iterator._current;
+				return (*this);
 			}
 
-			template<typename Iter>	reverse_iterator(const reverse_iterator<Iter>& rev_it) : _current(rev_it.base()) { }
-
-			iterator_type			base() const	{ return (_current); }
+			iterator_type			base() const
+			{
+				return (_current);
+			}
 
       		reference	operator*() const
      		{
-			//	Iterator	save = _current;
-			//	return (*(--save));
-				return (*_current);
+				Iterator	save = _current;
+				return (*(--save));
       		}
+
 			pointer		operator->() const
 			{
-			//	Iterator	save = _current;
-			//	--save;
-			//	return (_toPointer(save));
-				return (_toPointer(_current));
+				Iterator	save = _current;
+				--save;
+				return (_toPointer(save));
       		}
 			
 			reverse_iterator&	operator++()

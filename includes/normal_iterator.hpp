@@ -35,12 +35,11 @@ namespace ft
 
 			// constructors
 			normal_iterator() : _current(Iterator()) { }
-			explicit normal_iterator(const Iterator& iterator) : _current(iterator) { }
-
-			// allow iterator to const_iterator conversion
+			normal_iterator(const Iterator& iterator) : _current(iterator) { }
 			template<typename Iter>
 			normal_iterator(const normal_iterator< Iter, typename ft::enable_if< (ft::are_same<Iter, typename Container::pointer>::value), Container>::type >& iterator) 
 				: _current(iterator.base()) { }
+			virtual ~normal_iterator(void) { }
 
 			reference operator*() const { return *_current; }
 			pointer operator->() const { return _current; }
