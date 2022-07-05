@@ -54,28 +54,30 @@ namespace ft
 			
 			RedBlackIterator&	operator++()
 			{
-				RedBlackIterator	copy(*this);
 				_node = _tree.nextNode(_node);
-				return (copy);
+				return (*this);
 			}
 
 			RedBlackIterator	operator++(int) 
 			{
+				RedBlackIterator	newIt(_tree, _tree.nextNode(_node));
+
 				_node = _tree.nextNode(_node);
-				return (*this);
+				return (newIt);
 			}
 
 			RedBlackIterator&	operator--() 
 			{
-				RedBlackIterator	copy(*this);
 				_node = _tree.prevNode(_node);
-				return (copy);
+				return (*this);
 			}
 
 			RedBlackIterator	operator--(int) 
 			{
+				RedBlackIterator	newIt(_tree, _tree.prevNode(_node));
+				
 				_node = _tree.prevNode(_node);
-				return (*this);
+				return (newIt);
 			}
 
 			const NodeP&		base() const 

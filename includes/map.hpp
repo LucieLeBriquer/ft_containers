@@ -125,22 +125,26 @@ namespace ft
 		
 		reverse_iterator rbegin()
 		{
-			return (reverse_iterator(rbtIterator(_tree, _tree.getLeaf())));
+			reverse_iterator	rev(rbtIterator(_tree, _tree.maximum()));
+			//rev++;
+			return (rev);
 		}
 
 		const_reverse_iterator rbegin() const
 		{
-			return (const_reverse_iterator(rbtIterator(_tree, _tree.getLeaf())));
+			const_reverse_iterator	rev(rbtIterator(_tree, _tree.maximum()));
+			//rev++;
+			return (rev);
 		}
 
 		reverse_iterator rend()
 		{
-			return (reverse_iterator(rbtIterator(_tree, _tree.minimum())));
+			return (reverse_iterator(rbtIterator(_tree, _tree.getLeaf())));
 		}
 
 		const_reverse_iterator rend() const
 		{
-			return (const_reverse_iterator(rbtIterator(_tree, _tree.minimum())));
+			return (const_reverse_iterator(rbtIterator(_tree, _tree.getLeaf())));
 		}
 
 		// capacity
@@ -193,7 +197,8 @@ namespace ft
 		// to delete
 		void	print(void) const
 		{
-			_tree.test();
+			_tree.print();
+			
 		}
 
 	};

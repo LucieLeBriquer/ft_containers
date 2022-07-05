@@ -273,7 +273,7 @@ namespace ft
 			}
 
 			// to delete
-			void	_printTreeRec(NodeP root, std::string indent, bool last)
+			void	_printTreeRec(NodeP root, std::string indent, bool last) const
 			{
 				if (root != _leaf)
 				{
@@ -526,6 +526,11 @@ namespace ft
 				_test(minimum(_root));
 				std::cout << std::endl;
 				_testR(maximum(_root));
+			}
+
+			void	print(void) const
+			{
+				_printTreeRec(_root, "", true);
 			}
 
 			NodeP	getRoot(void) const
