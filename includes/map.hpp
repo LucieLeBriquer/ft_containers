@@ -125,16 +125,12 @@ namespace ft
 		
 		reverse_iterator rbegin()
 		{
-			reverse_iterator	rev(rbtIterator(_tree, _tree.maximum()));
-			//rev++;
-			return (rev);
+			return (reverse_iterator(rbtIterator(_tree, _tree.maximum())));
 		}
 
 		const_reverse_iterator rbegin() const
 		{
-			const_reverse_iterator	rev(rbtIterator(_tree, _tree.maximum()));
-			//rev++;
-			return (rev);
+			return (const_reverse_iterator(rbtIterator(_tree, _tree.maximum())));
 		}
 
 		reverse_iterator rend()
