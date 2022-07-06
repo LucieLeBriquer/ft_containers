@@ -19,11 +19,10 @@
 
 namespace ft 
 {
-	/*template<typename T>
-	T	*__addressof(T &r)
-	{
-		return (__builtin_addressof(r));
-	}*/
+
+	/*
+	**		NODE structure
+	*/
 
     template <typename T>
     struct Node
@@ -47,28 +46,31 @@ namespace ft
 		}
 	};
 	
+
+	/*
+	**		RED-BLACK TREE
+	*/
+
 	template <typename T, class Compare>
 	class RedBlackTree
 	{
 		private:
-			/*
-			**		TYPEDEF
-			*/
+
+			//	typedef
+
 			typedef T value_type;
 			typedef	Node<T> *NodeP;
 
-			/*
-			**		MEMBER OBJECTS
-			*/
+
+			//	member objects
+
 			NodeP		_root;
 			NodeP		_leaf;
 			Compare		_comp;
 
-			/*
-			**		PRIVATE MEMBER FUNCTIONS
-			*/
 
-			// comparisons functions
+			//	comparisons functions
+
 			bool	_isLess(value_type const value1, value_type const value2) const
 			{
 				return (_comp(value1, value2));
@@ -84,7 +86,9 @@ namespace ft
 				return (!(_isLess(value1, value2) || _isLess(value2, value1)));
 			}
 
-			// create nodes
+
+			//	create nodes
+
 			void	_fillNewNode(NodeP node, const value_type value, const int color)
 			{
 				node->parent = NULL;
@@ -94,7 +98,9 @@ namespace ft
 				node->color = color;
 			}
 
-			// search key in tree
+
+			//	search key in tree
+
 			NodeP	_searchNode(NodeP node, const value_type value) const
 			{
 				if (node == _leaf || _areEqual(value, node->value))
@@ -104,7 +110,8 @@ namespace ft
 				return (_searchNode(node->right, value));
 			}
 
-			// insertion and delete fix
+			//	insertion and delete fix
+
 			void	_insertionUpdate(NodeP node)
 			{
 				NodeP	cur;
@@ -244,7 +251,9 @@ namespace ft
 				newRoot->parent = toRemove->parent;
 			}
 
-			// rotations
+
+			//	rotations
+
 			void	_rotateLeft(NodeP node)
 			{
 				NodeP	save;
@@ -283,32 +292,11 @@ namespace ft
 				node->parent = save;
 			}
 
-			// to delete
-			void	_printTreeRec(NodeP root, std::string indent, bool last) const
-			{
-				if (root != _leaf)
-				{
-					std::cout << indent;
-					if (last)
-					{
-						std::cout << "R----";
-						indent += "   ";
-					}
-					else
-					{
-						std::cout << "L----";
-						indent += "|  ";
-					}
-
-					std::string sColor = root->color ? "RED" : "BLACK";
-					std::cout << root->value.first << " " << root->value.second << "(" << sColor << ")" << std::endl;
-					_printTreeRec(root->left, indent, false);
-					_printTreeRec(root->right, indent, true);
-				}
-			}
 
 		public:
-			// constructors
+
+			//	constructors
+
 			RedBlackTree() : _comp(Compare())
 			{
 				_leaf = new Node<T>;
@@ -322,11 +310,15 @@ namespace ft
 
 			~RedBlackTree()
 			{
-				// free everything;
+				// TODO free everything;
 			}
+
+
+			//	assignation
 
 			RedBlackTree	&operator=(const RedBlackTree &tree)
 			{
+				// TODO deep copy
 				if (this != &tree)
 				{
 					_root = tree._root;
@@ -336,7 +328,8 @@ namespace ft
 				return (*this);
 			}
 
-			// min/max functions
+
+			//	min/max functions
 			NodeP	minimum(NodeP node) const
 			{
 				while (node->left != _leaf)
@@ -361,11 +354,16 @@ namespace ft
 				return (maximum(_root));
 			}
 
-			// search in tree
+
+			//	search in tree
+
 			NodeP	search(const value_type value) const
 			{
 				return (_searchNode(_root, value));
 			}
+
+
+			//	remove in tree
 
 			void	remove(const value_type value)
 			{
@@ -389,7 +387,7 @@ namespace ft
 						node = node->left;
 				}
 
-				// didn't found key -> see how maps deals with it
+				// TODO didn't found key -> see how maps deals with it (exception ?)
 				if (toDelete == _leaf)
 					return ;
 
@@ -429,6 +427,9 @@ namespace ft
 				
 			}
 
+
+			//	insertion
+			
 			void	insert(const value_type value)
 			{
 				NodeP	node = new Node<T>;
@@ -468,14 +469,9 @@ namespace ft
 				_insertionUpdate(node);
 			}
 
-			// to delete
-			void	printTree(void) const
-			{
-				_printTreeRec(_root, "", true);
-				std::cout << std::endl;
-			}
 
-			// for map iterator
+			//	get prev and next node for tree iterator
+
 			NodeP	nextNode(NodeP node) const
 			{
 				NodeP	cur;
@@ -510,39 +506,8 @@ namespace ft
 				return (cur);
 			}
 
-			void	_test(const NodeP node) const
-			{
-				NodeP	cur = node;
 
-				while (cur != _leaf)
-				{
-					std::cout << (cur->value).first << "->" << (cur->value).second << std::endl;
-					cur = nextNode(cur);
-				}
-			}
-
-			void	_testR(const NodeP node) const
-			{
-				NodeP	cur = node;
-
-				while (cur != _leaf)
-				{
-					std::cout << (cur->value).first << "->" << (cur->value).second << std::endl;
-					cur = prevNode(cur);
-				}
-			}
-			
-			void	test(void) const
-			{
-				_test(minimum(_root));
-				std::cout << std::endl;
-				_testR(maximum(_root));
-			}
-
-			void	print(void) const
-			{
-				_printTreeRec(_root, "", true);
-			}
+			//	get start and end
 
 			NodeP	getRoot(void) const
 			{

@@ -41,7 +41,6 @@ int	main(void)
 	NSP::pair<int, std::string> pair4(1, "soji");
 	NSP::map<int, std::string>::iterator			it;
 	NSP::map<int, std::string>::reverse_iterator	rit;
-	std::map<int, std::string>::reverse_iterator	rit2;
 
 	map.insert(pair3);
 	map.insert(pair2);
@@ -64,5 +63,13 @@ int	main(void)
 		std::cout << "[" << i << "] " << rit->first << " : " << rit->second << std::endl;
 		rit++;
 		i++;
+	}
+	
+	NSP::map<int, std::string>	copy(map.begin(), map.end());
+	it = copy.begin();
+	while (it != copy.end())
+	{
+		std::cout << it->first << " : " << it->second << std::endl;
+		it++;
 	}
 }
