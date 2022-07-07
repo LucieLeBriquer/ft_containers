@@ -6,15 +6,13 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/06/27 19:25:31 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/07 17:14:10 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
 # include "reverse_iterator.hpp"
-# include "enable_if.hpp"
-# include "is_integral.hpp"
 # include "RedBlackTree.hpp"
 # include "rbt_iterator.hpp"
 
@@ -71,13 +69,16 @@ namespace ft
 			explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
 				_tree(RedBlackTree<value_type, value_compare>()), _alloc(alloc), _comp(comp)
 			{
-				return ;
+				if (LOG >= LOG_ALL)
+					std::cerr << GREEN << "[Map] " << END << "constructor" << std::endl;
 			}
 
 			template <class InputIterator>
 			map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type())
 			{
+				if (LOG >= LOG_ALL)
+					std::cerr << GREEN << "[Map] " << END << "iterator constructor" << std::endl;
 				_alloc = alloc;
 				_comp = comp;
 				while (first != last)
@@ -89,12 +90,15 @@ namespace ft
 
 			map(const map& x)
 			{
+				if (LOG >= LOG_ALL)
+					std::cerr << GREEN << "[Map] " << END << "copy constructor" << std::endl;
 				*this = x;
 			}
 
 			~map()
-			{ 
-				//
+			{
+				if (LOG >= LOG_ALL)
+					std::cerr << RED << "[Map] " << END << "destructor" << std::endl;
 			}
 
 			// overload operator
@@ -109,42 +113,42 @@ namespace ft
 			// iterators
 			iterator begin()
 			{
-				return (iterator(rbtIterator(_tree, _tree.minimum())));
+				return (iterator(_tree, _tree.minimum()));
 			}
 			
 			const_iterator begin() const
 			{
-				return (const_iterator(rbtIterator(_tree, _tree.minimum())));
+				return (const_iterator(_tree, _tree.minimum()));
 			}
 
 			iterator end()
 			{
-				return (iterator(rbtIterator(_tree, _tree.getLeaf())));
+				return (iterator(_tree, _tree.getLeaf()));
 			}
 
 			const_iterator end() const
 			{
-				return (const_iterator(rbtIterator(_tree, _tree.getLeaf())));
+				return (const_iterator(_tree, _tree.getLeaf()));
 			}
 			
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator(rbtIterator(_tree, _tree.maximum())));
+				return (reverse_iterator(iterator(_tree, _tree.maximum())));
 			}
 
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator(rbtIterator(_tree, _tree.maximum())));
+				return (const_reverse_iterator(iterator(_tree, _tree.maximum())));
 			}
 
 			reverse_iterator rend()
 			{
-				return (reverse_iterator(rbtIterator(_tree, _tree.getLeaf())));
+				return (reverse_iterator(iterator(_tree, _tree.getLeaf())));
 			}
 
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator(rbtIterator(_tree, _tree.getLeaf())));
+				return (const_reverse_iterator(iterator(_tree, _tree.getLeaf())));
 			}
 
 			// capacity
@@ -160,10 +164,16 @@ namespace ft
 
 			//modifiers
 
-			pair<iterator,bool> insert(const value_type &val)
+			/*pair<iterator,bool> insert(const value_type &val)
 			{
 				_tree.insert(val);
+				std::cout << "wesh" << std::endl;
 				return (ft::make_pair<iterator, bool>(iterator(), true));
+			}*/
+			// wrong type just to test
+			void	insert(const value_type &val)
+			{
+				_tree.insert(val);
 			}
 			iterator	insert(iterator position, const value_type& val);
 			
@@ -197,6 +207,12 @@ namespace ft
 				return (allocator_type(_alloc));
 			}
 
+
+			//	todelete
+			void	print(void) const
+			{
+				_tree.print();
+			}
 		};
 }
 

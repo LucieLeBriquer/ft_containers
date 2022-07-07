@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/06 17:24:23 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:21:37 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RBT_ITERATOR_HPP
 # include "RedBlackTree.hpp"
 # include "iterators_traits.hpp"
+# include "global.hpp"
 
 namespace ft
 {
@@ -47,10 +48,23 @@ namespace ft
 
 			//	constructors
 
-			RedBlackIterator() : _tree(Tree()), _node(_tree.getRoot()) { }
-			RedBlackIterator(const Tree& tree) : _tree(tree), _node(_tree.getRoot()) { }
-			RedBlackIterator(const Tree& tree, const NodeP &node) : _tree(tree), _node(node) { }
-			RedBlackIterator(const RedBlackIterator &rbtIt) : _tree(rbtIt._tree), _node(rbtIt._node) { }
+			RedBlackIterator() : _tree(Tree()), _node(_tree.getRoot())
+			{
+				if (LOG >= LOG_ALL)
+					std::cerr << GREEN << "[RedBlackIterator] " << END << "constructor" << std::endl;
+			}
+			
+			RedBlackIterator(const Tree& tree, const NodeP &node) : _tree(tree), _node(node)
+			{
+				if (LOG >= LOG_ALL)
+					std::cerr << GREEN << "[RedBlackIterator] " << END << "tree constructor" << std::endl;	
+			}
+
+			RedBlackIterator(const RedBlackIterator &rbtIt) : _tree(rbtIt._tree), _node(rbtIt._node)
+			{
+				if (LOG >= LOG_ALL)
+					std::cerr << GREEN << "[RedBlackIterator] " << END << "copy constructor" << std::endl;
+			}
 
 
 			//	assignation
@@ -83,7 +97,12 @@ namespace ft
 
 			RedBlackIterator&	operator++()
 			{
+				std::cerr << "++(" << _node;
 				_node = _tree.nextNode(_node);
+				std::cerr << ") leads to " << _node << "[" << _node->value.first << "]" << std::endl;
+				std::cerr << "\tleaf = " << _tree.getLeaf() << std::endl;
+				_tree.print();
+				std::cout << std::endl;
 				return (*this);
 			}
 
@@ -91,13 +110,23 @@ namespace ft
 			{
 				RedBlackIterator	newIt = *this;
 
+				std::cerr << "++(" << _node;
 				_node = _tree.nextNode(_node);
+				std::cerr << ") leads to " << _node << "[" << _node->value.first << "]" << std::endl;
+				std::cerr << "\tleaf = " << _tree.getLeaf() << std::endl;
+				_tree.print();
+				std::cout << std::endl;
 				return (newIt);
 			}
 
 			RedBlackIterator&	operator--() 
 			{
+				std::cerr << "--(" << _node;
 				_node = _tree.prevNode(_node);
+				std::cerr << ") leads to " << _node << "[" << _node->value.first << "]" << std::endl;
+				std::cerr << "\tleaf = " << _tree.getLeaf() << std::endl;
+				_tree.print();
+				std::cout << std::endl;
 				return (*this);
 			}
 
@@ -105,7 +134,12 @@ namespace ft
 			{
 				RedBlackIterator	newIt = *this;
 				
+				std::cerr << "--(" << _node;
 				_node = _tree.prevNode(_node);
+				std::cerr << ") leads to " << _node << "[" << _node->value.first << "]" << std::endl;
+				std::cerr << "\tleaf = " << _tree.getLeaf() << std::endl;
+				_tree.print();
+				std::cout << std::endl;
 				return (newIt);
 			}
 
@@ -120,15 +154,21 @@ namespace ft
 
 			//	compare
 
-			friend bool	operator==(const RedBlackIterator &it1, const RedBlackIterator &it2)
+			/*friend bool	operator==(const RedBlackIterator &it1, const RedBlackIterator &it2)
 			{
-				return (it1._node == it2._node);
+				std::cerr << "here" << std::endl;
+				std::cerr << "it1 " << it1._node->value.first << std::endl;
+				std::cerr << "it2 " << it2._node->value.first << std::endl;
+				return (it1._node == it2._node);<
 			}
 
 			friend bool	operator!=(const RedBlackIterator &it1, const RedBlackIterator &it2)
 			{
+				std::cerr << "here" << std::endl;
+				std::cerr << "it1 " << it1._node->value.first << std::endl;
+				std::cerr << "it2 " << it2._node->value.first << std::endl;
 				return (it1._node != it2._node);
-			}
+			}*/
 	};
 
 	/*
@@ -138,12 +178,20 @@ namespace ft
 	template <typename T, class Compare>
 	inline bool operator==(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
 	{
+		std::cerr << "==()" << std::endl;
+		std::cerr << "lhs " << lhs.base()->value.first << "\tlhs.base() " << lhs.base() << std::endl;
+		std::cerr << "rhs " << rhs.base()->value.first << "rhs.base() " << rhs.base() << std::endl;
 		return (lhs.base() == rhs.base());
 	}
 
 	template <typename T, class Compare>
 	inline bool operator!=(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
 	{
+		std::cerr << "!=()" << std::endl;
+		std::cerr << "lhs " << lhs.base()->value.first << std::endl;
+		std::cerr << "rhs " << rhs.base()->value.first << std::endl;
+		std::cerr << "lhs.base() " << lhs.base() << std::endl;
+		std::cerr << "rhs.base() " << rhs.base() << std::endl;
 		return (lhs.base() != rhs.base());
 	}
 
