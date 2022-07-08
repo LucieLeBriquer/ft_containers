@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/07 18:21:37 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/08 09:43:24 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,19 @@ namespace ft
 					std::cerr << GREEN << "[RedBlackIterator] " << END << "constructor" << std::endl;
 			}
 			
-			RedBlackIterator(const Tree& tree, const NodeP &node) : _tree(tree), _node(node)
+			RedBlackIterator(const Tree& tree, const NodeP &node) : _tree(tree), _node(_tree.search(node->value))
 			{
 				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "[RedBlackIterator] " << END << "tree constructor" << std::endl;	
+				{
+					std::cerr << GREEN << "[RedBlackIterator] " << END << "tree constructor" << std::endl;
+					std::cerr <<  "node=" << _node << " in tree" << std::endl;
+					_tree.print();
+				}
 			}
 
-			RedBlackIterator(const RedBlackIterator &rbtIt) : _tree(rbtIt._tree), _node(rbtIt._node)
+			RedBlackIterator(const RedBlackIterator &rbtIt)
 			{
+				*this = rbtIt;
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[RedBlackIterator] " << END << "copy constructor" << std::endl;
 			}
@@ -73,8 +78,15 @@ namespace ft
 			{
 				if (this != &rbtIt)
 				{
+					if (LOG >= LOG_ALL)
+						std::cerr << YELLOW << "[RedBlackIterator] " << END << "assignation" << std::endl;
 					_tree = rbtIt._tree;
-					_node = rbtIt._node;
+					_node = _tree.search(rbtIt._node->value);
+					if (LOG >= LOG_ALL)
+					{
+						std::cerr <<  "assignation : node=" << _node << " in tree" << std::endl;
+						_tree.print();
+					}
 				}
 				return (*this);
 			}
@@ -97,12 +109,7 @@ namespace ft
 
 			RedBlackIterator&	operator++()
 			{
-				std::cerr << "++(" << _node;
 				_node = _tree.nextNode(_node);
-				std::cerr << ") leads to " << _node << "[" << _node->value.first << "]" << std::endl;
-				std::cerr << "\tleaf = " << _tree.getLeaf() << std::endl;
-				_tree.print();
-				std::cout << std::endl;
 				return (*this);
 			}
 
@@ -110,23 +117,13 @@ namespace ft
 			{
 				RedBlackIterator	newIt = *this;
 
-				std::cerr << "++(" << _node;
 				_node = _tree.nextNode(_node);
-				std::cerr << ") leads to " << _node << "[" << _node->value.first << "]" << std::endl;
-				std::cerr << "\tleaf = " << _tree.getLeaf() << std::endl;
-				_tree.print();
-				std::cout << std::endl;
 				return (newIt);
 			}
 
 			RedBlackIterator&	operator--() 
 			{
-				std::cerr << "--(" << _node;
 				_node = _tree.prevNode(_node);
-				std::cerr << ") leads to " << _node << "[" << _node->value.first << "]" << std::endl;
-				std::cerr << "\tleaf = " << _tree.getLeaf() << std::endl;
-				_tree.print();
-				std::cout << std::endl;
 				return (*this);
 			}
 
@@ -134,90 +131,25 @@ namespace ft
 			{
 				RedBlackIterator	newIt = *this;
 				
-				std::cerr << "--(" << _node;
 				_node = _tree.prevNode(_node);
-				std::cerr << ") leads to " << _node << "[" << _node->value.first << "]" << std::endl;
-				std::cerr << "\tleaf = " << _tree.getLeaf() << std::endl;
-				_tree.print();
-				std::cout << std::endl;
 				return (newIt);
-			}
-
-
-			//	get pointer
-
-			const NodeP&		base() const 
-			{
-				return (_node);
 			}
 
 
 			//	compare
 
-			/*friend bool	operator==(const RedBlackIterator &it1, const RedBlackIterator &it2)
+			friend bool	operator==(const RedBlackIterator &it1, const RedBlackIterator &it2)
 			{
-				std::cerr << "here" << std::endl;
-				std::cerr << "it1 " << it1._node->value.first << std::endl;
-				std::cerr << "it2 " << it2._node->value.first << std::endl;
-				return (it1._node == it2._node);<
+				return ((it1._node->isLeaf && it2._node->isLeaf) ||
+					(it1._tree.areEqual(it1._node->value, it2._node->value)
+					&& !it1._node->isLeaf && !it2._node->isLeaf));
 			}
 
 			friend bool	operator!=(const RedBlackIterator &it1, const RedBlackIterator &it2)
 			{
-				std::cerr << "here" << std::endl;
-				std::cerr << "it1 " << it1._node->value.first << std::endl;
-				std::cerr << "it2 " << it2._node->value.first << std::endl;
-				return (it1._node != it2._node);
-			}*/
+				return (!(operator==(it1, it2)));
+			}
 	};
-
-	/*
-	**		COMPARISONS
-	*/
-
-	template <typename T, class Compare>
-	inline bool operator==(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
-	{
-		std::cerr << "==()" << std::endl;
-		std::cerr << "lhs " << lhs.base()->value.first << "\tlhs.base() " << lhs.base() << std::endl;
-		std::cerr << "rhs " << rhs.base()->value.first << "rhs.base() " << rhs.base() << std::endl;
-		return (lhs.base() == rhs.base());
-	}
-
-	template <typename T, class Compare>
-	inline bool operator!=(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
-	{
-		std::cerr << "!=()" << std::endl;
-		std::cerr << "lhs " << lhs.base()->value.first << std::endl;
-		std::cerr << "rhs " << rhs.base()->value.first << std::endl;
-		std::cerr << "lhs.base() " << lhs.base() << std::endl;
-		std::cerr << "rhs.base() " << rhs.base() << std::endl;
-		return (lhs.base() != rhs.base());
-	}
-
-	template <typename T, class Compare>
-	inline bool operator<(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
-	{
-		return (lhs.base() < rhs.base());
-	}
-
-	template <typename T, class Compare>
-	inline bool operator<=(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
-	{
-		return (lhs.base() <= rhs.base());
-	}
-
-	template <typename T, class Compare>
-	inline bool operator>(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
-	{
-		return (lhs.base() > rhs.base());
-	}
-	
-	template <typename T, class Compare>
-	inline bool operator>=(const RedBlackIterator<T, Compare>& lhs, const RedBlackIterator<T, Compare>& rhs)
-	{
-		return (lhs.base() >= rhs.base());
-	}
 }
 
 #endif

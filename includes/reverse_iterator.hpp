@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 16:55:35 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/06 16:57:23 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/08 10:36:28 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,16 +154,9 @@ namespace ft
 			typedef typename traitsType::difference_type	difference_type;
 			typedef typename traitsType::pointer			pointer;
 			typedef typename traitsType::reference			reference;
-
-		private:
-      		template<typename V>
-			static V* 		_toPointer(V* p) { return p; }
-			
-			template<typename V>
-			static pointer	_toPointer(V t) { return t.operator->(); }
 		
 		public:
-			reverse_iterator() : _current() { }	
+			reverse_iterator() : _current() { }
 			reverse_iterator(iterator_type iterator) : _current(iterator) {	}
 			reverse_iterator(const reverse_iterator &rev_iterator) : _current(rev_iterator._current) { }
 			
@@ -181,17 +174,16 @@ namespace ft
 				return (_current);
 			}
 
-      		reference	operator*() const
+			reference	operator*() const
      		{
-				RedBlackIterator< T, Compare >	save = _current;
-				return (*(save));
+				return (*(_current));
       		}
 
 			pointer		operator->() const
 			{
-				RedBlackIterator< T, Compare >	save = _current;
-				return (_toPointer(save));
+				return (_current.operator->());
       		}
+			
 			
 			reverse_iterator&	operator++()
 			{
@@ -268,7 +260,7 @@ namespace ft
 	template<typename Iterator>
 	inline bool	operator!=(const reverse_iterator<Iterator>& iteratorL, const reverse_iterator<Iterator>& iteratorR)
 	{
-		return (!(iteratorR.base() == iteratorL.base()));
+		return (!(iteratorL.base() == iteratorR.base()));
 	}
 
 	template<typename Iterator>

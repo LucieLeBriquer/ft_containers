@@ -23,13 +23,18 @@ namespace ft
 	class map
 	{
 		public:
+
+			//	typedef
+
 			typedef Key						key_type;
 			typedef T						mapped_type;
 			typedef ft::pair<Key, T>		value_type;
 			typedef Compare					key_compare;
 			typedef Alloc					allocator_type;
 
-			// value_compare class to compare key values
+
+			//	value_compare class to compare key values
+
 			class value_compare
 			{
 				protected:
@@ -46,12 +51,18 @@ namespace ft
 					}
 			};
 
+
 		private:
+
 			RedBlackTree<value_type, value_compare>	_tree;
 			allocator_type							_alloc;
 			key_compare								_comp;
 
+
 		public:
+
+			//	typedef
+
 			typedef typename allocator_type::pointer			pointer;
 			typedef typename allocator_type::const_pointer		const_pointer;
 			typedef typename allocator_type::reference			reference;
@@ -65,7 +76,9 @@ namespace ft
 			typedef reverse_iterator<const_iterator>			const_reverse_iterator;
 			typedef reverse_iterator<iterator>					reverse_iterator;
 
-			// constructors
+
+			//	constructors
+
 			explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
 				_tree(RedBlackTree<value_type, value_compare>()), _alloc(alloc), _comp(comp)
 			{
@@ -101,7 +114,9 @@ namespace ft
 					std::cerr << RED << "[Map] " << END << "destructor" << std::endl;
 			}
 
-			// overload operator
+
+			//	overload operator
+
 			map	&operator=(const map& x)
 			{
 				_comp = x._comp;
@@ -110,7 +125,9 @@ namespace ft
 				return (*this);
 			}
 
-			// iterators
+
+			//	iterators
+
 			iterator begin()
 			{
 				return (iterator(_tree, _tree.minimum()));
@@ -151,30 +168,38 @@ namespace ft
 				return (const_reverse_iterator(iterator(_tree, _tree.getLeaf())));
 			}
 
-			// capacity
-			bool empty() const;
-			size_type size() const;
+
+			//	capacity
+
+			bool empty() const
+			{
+				return (_tree.getRoot() == _tree.getLeaf());
+			}
+
+			size_type size() const
+			{
+				return (_tree.size());
+			}
+			
 			size_type max_size() const;
 
-			// element access
+
+			//	element access
+
 			mapped_type	&operator[](const key_type &k)
 			{
 				(void)k;
 			}
 
-			//modifiers
 
-			/*pair<iterator,bool> insert(const value_type &val)
+			//	modifiers
+
+			pair<iterator,bool> insert(const value_type &val)
 			{
 				_tree.insert(val);
-				std::cout << "wesh" << std::endl;
 				return (ft::make_pair<iterator, bool>(iterator(), true));
-			}*/
-			// wrong type just to test
-			void	insert(const value_type &val)
-			{
-				_tree.insert(val);
 			}
+
 			iterator	insert(iterator position, const value_type& val);
 			
 			template <class InputIterator>

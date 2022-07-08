@@ -36,8 +36,9 @@ namespace ft
 		Node		*right;
 		Node		*parent;
 		int			color;
+		bool		isLeaf;
 
-		Node() : value(value_type()), left(NULL), right(NULL), parent(NULL), color(BLACK_C)
+		Node() : value(value_type()), left(NULL), right(NULL), parent(NULL), color(BLACK_C), isLeaf(true)
 		{
 			return ;
 		}
@@ -83,11 +84,6 @@ namespace ft
 				return (_comp(value2, value1));
 			}
 
-			bool	_areEqual(const value_type value1, const value_type value2) const
-			{
-				return (!(_isLess(value1, value2) || _isLess(value2, value1)));
-			}
-
 
 			//	create nodes
 
@@ -98,6 +94,7 @@ namespace ft
 				node->left = _leaf;
 				node->right = _leaf;
 				node->color = color;
+				node->isLeaf = false;
 			}
 
 
@@ -105,7 +102,7 @@ namespace ft
 
 			NodeP	_searchNode(NodeP node, const value_type value) const
 			{
-				if (node == _leaf || node == NULL || _areEqual(value, node->value))
+				if (node == _leaf || node == NULL || areEqual(value, node->value))
 					return (node);
 				if (_isLess(value, node->value))
 					return (_searchNode(node->left, value));
@@ -312,34 +309,51 @@ namespace ft
 					}
 
 					std::string sColor = root->color ? "RED" : "BLACK";
-					std::cout << root->value.first << " " << root->value.second << "(" << sColor << ")" << std::endl;
+					std::cout << root->value.first << " " << root->value.second << "(" << sColor << ") at[" << root << "]" << std::endl;
 					_printTreeRec(root->left, indent, false);
 					_printTreeRec(root->right, indent, true);
 				}
 			}
 
+			void	_deleteNodesRec(NodeP node)
+			{
+				NodeP	nodeR;
+				NodeP	nodeL;
+
+				if (node != _leaf)
+				{
+					nodeR = node->right;
+					nodeL = node->left;
+					if (LOG >= LOG_ALL)
+						std::cerr << RED << "\tdelete " << END << node << std::endl;
+					delete node;
+					_deleteNodesRec(nodeR);
+					_deleteNodesRec(nodeL);
+				}
+			}
+
 			void	_deleteNodes(void)
 			{
-				NodeP				start;
-				std::vector<NodeP>	toDelete;
-
-				toDelete.clear();
-				start = minimum();
-				while (start != _leaf && start != NULL)
-				{
-					toDelete.push_back(start);
-					start = nextNode(start);
-				}
-
-				for (size_t	i = 0; i < toDelete.size(); i++)
-				{
-					if (LOG >= LOG_ALL)
-						std::cerr << RED << "\tdelete " << END << toDelete[i] << std::endl;
-					delete toDelete[i];
-				}
+				_deleteNodesRec(_root);
 				_root = _leaf;
 			}
 
+			void	_copyRec(NodeP leaf, NodeP node)
+			{
+				if (node != leaf)
+				{
+					insert(node->value);
+					_copyRec(leaf, node->left);
+					_copyRec(leaf, node->right);
+				}
+			}
+
+			size_t	_sizeRec(NodeP node) const
+			{
+				if (node == _leaf || node == NULL)
+					return (0);
+				return (1 + _sizeRec(node->right) + _sizeRec(node->left));
+			}
 
 		public:
 
@@ -355,15 +369,22 @@ namespace ft
 				_root = _leaf;
 			}
 
-			RedBlackTree(const RedBlackTree &tree)
+			RedBlackTree(const RedBlackTree &tree, bool deep = true)
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[RedBlackTree] " << END << "copy constructor" << std::endl;
-				_leaf = new Node<T>;
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "\tcreates leaf " << END << _leaf << std::endl;
-				_root = _leaf;
-				*this = tree;
+				if (deep)
+				{
+					_leaf = new Node<T>;
+					_root = _leaf;
+					*this = tree;
+				}
+				else
+				{
+					_root = tree._root;
+					_leaf = tree._leaf;
+				}
+				
 			}
 
 			~RedBlackTree()
@@ -384,14 +405,8 @@ namespace ft
 			{
 				if (this != &tree)
 				{
-					NodeP	start = tree.minimum();
-
 					_deleteNodes();
-					while (start != tree.getLeaf() && start != NULL)
-					{
-						insert(start->value);
-						start = tree.nextNode(start);
-					}
+					_copyRec(tree.getLeaf(), tree.getRoot());
 				}
 				return (*this);
 			}
@@ -449,7 +464,7 @@ namespace ft
 				toDelete = _leaf;
 				while (node != _leaf)
 				{
-					if (_areEqual(value, node->value))
+					if (areEqual(value, node->value))
 					{
 						toDelete = node;
 						break;
@@ -593,6 +608,22 @@ namespace ft
 			NodeP	getLeaf(void) const
 			{
 				return (_leaf);
+			}
+
+
+			//	comparison
+
+			bool	areEqual(const value_type value1, const value_type value2) const
+			{
+				return (!(_isLess(value1, value2) || _isLess(value2, value1)));
+			}
+
+
+			//	size
+
+			size_t	size(void) const
+			{
+				return (_sizeRec(_root));
 			}
 
 			//	to delete

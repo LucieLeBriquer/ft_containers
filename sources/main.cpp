@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/07 18:31:54 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/08 10:03:01 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 int	main(void)
 {
+	int	i;
 	NSP::pair<int, std::string>	pair1(150, "lucie");
 	NSP::pair<int, std::string>	pair2(2, "jonathan");
 	NSP::pair<int, std::string>	pair3(100, "lise");
@@ -37,10 +38,15 @@ int	main(void)
 	NSP::map<int, std::string>::iterator			itEnd;
 	NSP::map<int, std::string>::reverse_iterator	rit;
 
+	std::cout << "map is empty ? " << map.empty() << std::endl;
+	std::cout << "map size = " << map.size() << std::endl;
+
 	map.insert(pair1);
 	map.insert(pair2);
 	map.insert(pair3);
 	map.insert(pair4);
+	std::cout << "map is empty ? " << map.empty() << std::endl;
+	std::cout << "map size = " << map.size() << std::endl;
 
 
 	NSP::map<int, std::string>	map2(map);
@@ -48,26 +54,23 @@ int	main(void)
 
 	map3 = map;
 	map3 = map2;
-
-	/* map.print();
-	map2.print();
-	map3.print(); */
-	std::cout << "map is filled" << std::endl;
 	
 	it = map.begin();
-	int i = 0;
+	i = 0;
 	while (it != map.end())
 	{
+		std::cout << "[" << i << "] " << (*it).first << " : " << (*it).second << std::endl;
 		std::cout << "[" << i << "] " << it->first << " : " << it->second << std::endl;
 		it++;
 		i++;
 	}
 	std::cout << std::endl;
 	
-	/* rit = map.rbegin();
+	rit = map.rbegin();
 	i = 0;
 	while (rit != map.rend())
 	{
+		std::cout << "[" << i << "] " << (*rit).first << " : " << (*rit).second << std::endl;
 		std::cout << "[" << i << "] " << rit->first << " : " << rit->second << std::endl;
 		rit++;
 		i++;
@@ -78,7 +81,8 @@ int	main(void)
 	it = copy.begin();
 	while (it != copy.end())
 	{
+		std::cout << (*it).first << " : " << (*it).second << std::endl;
 		std::cout << it->first << " : " << it->second << std::endl;
 		it++;
-	} */
+	}
 }
