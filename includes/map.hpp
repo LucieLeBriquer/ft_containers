@@ -58,6 +58,9 @@ namespace ft
 			allocator_type							_alloc;
 			key_compare								_comp;
 
+			// typedef
+			
+			typedef Node<value_type> *NodeP;
 
 		public:
 
@@ -180,15 +183,24 @@ namespace ft
 			{
 				return (_tree.size());
 			}
-			
-			size_type max_size() const;
+
+			size_type max_size() const
+			{
+				return (_tree.maxSize());
+			};
 
 
 			//	element access
 
 			mapped_type	&operator[](const key_type &k)
 			{
-				(void)k;
+				value_type	pair(k, mapped_type());
+				NodeP		ptr;
+
+				ptr = _tree.search(pair);
+				if (!ptr || ptr->isLeaf)
+					ptr = _tree.insert(pair);
+				return (ptr->value.second);
 			}
 
 
@@ -196,8 +208,16 @@ namespace ft
 
 			pair<iterator,bool> insert(const value_type &val)
 			{
-				_tree.insert(val);
-				return (ft::make_pair<iterator, bool>(iterator(), true));
+				NodeP		ptr;
+				bool		alreadyMapped = true;
+
+				ptr = _tree.search(val);
+				if (!ptr || ptr->isLeaf)
+				{
+					alreadyMapped = false;
+					ptr = _tree.insert(val);
+				}
+				return (ft::make_pair<iterator, bool>(iterator(_tree, ptr), alreadyMapped));
 			}
 
 			iterator	insert(iterator position, const value_type& val);

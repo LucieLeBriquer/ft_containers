@@ -518,7 +518,7 @@ namespace ft
 
 			//	insertion
 			
-			void	insert(const value_type value)
+			NodeP	insert(const value_type value)
 			{
 				NodeP	node = new Node<T>;
 				if (LOG >= LOG_ALL)
@@ -550,14 +550,15 @@ namespace ft
 				if (node->parent == NULL)
 				{
 					node->color = BLACK_C;
-					return ;
+					return (node);
 				}
 				if (node->parent->parent == NULL)
 				{
-					return ;
+					return (node);
 				}
 
 				_insertionUpdate(node);
+				return (node);
 			}
 
 
@@ -624,6 +625,13 @@ namespace ft
 			size_t	size(void) const
 			{
 				return (_sizeRec(_root));
+			}
+
+			size_t	maxSize(void) const
+			{
+				std::allocator< Node<T> >	alloc;
+				
+				return (alloc.max_size());
 			}
 
 			//	to delete

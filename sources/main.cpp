@@ -40,13 +40,17 @@ int	main(void)
 
 	std::cout << "map is empty ? " << map.empty() << std::endl;
 	std::cout << "map size = " << map.size() << std::endl;
+	std::cout << "map max_size = " << map.max_size() << std::endl;
 
 	map.insert(pair1);
 	map.insert(pair2);
 	map.insert(pair3);
 	map.insert(pair4);
+	std::cout << map[100] << std::endl;
+	std::cout << map[10] << std::endl;
 	std::cout << "map is empty ? " << map.empty() << std::endl;
 	std::cout << "map size = " << map.size() << std::endl;
+	std::cout << "map max_size = " << map.max_size() << std::endl;
 
 
 	NSP::map<int, std::string>	map2(map);
