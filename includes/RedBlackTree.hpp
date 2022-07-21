@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:12:47 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/07 17:59:13 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:48:21 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,7 @@ namespace ft
 			NodeP		_root;
 			NodeP		_leaf;
 			Compare		_comp;
-
-
-			//	unused constructors and assignation
-
-			RedBlackTree(const RedBlackTree &tree)
-			{
-				(void)tree;
-			}
-
-			RedBlackTree	&operator=(const RedBlackTree &tree)
-			{
-				if (this != &tree)
-				{
-					_root = tree._root;
-					_leaf = tree._leaf;
-					_comp = tree._comp;
-				}
-				return (*this);
-			}
-
+			
 
 			//	comparisons functions
 
@@ -343,17 +324,18 @@ namespace ft
 				}
 			}
 
+
+			// deletion
+
 			void	_deleteNodesRec(NodeP node)
 			{
 				NodeP	nodeR;
 				NodeP	nodeL;
 
-				if (node != _leaf)
+				if (node != _leaf && node != NULL)
 				{
 					nodeR = node->right;
 					nodeL = node->left;
-					if (LOG >= LOG_ALL)
-						std::cerr << RED << "\tdelete " << END << node << std::endl;
 					delete node;
 					_deleteNodesRec(nodeR);
 					_deleteNodesRec(nodeL);
@@ -366,12 +348,29 @@ namespace ft
 				_root = _leaf;
 			}
 
+
+			//	size
+
 			size_t	_sizeRec(NodeP node) const
 			{
 				if (node == _leaf || node == NULL)
 					return (0);
 				return (1 + _sizeRec(node->right) + _sizeRec(node->left));
 			}
+
+			
+			//	deep copy
+
+			void	_copyRec(NodeP leaf, NodeP node)
+			{
+				if (node != leaf)
+				{
+					insert(node->value);
+					_copyRec(leaf, node->left);
+					_copyRec(leaf, node->right);
+				}
+			}
+
 
 		public:
 
@@ -382,20 +381,41 @@ namespace ft
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[RedBlackTree] " << END << "constructor" << std::endl;
 				_leaf = new Node<T>;
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "\tcreates leaf " << END << _leaf << std::endl;
 				_root = _leaf;
+			}
+
+			RedBlackTree(const RedBlackTree &tree)
+			{
+				if (LOG >= LOG_ALL)
+					std::cerr << GREEN << "[RedBlackTree] " << END << "copy constructor" << std::endl;
+				if (this != &tree)
+				{
+					_leaf = new Node<T>;
+					_root = _leaf;
+					*this = tree;
+				}
 			}
 
 			~RedBlackTree()
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << RED << "[RedBlackTree] " << END << "destructor" << std::endl;
-				_deleteNodes();
-				if (LOG >= LOG_ALL)
-					std::cerr << RED << "\tdelete leaf " << END << _leaf << std::endl;
+				if (_root != _leaf && _root != NULL)
+					_deleteNodes();
 				delete _leaf;
+			}
 
+
+			// assignation
+
+			RedBlackTree	&operator=(const RedBlackTree &tree)
+			{
+				if (this != &tree)
+				{
+					_deleteNodes();
+					_copyRec(tree.getLeaf(), tree.getRoot());
+				}
+				return (*this);
 			}
 
 
@@ -685,6 +705,14 @@ namespace ft
 				std::allocator< Node<T> >	alloc;
 				
 				return (alloc.max_size());
+			}
+
+
+			//	clear
+
+			void	clear(void)
+			{
+				_deleteNodes();
 			}
 
 			//	to delete

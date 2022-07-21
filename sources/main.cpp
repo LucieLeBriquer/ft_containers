@@ -55,6 +55,15 @@ int	main(void)
 	NSP::map<int, std::string>	map3;
 
 	map3.insert(map2.begin(), map2.end());
+
+	std::cout << std::endl;
+	std::cout << YELLOW << ">> map" << END << std::endl;
+	map.print();
+	std::cout << YELLOW << ">> map2" << END << std::endl;
+	map2.print();
+	std::cout << YELLOW << ">> map3" << END << std::endl;
+	map3.print();
+
 	it = map3.begin();
 	itEnd = map3.end();
 	while (it != itEnd)
@@ -73,4 +82,22 @@ int	main(void)
 		std::cout << (*it).first << " : " << (*it).second << std::endl;
 		it++;
 	}
+
+	std::cout << "before clear" << std::endl;
+	map.clear();
+	it = map.begin();
+	itEnd = map.end();
+	while (it != itEnd)
+	{
+		std::cout << (*it).first << " : " << (*it).second << std::endl;
+		it++;
+	}
+
+	std::cout << std::endl;
+	std::cout << YELLOW << ">> map" << END << std::endl;
+	map.print();
+	std::cout << YELLOW << ">> map2" << END << std::endl;
+	map2.print();
+	std::cout << YELLOW << ">> map3" << END << std::endl;
+	map3.print();
 }

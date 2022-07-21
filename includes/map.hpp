@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/21 16:49:22 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:31:14 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ namespace ft
 			
 			typedef Node<value_type> *NodeP;
 			typedef RedBlackTree<value_type, value_compare> *TreeP;
+			typedef RedBlackTree<value_type, value_compare> Tree;
 
 			TreeP									_tree;
 			allocator_type							_alloc;
@@ -116,6 +117,7 @@ namespace ft
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << RED << "[Map] " << END << "destructor" << std::endl;
+				delete _tree;
 			}
 
 
@@ -123,9 +125,12 @@ namespace ft
 
 			map	&operator=(const map& x)
 			{
-				_comp = x._comp;
-				_alloc = x._alloc;
-				_tree = x._tree;
+				if (this != &x)
+				{
+					_comp = x._comp;
+					_alloc = x._alloc;
+					_tree = new Tree(*(x._tree));
+				}
 				return (*this);
 			}
 
@@ -247,9 +252,34 @@ namespace ft
 				return (_tree->remove(ft::make_pair<key_type, mapped_type>(k, mapped_type())) ? 1 : 0);
 			}
 
-			void		erase(iterator first, iterator last);
-			void		swap(map& x);
-			void		clear();
+			void		erase(iterator first, iterator last)
+			{
+				while (first != last)
+				{
+					_tree->remove(first->base());
+					first++;
+				}
+			}
+
+			void		swap(map& x)
+			{
+				TreeP			saveTree = _tree;
+				allocator_type	saveAlloc = _alloc;
+				key_compare		saveComp = _comp;
+
+				_tree = x._tree;
+				_alloc = x._alloc;
+				_comp = x._comp;
+				x._tree = saveTree;
+				x._alloc = saveAlloc;
+				x._comp = saveComp;
+			}
+
+			void		clear()
+			{
+				_tree->clear();
+			}
+
 
 			// observers
 			key_compare		key_comp() const;
