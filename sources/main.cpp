@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/08 10:03:01 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/21 19:19:04 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 
 int	main(void)
 {
-	int	i;
 	NSP::pair<int, std::string>	pair1(150, "lucie");
 	NSP::pair<int, std::string>	pair2(2, "jonathan");
 	NSP::pair<int, std::string>	pair3(100, "lise");
@@ -52,41 +51,26 @@ int	main(void)
 	std::cout << "map size = " << map.size() << std::endl;
 	std::cout << "map max_size = " << map.max_size() << std::endl;
 
-
 	NSP::map<int, std::string>	map2(map);
 	NSP::map<int, std::string>	map3;
 
-	map3 = map;
-	map3 = map2;
-	
-	it = map.begin();
-	i = 0;
-	while (it != map.end())
-	{
-		std::cout << "[" << i << "] " << (*it).first << " : " << (*it).second << std::endl;
-		std::cout << "[" << i << "] " << it->first << " : " << it->second << std::endl;
-		it++;
-		i++;
-	}
-	std::cout << std::endl;
-	
-	rit = map.rbegin();
-	i = 0;
-	while (rit != map.rend())
-	{
-		std::cout << "[" << i << "] " << (*rit).first << " : " << (*rit).second << std::endl;
-		std::cout << "[" << i << "] " << rit->first << " : " << rit->second << std::endl;
-		rit++;
-		i++;
-	}
-	std::cout << std::endl;
-
-	NSP::map<int, std::string>	copy(map.begin(), map.end());
-	it = copy.begin();
-	while (it != copy.end())
+	map3.insert(map2.begin(), map2.end());
+	it = map3.begin();
+	itEnd = map3.end();
+	while (it != itEnd)
 	{
 		std::cout << (*it).first << " : " << (*it).second << std::endl;
-		std::cout << it->first << " : " << it->second << std::endl;
+		it++;
+	}
+	it = map.begin();
+	std::cout << map.erase(1) << std::endl;
+	std::cout << map.erase(1) << std::endl;
+	std::cout << map.erase(123) << std::endl;
+	it = map.begin();
+	itEnd = map.end();
+	while (it != itEnd)
+	{
+		std::cout << (*it).first << " : " << (*it).second << std::endl;
 		it++;
 	}
 }

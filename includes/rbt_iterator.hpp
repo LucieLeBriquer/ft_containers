@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/08 09:43:24 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/21 18:57:22 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ namespace ft
 		
 			//	typedefs
 
-			typedef RedBlackTree<T, Compare> Tree;
+			typedef RedBlackTree<T, Compare> *TreeP;
 			typedef Node<T> *NodeP;
 
 
 			//	member objects
 
-			Tree	_tree;
+			TreeP	_tree;
 			NodeP	_node;
 
 
@@ -48,19 +48,19 @@ namespace ft
 
 			//	constructors
 
-			RedBlackIterator() : _tree(Tree()), _node(_tree.getRoot())
+			RedBlackIterator() : _tree(NULL), _node(NULL)
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[RedBlackIterator] " << END << "constructor" << std::endl;
 			}
 			
-			RedBlackIterator(const Tree& tree, const NodeP &node) : _tree(tree), _node(_tree.search(node->value))
+			RedBlackIterator(const TreeP& tree, const NodeP &node) : _tree(tree), _node(node)
 			{
 				if (LOG >= LOG_ALL)
 				{
 					std::cerr << GREEN << "[RedBlackIterator] " << END << "tree constructor" << std::endl;
 					std::cerr <<  "node=" << _node << " in tree" << std::endl;
-					_tree.print();
+					_tree->print();
 				}
 			}
 
@@ -81,11 +81,11 @@ namespace ft
 					if (LOG >= LOG_ALL)
 						std::cerr << YELLOW << "[RedBlackIterator] " << END << "assignation" << std::endl;
 					_tree = rbtIt._tree;
-					_node = _tree.search(rbtIt._node->value);
+					_node = rbtIt._node;
 					if (LOG >= LOG_ALL)
 					{
 						std::cerr <<  "assignation : node=" << _node << " in tree" << std::endl;
-						_tree.print();
+						_tree->print();
 					}
 				}
 				return (*this);
@@ -109,7 +109,7 @@ namespace ft
 
 			RedBlackIterator&	operator++()
 			{
-				_node = _tree.nextNode(_node);
+				_node = _tree->nextNode(_node);
 				return (*this);
 			}
 
@@ -117,13 +117,13 @@ namespace ft
 			{
 				RedBlackIterator	newIt = *this;
 
-				_node = _tree.nextNode(_node);
+				_node = _tree->nextNode(_node);
 				return (newIt);
 			}
 
 			RedBlackIterator&	operator--() 
 			{
-				_node = _tree.prevNode(_node);
+				_node = _tree->prevNode(_node);
 				return (*this);
 			}
 
@@ -131,8 +131,13 @@ namespace ft
 			{
 				RedBlackIterator	newIt = *this;
 				
-				_node = _tree.prevNode(_node);
+				_node = _tree->prevNode(_node);
 				return (newIt);
+			}
+
+			NodeP				base(void) const
+			{
+				return (_node);
 			}
 
 
@@ -141,7 +146,7 @@ namespace ft
 			friend bool	operator==(const RedBlackIterator &it1, const RedBlackIterator &it2)
 			{
 				return ((it1._node->isLeaf && it2._node->isLeaf) ||
-					(it1._tree.areEqual(it1._node->value, it2._node->value)
+					(it1._tree->areEqual(it1._node->value, it2._node->value)
 					&& !it1._node->isLeaf && !it2._node->isLeaf));
 			}
 

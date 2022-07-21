@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/07 17:14:10 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/21 16:49:22 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,15 @@ namespace ft
 
 
 		private:
-
-			RedBlackTree<value_type, value_compare>	_tree;
-			allocator_type							_alloc;
-			key_compare								_comp;
-
 			// typedef
 			
 			typedef Node<value_type> *NodeP;
+			typedef RedBlackTree<value_type, value_compare> *TreeP;
+
+			TreeP									_tree;
+			allocator_type							_alloc;
+			key_compare								_comp;
+
 
 		public:
 
@@ -83,7 +84,7 @@ namespace ft
 			//	constructors
 
 			explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
-				_tree(RedBlackTree<value_type, value_compare>()), _alloc(alloc), _comp(comp)
+				_tree(new RedBlackTree<value_type, value_compare>()), _alloc(alloc), _comp(comp)
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[Map] " << END << "constructor" << std::endl;
@@ -99,8 +100,8 @@ namespace ft
 				_comp = comp;
 				while (first != last)
 				{
-					_tree.insert(*first);
-					first++;
+					_tree->insert(*first);
+					first++;				
 				}
 			}
 
@@ -133,42 +134,42 @@ namespace ft
 
 			iterator begin()
 			{
-				return (iterator(_tree, _tree.minimum()));
+				return (iterator(_tree, _tree->minimum()));
 			}
 			
 			const_iterator begin() const
 			{
-				return (const_iterator(_tree, _tree.minimum()));
+				return (const_iterator(_tree, _tree->minimum()));
 			}
 
 			iterator end()
 			{
-				return (iterator(_tree, _tree.getLeaf()));
+				return (iterator(_tree, _tree->getLeaf()));
 			}
 
 			const_iterator end() const
 			{
-				return (const_iterator(_tree, _tree.getLeaf()));
+				return (const_iterator(_tree, _tree->getLeaf()));
 			}
 			
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator(iterator(_tree, _tree.maximum())));
+				return (reverse_iterator(iterator(_tree, _tree->maximum())));
 			}
 
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator(iterator(_tree, _tree.maximum())));
+				return (const_reverse_iterator(iterator(_tree, _tree->maximum())));
 			}
 
 			reverse_iterator rend()
 			{
-				return (reverse_iterator(iterator(_tree, _tree.getLeaf())));
+				return (reverse_iterator(iterator(_tree, _tree->getLeaf())));
 			}
 
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator(iterator(_tree, _tree.getLeaf())));
+				return (const_reverse_iterator(iterator(_tree, _tree->getLeaf())));
 			}
 
 
@@ -176,17 +177,17 @@ namespace ft
 
 			bool empty() const
 			{
-				return (_tree.getRoot() == _tree.getLeaf());
+				return (_tree->getRoot() == _tree->getLeaf());
 			}
 
 			size_type size() const
 			{
-				return (_tree.size());
+				return (_tree->size());
 			}
 
 			size_type max_size() const
 			{
-				return (_tree.maxSize());
+				return (_tree->maxSize());
 			};
 
 
@@ -197,9 +198,9 @@ namespace ft
 				value_type	pair(k, mapped_type());
 				NodeP		ptr;
 
-				ptr = _tree.search(pair);
+				ptr = _tree->search(pair);
 				if (!ptr || ptr->isLeaf)
-					ptr = _tree.insert(pair);
+					ptr = _tree->insert(pair);
 				return (ptr->value.second);
 			}
 
@@ -211,22 +212,41 @@ namespace ft
 				NodeP		ptr;
 				bool		alreadyMapped = true;
 
-				ptr = _tree.search(val);
+				ptr = _tree->search(val);
 				if (!ptr || ptr->isLeaf)
 				{
 					alreadyMapped = false;
-					ptr = _tree.insert(val);
+					ptr = _tree->insert(val);
 				}
 				return (ft::make_pair<iterator, bool>(iterator(_tree, ptr), alreadyMapped));
 			}
 
-			iterator	insert(iterator position, const value_type& val);
+			iterator	insert(iterator position, const value_type& val)
+			{
+				(void)position;
+				return (insert(val).first);
+			}
 			
 			template <class InputIterator>
-			void		insert(InputIterator first, InputIterator last);
+			void		insert(InputIterator first, InputIterator last)
+			{
+				while (first != last)
+				{
+					insert(*first);
+					first++;
+				}
+			}
 
-			void 		erase(iterator position);
-			size_type	erase(const key_type& k);
+			void 		erase(iterator position)
+			{
+				_tree->remove(position.base());
+			}
+
+			size_type	erase(const key_type& k)
+			{
+				return (_tree->remove(ft::make_pair<key_type, mapped_type>(k, mapped_type())) ? 1 : 0);
+			}
+
 			void		erase(iterator first, iterator last);
 			void		swap(map& x);
 			void		clear();
@@ -256,7 +276,7 @@ namespace ft
 			//	todelete
 			void	print(void) const
 			{
-				_tree.print();
+				_tree->print();
 			}
 		};
 }

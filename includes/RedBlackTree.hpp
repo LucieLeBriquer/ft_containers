@@ -72,6 +72,25 @@ namespace ft
 			Compare		_comp;
 
 
+			//	unused constructors and assignation
+
+			RedBlackTree(const RedBlackTree &tree)
+			{
+				(void)tree;
+			}
+
+			RedBlackTree	&operator=(const RedBlackTree &tree)
+			{
+				if (this != &tree)
+				{
+					_root = tree._root;
+					_leaf = tree._leaf;
+					_comp = tree._comp;
+				}
+				return (*this);
+			}
+
+
 			//	comparisons functions
 
 			bool	_isLess(value_type const value1, value_type const value2) const
@@ -107,6 +126,15 @@ namespace ft
 				if (_isLess(value, node->value))
 					return (_searchNode(node->left, value));
 				return (_searchNode(node->right, value));
+			}
+
+			NodeP	_searchNode(NodeP node, const NodeP nodeToFind) const
+			{
+				if (node == _leaf || node == NULL || node == nodeToFind)
+					return (node);
+				if (_isLess(nodeToFind->value, node->value))
+					return (_searchNode(node->left, nodeToFind));
+				return (_searchNode(node->right, nodeToFind));
 			}
 
 			//	insertion and delete fix
@@ -338,16 +366,6 @@ namespace ft
 				_root = _leaf;
 			}
 
-			void	_copyRec(NodeP leaf, NodeP node)
-			{
-				if (node != leaf)
-				{
-					insert(node->value);
-					_copyRec(leaf, node->left);
-					_copyRec(leaf, node->right);
-				}
-			}
-
 			size_t	_sizeRec(NodeP node) const
 			{
 				if (node == _leaf || node == NULL)
@@ -369,24 +387,6 @@ namespace ft
 				_root = _leaf;
 			}
 
-			RedBlackTree(const RedBlackTree &tree, bool deep = true)
-			{
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "[RedBlackTree] " << END << "copy constructor" << std::endl;
-				if (deep)
-				{
-					_leaf = new Node<T>;
-					_root = _leaf;
-					*this = tree;
-				}
-				else
-				{
-					_root = tree._root;
-					_leaf = tree._leaf;
-				}
-				
-			}
-
 			~RedBlackTree()
 			{
 				if (LOG >= LOG_ALL)
@@ -398,18 +398,6 @@ namespace ft
 
 			}
 
-
-			//	assignation
-
-			RedBlackTree	&operator=(const RedBlackTree &tree)
-			{
-				if (this != &tree)
-				{
-					_deleteNodes();
-					_copyRec(tree.getLeaf(), tree.getRoot());
-				}
-				return (*this);
-			}
 
 
 			//	min/max functions
@@ -450,10 +438,14 @@ namespace ft
 				return (_searchNode(_root, value));
 			}
 
+			NodeP	search(const NodeP node) const
+			{
+				return (_searchNode(_root, node));
+			}
 
 			//	remove in tree
 
-			void	remove(const value_type value)
+			bool	remove(const value_type value)
 			{
 				NodeP	toDelete;
 				NodeP	copy;
@@ -469,7 +461,69 @@ namespace ft
 						toDelete = node;
 						break;
 					}
-					if (_isLess(value, node->value))
+					if (_isLess(node->value, value))
+						node = node->right;
+					else
+						node = node->left;
+				}
+
+				// TODO didn't found key -> see how maps deals with it (exception ?)
+				if (toDelete == _leaf)
+					return (false);
+
+				copy = toDelete;
+				color = copy->color;
+				if (toDelete->left == _leaf)
+				{
+					toFix = toDelete->right;
+					_replace(toDelete, toDelete->right);
+				}
+				else if (toDelete->right == _leaf)
+				{
+					toFix = toDelete->left;
+					_replace(toDelete, toDelete->left);
+				}
+				else
+				{
+					copy = minimum(toDelete->right);
+					color = copy->color;
+					toFix = copy->right;
+					if (copy->parent == toDelete)
+						toFix->parent = copy;
+					else
+					{
+						_replace(copy, copy->right);
+						copy->right = toDelete->right;
+						copy->right->parent = copy;
+					}
+					_replace(toDelete, copy);
+					copy->left = toDelete->left;
+					copy->left->parent = copy;
+					copy->color = toDelete->color;
+				}
+				delete toDelete;
+				if (color == BLACK_C)
+					_deleteUpdate(toFix);	
+				return (true);
+			}
+
+			void	remove(const NodeP toRemove)
+			{
+				NodeP	toDelete;
+				NodeP	copy;
+				NodeP	toFix;
+				NodeP	node = _root;
+				int		color;
+
+				toDelete = _leaf;
+				while (node != _leaf)
+				{
+					if (toRemove == node)
+					{
+						toDelete = node;
+						break;
+					}
+					if (_isLess(node->value, toRemove->value))
 						node = node->right;
 					else
 						node = node->left;
@@ -511,8 +565,7 @@ namespace ft
 				}
 				delete toDelete;
 				if (color == BLACK_C)
-					_deleteUpdate(toFix);
-				
+					_deleteUpdate(toFix);	
 			}
 
 
