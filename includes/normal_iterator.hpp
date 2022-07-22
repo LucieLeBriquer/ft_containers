@@ -67,7 +67,7 @@ namespace ft
 
 			reference	operator[](difference_type n) const
 			{
-				return _current[n];
+				return (_current[n]);
 			}
 
 			normal_iterator&	operator+=(difference_type n)
@@ -84,7 +84,7 @@ namespace ft
 			normal_iterator&	operator-=(difference_type n)
 			{
 				_current -= n;
-				return *this;
+				return (*this);
 			}
 
 			normal_iterator		operator-(difference_type n) const

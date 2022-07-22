@@ -25,6 +25,21 @@
 #endif
 #define SIZE 60
 
+
+void	printMap(NSP::map<int, std::string>	map, std::string prefix)
+{
+	NSP::map<int, std::string>::iterator	it;
+
+	std::cout << YELLOW << ">> " << prefix << END << std::endl;
+	it = map.begin();
+	while (it != map.end())
+	{
+		std::cout << (*it).first << " : " << (*it).second << std::endl;
+		it++;
+	}
+	std::cout << std::endl;
+}
+
 int	main(void)
 {
 	NSP::pair<int, std::string>	pair1(150, "lucie");
@@ -56,48 +71,23 @@ int	main(void)
 
 	map3.insert(map2.begin(), map2.end());
 
-	std::cout << std::endl;
-	std::cout << YELLOW << ">> map" << END << std::endl;
-	map.print();
-	std::cout << YELLOW << ">> map2" << END << std::endl;
-	map2.print();
-	std::cout << YELLOW << ">> map3" << END << std::endl;
-	map3.print();
+	printMap(map, "map");
+	printMap(map2, "map2");
+	printMap(map3, "map3");
 
-	it = map3.begin();
-	itEnd = map3.end();
-	while (it != itEnd)
-	{
-		std::cout << (*it).first << " : " << (*it).second << std::endl;
-		it++;
-	}
 	it = map.begin();
+	it++;
+	map.erase(it);
 	std::cout << map.erase(1) << std::endl;
 	std::cout << map.erase(1) << std::endl;
+	std::cout << map.erase(150) << std::endl;
 	std::cout << map.erase(123) << std::endl;
-	it = map.begin();
-	itEnd = map.end();
-	while (it != itEnd)
-	{
-		std::cout << (*it).first << " : " << (*it).second << std::endl;
-		it++;
-	}
+	std::string	str = "0123456789";
+	
+	for (int i = 0; i < 10; i++)
+		map[i] = str.substr(i, 1);
 
-	std::cout << "before clear" << std::endl;
-	map.clear();
-	it = map.begin();
-	itEnd = map.end();
-	while (it != itEnd)
-	{
-		std::cout << (*it).first << " : " << (*it).second << std::endl;
-		it++;
-	}
-
-	std::cout << std::endl;
-	std::cout << YELLOW << ">> map" << END << std::endl;
-	map.print();
-	std::cout << YELLOW << ">> map2" << END << std::endl;
-	map2.print();
-	std::cout << YELLOW << ">> map3" << END << std::endl;
-	map3.print();
+	printMap(map, "map");
+	printMap(map2, "map2");
+	printMap(map3, "map3");
 }

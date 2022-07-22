@@ -70,7 +70,7 @@ namespace ft
 			NodeP		_root;
 			NodeP		_leaf;
 			Compare		_comp;
-			
+
 
 			//	comparisons functions
 
@@ -654,6 +654,16 @@ namespace ft
 				return (cur);
 			}
 
+			NodeP	nextNode(NodeP node, size_t n) const
+			{
+				NodeP	res;
+				
+				res = node;
+				for (size_t i = 0; i < n; i++)
+					res = nextNode(res);
+				return (res);
+			}
+
 			NodeP	prevNode(NodeP node) const
 			{
 				NodeP	cur;
@@ -671,6 +681,15 @@ namespace ft
 				return (cur);
 			}
 
+			NodeP	prevNode(NodeP node, size_t n) const
+			{
+				NodeP	res;
+				
+				res = node;
+				for (size_t i = 0; i < n; i++)
+					res = prevNode(res);
+				return (res);
+			}
 
 			//	get root and leaf
 

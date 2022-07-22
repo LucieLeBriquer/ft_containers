@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/21 18:57:22 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/22 15:49:21 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,55 @@ namespace ft
 				return (newIt);
 			}
 
-			NodeP				base(void) const
+			// reference	operator[](difference_type n) const
+			// {
+			// 	if (n >= 0)
+			// 		return (*( _tree->nextNode(_node, n)->valuePtr()));
+			// 	return (*( _tree->prevNode(_node, -n)->valuePtr()));
+			// }
+
+			// RedBlackIterator&	operator+=(difference_type n)
+			// {
+			// 	if (n >= 0)
+			// 		_node = _tree->nextNode(_node, n);
+			// 	else
+			// 		_node = _tree->prevNode(_node, -n);
+			// 	return (*this);
+			// }
+
+			// RedBlackIterator		operator+(difference_type n) const
+			// {
+			// 	NodeP	newPtr;
+
+			// 	if (n >= 0)
+			// 		newPtr = _tree->nextNode(_node, n);
+			// 	else
+			// 		newPtr = _tree->prevNode(_node, -n);
+			// 	return (RedBlackIterator(_tree, newPtr));
+			// }
+
+			// RedBlackIterator&	operator-=(difference_type n)
+			// {
+			// 	if (n >= 0)
+			// 		_node = _tree->prevNode(_node, n);
+			// 	else
+			// 		_node = _tree->nextNode(_node, -n);
+			// 	return (*this);
+			// }
+
+			// RedBlackIterator	operator-(difference_type n) const
+			// {
+			// 	NodeP	newPtr;
+
+			// 	if (n >= 0)
+			// 		newPtr = _tree->prevNode(_node, n);
+			// 	else
+			// 		newPtr = _tree->nextNode(_node, -n);
+
+			// 	return (RedBlackIterator(_tree, newPtr));
+			// }
+
+			const NodeP			&base(void) const
 			{
 				return (_node);
 			}
