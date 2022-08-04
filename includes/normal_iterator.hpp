@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 16:18:53 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/28 15:23:29 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/22 17:29:07 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,17 @@ namespace ft
 
 			// constructors
 			normal_iterator() : _current(Iterator()) { }
+
 			normal_iterator(const Iterator& iterator) : _current(iterator) { }
+
 			template<typename Iter>
 			normal_iterator(const normal_iterator< Iter, typename ft::enable_if< (ft::are_same<Iter, typename Container::pointer>::value), Container>::type >& iterator) 
 				: _current(iterator.base()) { }
+			
+			template<typename Iter>
+			normal_iterator(const normal_iterator< Iter, typename ft::enable_if< (ft::are_const_same<typename Iter::value_type, value_type>::value), Container>::type >& iterator) 
+				: _current(iterator.base()) { }
+
 			virtual ~normal_iterator(void) { }
 
 			reference operator*() const { return *_current; }

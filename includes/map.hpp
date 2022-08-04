@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/21 19:31:14 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/28 08:17:56 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,17 @@ namespace ft
 			typedef size_t												size_type;
 			typedef std::ptrdiff_t										difference_type;
 
-			typedef RedBlackIterator<value_type, value_compare>			iterator;
-			typedef RedBlackIterator<const value_type, value_compare>	const_iterator;
-			typedef reverse_iterator<const_iterator>					const_reverse_iterator;
-			typedef reverse_iterator<iterator>							reverse_iterator;
+		private:
+
+			typedef RedBlackIterator<const value_type, value_compare>	rbtIteratorConst;
+			typedef RedBlackIterator<value_type, value_compare>			rbtIterator;
+		
+		public:
+
+			typedef normal_iterator<rbtIterator, map>		iterator;
+			typedef normal_iterator<rbtIteratorConst, map>	const_iterator;
+			typedef reverse_iterator<const_iterator>		const_reverse_iterator;
+			typedef reverse_iterator<iterator>				reverse_iterator;
 
 
 			//	constructors
@@ -138,42 +145,42 @@ namespace ft
 
 			iterator begin()
 			{
-				return (iterator(_tree, _tree->minimum()));
+				return (iterator(rbtIterator(_tree, _tree->minimum())));
 			}
 			
 			const_iterator begin() const
 			{
-				return (const_iterator(_tree, _tree->minimum()));
+				return (const_iterator(rbtIterator(_tree, _tree->minimum())));
 			}
 
 			iterator end()
 			{
-				return (iterator(_tree, _tree->getLeaf()));
+				return (iterator(rbtIterator(_tree, _tree->getLeaf())));
 			}
 
 			const_iterator end() const
 			{
-				return (const_iterator(_tree, _tree->getLeaf()));
+				return (const_iterator(rbtIterator(_tree, _tree->getLeaf())));
 			}
 			
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator(iterator(_tree, _tree->maximum())));
+				return (reverse_iterator(iterator(rbtIterator(_tree, _tree->maximum()))));
 			}
 
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator(iterator(_tree, _tree->maximum())));
+				return (const_reverse_iterator(iterator(rbtIterator(_tree, _tree->maximum()))));
 			}
 
 			reverse_iterator rend()
 			{
-				return (reverse_iterator(iterator(_tree, _tree->getLeaf())));
+				return (reverse_iterator(iterator(rbtIterator(_tree, _tree->getLeaf()))));
 			}
 
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator(iterator(_tree, _tree->getLeaf())));
+				return (const_reverse_iterator(iterator(rbtIterator(_tree, _tree->getLeaf()))));
 			}
 
 
@@ -222,7 +229,7 @@ namespace ft
 					alreadyMapped = false;
 					ptr = _tree->insert(val);
 				}
-				return (ft::make_pair<iterator, bool>(iterator(_tree, ptr), alreadyMapped));
+				return (ft::make_pair<iterator, bool>(iterator(rbtIterator(_tree, ptr)), alreadyMapped));
 			}
 
 			iterator	insert(iterator position, const value_type& val)

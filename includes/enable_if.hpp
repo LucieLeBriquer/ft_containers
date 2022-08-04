@@ -41,5 +41,34 @@ namespace ft
     	typedef __true_type type;
     };
 
+	// compare type equality ignoring const
+  	template<typename T1, typename T2>
+    struct are_const_same
+    {
+    	enum { value = 0 };
+    	typedef __false_type type;
+    };
+
+  	template<typename T>
+    struct are_const_same<T, T>
+    {
+    	enum { value = 1 };
+    	typedef __true_type type;
+    };
+	
+	template<typename T>
+    struct are_const_same<const T, T>
+    {
+    	enum { value = 1 };
+    	typedef __true_type type;
+    };
+	
+	template<typename T>
+    struct are_const_same<T, const T>
+    {
+    	enum { value = 1 };
+    	typedef __true_type type;
+    };
+
 }
 #endif

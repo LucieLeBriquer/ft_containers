@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/22 15:49:21 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/07/28 08:05:22 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,20 @@ namespace ft
 
 			//	member objects
 
-			TreeP	_tree;
-			NodeP	_node;
+			//TreeP	_tree;
+			//NodeP	_node;
+			void	*_tree;
+			void	*_node;
+
+			TreeP	_getTree(void) const
+			{
+				return (reinterpret_cast<TreeP>(_tree));
+			}
+
+			NodeP	_getNode(void) const
+			{
+				return (reinterpret_cast<NodeP>(_node));
+			}
 
 
 		public:
@@ -60,17 +72,26 @@ namespace ft
 				{
 					std::cerr << GREEN << "[RedBlackIterator] " << END << "tree constructor" << std::endl;
 					std::cerr <<  "node=" << _node << " in tree" << std::endl;
-					_tree->print();
+					_getTree()->print();
 				}
 			}
 
-			RedBlackIterator(const RedBlackIterator &rbtIt)
+			// RedBlackIterator(const RedBlackIterator &rbtIt)
+			// {
+			// 	*this = rbtIt;
+			// 	if (LOG >= LOG_ALL)
+			// 		std::cerr << GREEN << "[RedBlackIterator] " << END << "copy constructor" << std::endl;
+			// }
+			
+			template<typename U>
+			RedBlackIterator(const RedBlackIterator<U, Compare> &rbtIt, typename ft::enable_if< (ft::are_const_same<T, U>::value), T>::type* = 0) :
+				_tree(rbtIt.baseTree()),
+				_node(rbtIt.baseNode())
 			{
-				*this = rbtIt;
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[RedBlackIterator] " << END << "copy constructor" << std::endl;
-			}
 
+			}
 
 			//	assignation
 
@@ -82,11 +103,6 @@ namespace ft
 						std::cerr << YELLOW << "[RedBlackIterator] " << END << "assignation" << std::endl;
 					_tree = rbtIt._tree;
 					_node = rbtIt._node;
-					if (LOG >= LOG_ALL)
-					{
-						std::cerr <<  "assignation : node=" << _node << " in tree" << std::endl;
-						_tree->print();
-					}
 				}
 				return (*this);
 			}
@@ -96,12 +112,12 @@ namespace ft
 
 			reference 			operator*() const
 			{
-				return (*(_node->valuePtr()));
+				return (*(_getNode()->valuePtr()));
 			}
 
 			pointer 			operator->() const
 			{
-				return (_node->valuePtr());
+				return (_getNode()->valuePtr());
 			}
 			
 
@@ -109,7 +125,7 @@ namespace ft
 
 			RedBlackIterator&	operator++()
 			{
-				_node = _tree->nextNode(_node);
+				_node = _getTree()->nextNode(_getNode());
 				return (*this);
 			}
 
@@ -117,13 +133,13 @@ namespace ft
 			{
 				RedBlackIterator	newIt = *this;
 
-				_node = _tree->nextNode(_node);
+				_node = _getTree()->nextNode(_getNode());
 				return (newIt);
 			}
 
 			RedBlackIterator&	operator--() 
 			{
-				_node = _tree->prevNode(_node);
+				_node = _getTree()->prevNode(_getNode());
 				return (*this);
 			}
 
@@ -131,7 +147,7 @@ namespace ft
 			{
 				RedBlackIterator	newIt = *this;
 				
-				_node = _tree->prevNode(_node);
+				_node = _getTree()->prevNode(_getNode());
 				return (newIt);
 			}
 
@@ -183,26 +199,49 @@ namespace ft
 			// 	return (RedBlackIterator(_tree, newPtr));
 			// }
 
-			const NodeP			&base(void) const
+			void	*baseNode(void) const
 			{
-				return (_node);
+			 	return (_node);
+			}
+
+			void	*baseTree(void) const
+			{
+			 	return (_tree);
 			}
 
 
 			//	compare
 
-			friend bool	operator==(const RedBlackIterator &it1, const RedBlackIterator &it2)
-			{
-				return ((it1._node->isLeaf && it2._node->isLeaf) ||
-					(it1._tree->areEqual(it1._node->value, it2._node->value)
-					&& !it1._node->isLeaf && !it2._node->isLeaf));
-			}
+			// friend bool	operator==(const RedBlackIterator &it1, const RedBlackIterator &it2)
+			// {
+			// 	return ((it1._node->isLeaf && it2._node->isLeaf) ||
+			// 		(it1._tree->areEqual(it1._node->value, it2._node->value)
+			// 		&& !it1._node->isLeaf && !it2._node->isLeaf));
+			// }
 
-			friend bool	operator!=(const RedBlackIterator &it1, const RedBlackIterator &it2)
-			{
-				return (!(operator==(it1, it2)));
-			}
+			// friend bool	operator!=(const RedBlackIterator &it1, const RedBlackIterator &it2)
+			// {
+			// 	return (!(operator==(it1, it2)));
+			// }
 	};
+
+	template<typename T, typename U, class Compare>
+	bool	operator==(const RedBlackIterator<T, Compare> &it1, const RedBlackIterator<U, Compare> &it2)
+	{
+		Node<T>	*nodeT = reinterpret_cast<Node<T> *>(it1.baseNode());
+		Node<U>	*nodeU = reinterpret_cast<Node<U> *>(it2.baseNode());
+		RedBlackTree<T, Compare> *treeT = reinterpret_cast<RedBlackTree<T, Compare> *>(it1.baseTree());
+
+		return ((nodeT->isLeaf && nodeU->isLeaf) ||
+			(treeT->areEqual(nodeT->value, nodeU->value)
+			&& !nodeT->isLeaf && !nodeU->isLeaf));
+	}
+
+	template<typename T, typename U, class Compare>
+	bool	operator!=(const RedBlackIterator<T, Compare> &it1, const RedBlackIterator<U, Compare> &it2)
+	{
+		return (!(operator==(it1, it2)));
+	}
 }
 
 #endif
