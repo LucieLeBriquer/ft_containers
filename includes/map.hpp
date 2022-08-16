@@ -15,6 +15,7 @@
 # include "reverse_iterator.hpp"
 # include "RedBlackTree.hpp"
 # include "rbt_iterator.hpp"
+# include "normal_iterator.hpp"
 
 namespace ft
 {
