@@ -19,5 +19,8 @@ int	main(void)
 	*/
 
 	// construction
-	testMapConstruction();	
+	mapConstruction();
+	
+	// element access
+	elementAccess();
 }

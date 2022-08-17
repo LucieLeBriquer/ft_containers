@@ -594,6 +594,7 @@ namespace ft
 			NodeP	insert(const value_type value)
 			{
 				NodeP	node = new Node<T>;
+
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "\tcreates " << END << node << std::endl;
 				NodeP	cur;

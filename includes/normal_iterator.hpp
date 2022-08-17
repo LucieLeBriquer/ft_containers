@@ -48,8 +48,15 @@ namespace ft
 
 			virtual ~normal_iterator(void) { }
 
-			reference operator*() const { return *_current; }
-			pointer operator->() const { return _current; }
+			reference operator*() const
+			{
+				return (*_current);
+			}
+
+			pointer operator->() const
+			{
+				return (&(*_current));
+			}
 			
 			normal_iterator&	operator++() {
 				++_current;

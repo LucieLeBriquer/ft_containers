@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:18:58 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/17 17:39:41 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/17 17:47:22 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	showMap(NSP::map<K, T> &map)
 		it++;
 	}
 }
-void	testMapConstructionInt(void)
+
+static void	mapConstructionInt(void)
 {
 	NSP::pair<int, int>	pair1(150, 0);
 	NSP::pair<int, int>	pair2(2, 1);
@@ -63,7 +64,7 @@ void	testMapConstructionInt(void)
 	showMap(map);
 }
 
-void	testMapConstruction(void)
+static void	mapConstructionString(void)
 {
 	NSP::pair<int, std::string>	pair1(150, "string1");
 	NSP::pair<int, std::string>	pair2(2, "string2");
@@ -72,7 +73,7 @@ void	testMapConstruction(void)
 
 	// default constructor
 	NSP::map<int, std::string>	map;
-	printTitle("map construction", BORANGE);
+	printTitle("map construction <int, string>", BORANGE);
 	printSubtitle("default constructor", ORANGE);
 
 	map.insert(pair1);
@@ -101,6 +102,10 @@ void	testMapConstruction(void)
 
 	map.insert(v.rbegin(), v.rend());
 	showMap(map);
+}
 
-	testMapConstructionInt();
+void	mapConstruction(void)
+{
+	mapConstructionString();
+	mapConstructionInt();
 }

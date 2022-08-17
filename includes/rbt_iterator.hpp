@@ -71,8 +71,6 @@ namespace ft
 				if (LOG >= LOG_ALL)
 				{
 					std::cerr << GREEN << "[RedBlackIterator] " << END << "tree constructor" << std::endl;
-					std::cerr <<  "node=" << _node << " in tree" << std::endl;
-					_getTree()->print();
 				}
 			}
 

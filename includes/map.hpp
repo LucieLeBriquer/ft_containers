@@ -100,12 +100,11 @@ namespace ft
 
 			template <class InputIterator>
 			map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
-				const allocator_type& alloc = allocator_type())
+				const allocator_type& alloc = allocator_type()) :
+				_tree(new RedBlackTree<value_type, value_compare>()), _alloc(alloc), _comp(comp)
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[Map] " << END << "iterator constructor" << std::endl;
-				_alloc = alloc;
-				_comp = comp;
 				while (first != last)
 				{
 					_tree->insert(*first);
