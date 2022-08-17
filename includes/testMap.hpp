@@ -13,10 +13,13 @@
 #ifndef TESTMAP_HPP
 # define TESTMAP_HPP
 # include <map>
+# include <vector>
 # include "map.hpp"
 # include "testUtils.hpp"
 
 void	testMapConstruction(void);
-void	showMap(NSP::map<int, std::string> &map);
+
+template<typename K, typename T>
+void	showMap(NSP::map<K, T> &map);
 
 #endif
