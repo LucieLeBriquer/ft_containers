@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/28 08:05:22 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/18 16:38:40 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "RedBlackTree.hpp"
 # include "iterators_traits.hpp"
 # include "global.hpp"
+# include <cstdlib>
 
 namespace ft
 {
@@ -127,7 +128,7 @@ namespace ft
 				return (*this);
 			}
 
-			RedBlackIterator	operator++(int) 
+			RedBlackIterator	operator++(int)
 			{
 				RedBlackIterator	newIt = *this;
 

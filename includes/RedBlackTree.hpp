@@ -669,6 +669,9 @@ namespace ft
 			{
 				NodeP	cur;
 
+				if (node == _leaf)
+					return (maximum());
+
 				if (node->left != _leaf && node->left != NULL)
 					return (maximum(node->left));
 				cur = node->parent;

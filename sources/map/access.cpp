@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 17:51:16 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/17 18:05:36 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/18 16:35:22 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void    printReverse(NSP::map<T1, T2> &mp)
 #include <list>
 #define T1 int
 #define T2 int
-typedef _pair<const T1, T2> T3;
+typedef _pair<T1, T2> T3;
 
 void     fail(void)
 {
@@ -65,9 +65,15 @@ void     fail(void)
 
     NSP::map<T1, T2> mp(lst.begin(), lst.end());
     NSP::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
+	printSize(mp);
 
-    NSP::map<T1, T2> mp_range(it, --(--ite));
-    for (int i = 0; it != ite; ++it)
+	std::cout << "ite value=" << ite->first << " : " << ite->second << std::endl;
+	//std::cout << --(--ite)->second << std::endl;
+	std::cout <<  "--(--ite) value=" <<  (--(--ite))->second << std::endl;
+
+    NSP::map<T1, T2> mp_range(it, ++(++it));
+	printSize(mp_range);
+    /*for (int i = 0; it != ite; ++it)
         it->second = ++i * 5;
 
     it = mp.begin(); ite = --(--mp.end());
@@ -87,7 +93,7 @@ void     fail(void)
     std::cout << "\t-- PART TWO --" << std::endl;
     printSize(mp);
     printSize(mp_range);
-    printSize(mp_copy);
+    printSize(mp_copy);*/
 	
 }
 void	elementAccess(void)
