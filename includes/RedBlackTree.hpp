@@ -642,6 +642,9 @@ namespace ft
 			{
 				NodeP	cur;
 
+				if (node == _leaf)
+					return (minimum());
+
 				if (node->right != _leaf && node->right != NULL)
 					return (minimum(node->right));
 				cur = node->parent;
