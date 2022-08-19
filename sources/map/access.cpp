@@ -58,7 +58,7 @@ void	elementAccess(void)
 	std::cout << "/!\\ map[0] should be created" << std::endl;
 
 	printSubtitle("assign with operator[]", ORANGE);
-	map[150] = 0;
+	map[150] = -4;
 	map[2] = -1;
 	map[100] = -2;
 	map[1] = -3;

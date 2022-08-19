@@ -33,6 +33,7 @@ _BOLDCOLOR	= \033[32;1m
 _RESET		= \033[0m
 _CLEAR		= \033[0K\r\c
 _OK			= [\033[32mOK\033[0m]
+_KO			= [\033[31mKO\033[0m]
 
 $(OBJS_DIR)%.o	: $(SRCS_DIR)%.cpp
 			@mkdir -p $(OBJS_DIR) $(SUB_DIRS)
@@ -72,9 +73,8 @@ re			: fclean all
 diff		: $(NAME) $(NAME_STL)
 			@$(NAME) 2>&1 | sed "s/ft:://g" > $(TEST)
 			@$(NAME_STL) > $(TEST_STL) 2>&1
-			@diff -s $(TEST) $(TEST_STL) | grep "are identical" | wc -l | sed "s/1/[OK] No o/g" | sed "s/0/[KO] O/g" | tr -d '\n'
-			@echo "utput differences between my containers and STL containers"
-			@diff $(TEST) $(TEST_STL) | echo -n ""
+			@diff $(TEST) $(TEST_STL) && echo -n "$(_OK) No o" || echo -n "$(_KO) O"
+			@echo "utput differences"
 			@rm $(TEST) $(TEST_STL)
 			
 
