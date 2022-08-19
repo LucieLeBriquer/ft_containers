@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/28 08:17:56 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/19 10:52:31 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,17 @@ namespace ft
 
 		private:
 
-			typedef RedBlackIterator<const value_type, value_compare>	rbtIteratorConst;
-			typedef RedBlackIterator<value_type, value_compare>			rbtIterator;
+			typedef RedBlackIterator<value_type, value_compare>				rbtIterator;
+			typedef RedBlackIterator<const value_type, value_compare>		rbtIteratorConst;
+			typedef	RedBlackIteratorRev<value_type, value_compare>			rbtIteratorRev;
+			typedef	RedBlackIteratorRev<const value_type, value_compare>	rbtIteratorConstRev;
 		
 		public:
 
-			typedef normal_iterator<rbtIterator, map>		iterator;
-			typedef normal_iterator<rbtIteratorConst, map>	const_iterator;
-			typedef reverse_iterator<const_iterator>		const_reverse_iterator;
-			typedef reverse_iterator<iterator>				reverse_iterator;
+			typedef normal_iterator<rbtIterator, map>			iterator;
+			typedef normal_iterator<rbtIteratorConst, map>		const_iterator;
+			typedef normal_iterator<rbtIteratorRev, map>		reverse_iterator;
+			typedef normal_iterator<rbtIteratorConstRev, map>	const_reverse_iterator;
 
 
 			//	constructors
@@ -165,22 +167,22 @@ namespace ft
 			
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator(iterator(rbtIterator(_tree, _tree->maximum()))));
+				return (reverse_iterator(rbtIteratorRev(_tree, _tree->maximum())));
 			}
 
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator(iterator(rbtIterator(_tree, _tree->maximum()))));
+				return (const_reverse_iterator(rbtIteratorConstRev(_tree, _tree->maximum())));
 			}
 
 			reverse_iterator rend()
 			{
-				return (reverse_iterator(iterator(rbtIterator(_tree, _tree->getLeaf()))));
+				return (reverse_iterator(rbtIteratorRev(_tree, _tree->getLeaf())));
 			}
 
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator(iterator(rbtIterator(_tree, _tree->getLeaf()))));
+				return (const_reverse_iterator(rbtIteratorConstRev(_tree, _tree->getLeaf())));
 			}
 
 

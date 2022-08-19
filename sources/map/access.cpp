@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/17 17:51:16 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/18 16:35:22 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/19 10:52:29 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void     fail(void)
     NSP::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
 	printSize(mp);
 
-	std::cout << "ite value=" << ite->first << " : " << ite->second << std::endl;
 	//std::cout << --(--ite)->second << std::endl;
 	std::cout <<  "--(--ite) value=" <<  (--(--ite))->second << std::endl;
 
@@ -103,13 +102,30 @@ void	elementAccess(void)
 	NSP::pair<int, int>	pair3(100, 2);
 	NSP::pair<int, int> pair4(1, 3);
 
-	// default constructor
 	NSP::map<int, int>	map;
 	map.insert(pair1);
 	map.insert(pair2);
 	map.insert(pair3);
 	map.insert(pair4);
-	showMap(map);
 
-	fail();
+	printTitle("map element access", BORANGE);
+
+	// show map with iterator
+	printSubtitle("access with iterator", ORANGE);
+	NSP::map<int, int>::iterator		it = map.begin();
+	NSP::map<int, int>::const_iterator	ite = map.end();
+	while (it != ite)
+	{
+		std::cout << it->first << " : " << it->second << std::endl;
+		it++;
+	}
+
+	printSubtitle("access with reverse iterator", ORANGE);
+	NSP::map<int, int>::reverse_iterator		rit = map.rbegin();
+	NSP::map<int, int>::const_reverse_iterator	rite = map.rend();
+	while (rit != rite)
+	{
+		std::cout << rit->first << " : " << rit->second << std::endl;
+		rit++;
+	}
 }
