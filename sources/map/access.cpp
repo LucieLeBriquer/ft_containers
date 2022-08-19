@@ -12,7 +12,7 @@
 
 #include "testMap.hpp"
 
-void	elementAccess(void)
+void	mapElementAccess(void)
 {
 	NSP::pair<int, int>	pair1(150, 0);
 	NSP::pair<int, int>	pair2(2, 1);

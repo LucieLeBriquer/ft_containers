@@ -147,6 +147,11 @@ namespace ft
 			 	return (_node);
 			}
 
+			void	*base(void) const
+			{
+			 	return (_node);
+			}
+
 			void	*baseTree(void) const
 			{
 			 	return (_tree);
@@ -235,9 +240,7 @@ namespace ft
 			RedBlackIteratorRev(const TreeP& tree, const NodeP &node) : _tree(tree), _node(node)
 			{
 				if (LOG >= LOG_ALL)
-				{
 					std::cerr << GREEN << "[RedBlackIteratorRev] " << END << "tree constructor" << std::endl;
-				}
 			}
 			
 			template<typename U>
@@ -247,7 +250,15 @@ namespace ft
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[RedBlackIteratorRev] " << END << "copy constructor" << std::endl;
+			}
 
+
+			RedBlackIteratorRev(const RedBlackIterator<T, Compare> &rbtIt) :
+				_tree(rbtIt.baseTree()),
+				_node(rbtIt.baseNode())
+			{
+				if (LOG >= LOG_ALL)
+					std::cerr << GREEN << "[RedBlackIteratorRev] " << END << "copy constructor" << std::endl;
 			}
 
 
@@ -310,6 +321,11 @@ namespace ft
 			}
 
 			void	*baseNode(void) const
+			{
+			 	return (_node);
+			}
+
+			void	*base(void) const
 			{
 			 	return (_node);
 			}

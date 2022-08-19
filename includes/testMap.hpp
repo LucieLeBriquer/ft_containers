@@ -20,10 +20,12 @@
 # include <vector>
 # include "testUtils.hpp"
 
-void	mapConstruction(void);
-void	elementAccess(void);
-
 template<typename K, typename T>
 void	showMap(NSP::map<K, T> &map);
+
+void	mapConstruction(void);
+void	mapElementAccess(void);
+void	mapIterators(void);
+void	mapErase(void);
 
 #endif

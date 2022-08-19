@@ -63,12 +63,12 @@ namespace ft
     	typedef __true_type type;
     };
 	
-	template<typename T>
+	/*template<typename T>
     struct are_const_same<T, const T>
     {
     	enum { value = 1 };
     	typedef __true_type type;
-    };
+    };*/
 
 }
 #endif
