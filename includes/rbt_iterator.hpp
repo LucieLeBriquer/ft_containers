@@ -318,21 +318,6 @@ namespace ft
 			{
 			 	return (_tree);
 			}
-
-
-			//	compare
-
-			// friend bool	operator==(const RedBlackIterator &it1, const RedBlackIterator &it2)
-			// {
-			// 	return ((it1._node->isLeaf && it2._node->isLeaf) ||
-			// 		(it1._tree->areEqual(it1._node->value, it2._node->value)
-			// 		&& !it1._node->isLeaf && !it2._node->isLeaf));
-			// }
-
-			// friend bool	operator!=(const RedBlackIterator &it1, const RedBlackIterator &it2)
-			// {
-			// 	return (!(operator==(it1, it2)));
-			// }
 	};
 
 	template<typename T, typename U, class Compare>

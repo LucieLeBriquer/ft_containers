@@ -19,7 +19,7 @@ void	showMap(NSP::map<K, T> &map)
 
 	while (it != map.end())
 	{
-		std::cout << "\t" << (*it).first << " - " << (*it).second << std::endl;
+		std::cout << "\t" << (*it).first << "\t:\t" << (*it).second << std::endl;
 		it++;
 	}
 }
