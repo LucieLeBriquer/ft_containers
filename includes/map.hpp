@@ -225,7 +225,7 @@ namespace ft
 					alreadyMapped = false;
 					ptr = _tree->insert(val);
 				}
-				return (ft::make_pair<iterator, bool>(iterator(_tree, ptr), alreadyMapped));
+				return (ft::make_pair<iterator, bool>(iterator(_tree, ptr), !alreadyMapped));
 			}
 
 			iterator	insert(iterator position, const value_type& val)

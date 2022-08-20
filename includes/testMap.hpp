@@ -28,4 +28,6 @@ void	mapElementAccess(void);
 void	mapIterators(void);
 void	mapErase(void);
 
+void	fail(void);
+
 #endif

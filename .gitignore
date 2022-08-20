@@ -1,4 +1,5 @@
 *.o
+last
 containers
 containersSTL
 .vscode/*

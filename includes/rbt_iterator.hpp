@@ -349,8 +349,9 @@ namespace ft
 			}
 	};
 
-	template<typename T, typename U, class Compare>
-	bool	operator==(const RedBlackIteratorRev<T, Compare> &it1, const RedBlackIteratorRev<U, Compare> &it2)
+	template<typename T, typename U, class Compare, bool Const1, bool Const2>
+	bool	operator==(const RedBlackIteratorRev<T, Compare, Const1> &it1,
+						const RedBlackIteratorRev<U, Compare, Const2> &it2)
 	{
 		Node<T>	*nodeT = reinterpret_cast<Node<T> *>(it1.baseNode());
 		Node<U>	*nodeU = reinterpret_cast<Node<U> *>(it2.baseNode());
@@ -361,8 +362,9 @@ namespace ft
 			&& !nodeT->isLeaf && !nodeU->isLeaf));
 	}
 
-	template<typename T, typename U, class Compare>
-	bool	operator!=(const RedBlackIteratorRev<T, Compare> &it1, const RedBlackIteratorRev<U, Compare> &it2)
+	template<typename T, typename U, class Compare, bool Const1, bool Const2>
+	bool	operator!=(const RedBlackIteratorRev<T, Compare, Const1> &it1,
+						const RedBlackIteratorRev<U, Compare, Const2> &it2)
 	{
 		return (!(operator==(it1, it2)));
 	}
