@@ -43,6 +43,11 @@ namespace ft
 			return ;
 		}
 
+		Node(value_type val) : value(val), left(NULL), right(NULL), parent(NULL), color(BLACK_C), isLeaf(true)
+		{
+			return ;
+		}
+
 		T	*valuePtr()
 		{
 			return (&value);
@@ -87,10 +92,9 @@ namespace ft
 
 			//	create nodes
 
-			void	_fillNewNode(NodeP node, const value_type value, const int color)
+			void	_fillNewNode(NodeP node, const int color)
 			{
 				node->parent = NULL;
-				node->value = value;
 				node->left = _leaf;
 				node->right = _leaf;
 				node->color = color;
@@ -593,14 +597,14 @@ namespace ft
 			
 			NodeP	insert(const value_type value)
 			{
-				NodeP	node = new Node<T>;
+				NodeP	node = new Node<T>(value);
 
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "\tcreates " << END << node << std::endl;
 				NodeP	cur;
 				NodeP	root;
 
-				_fillNewNode(node, value, RED_C);
+				_fillNewNode(node, RED_C);
 
 				cur = NULL;
 				root = _root;

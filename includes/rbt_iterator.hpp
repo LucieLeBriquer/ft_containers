@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/18 16:38:40 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/20 15:19:31 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,31 @@
 
 namespace ft
 {
-	template <typename T, class Compare>
+	template<typename T, bool Const>
+	class usefull_types
+	{
+		public:
+			typedef T *pointer_type;
+			typedef T &reference_type;
+	};
+
+	template<typename T>
+	class usefull_types<T, true>
+	{
+		public:
+			typedef const T *pointer_type;
+			typedef const T &reference_type;
+	};
+
+	template <typename T, class Compare, bool Const>
 	class RedBlackIterator
     {
 		protected:
 		
 			//	typedefs
 
-			typedef RedBlackTree<T, Compare> *TreeP;
-			typedef Node<T> *NodeP;
+			typedef RedBlackTree<T, Compare>		*TreeP;
+			typedef Node<T>							*NodeP;
 
 
 			//	member objects
@@ -50,11 +66,11 @@ namespace ft
 
 			//	typedefs
 
-			typedef T								value_type;
-			typedef T&								reference;
-			typedef T*   							pointer;
-			typedef std::bidirectional_iterator_tag	iterator_category;
-			typedef std::ptrdiff_t					difference_type;
+			typedef T													value_type;
+			typedef typename usefull_types<T, Const>::reference_type	reference;
+			typedef typename usefull_types<T, Const>::pointer_type		pointer;
+			typedef std::bidirectional_iterator_tag						iterator_category;
+			typedef std::ptrdiff_t										difference_type;
 
 
 			//	constructors
@@ -68,19 +84,17 @@ namespace ft
 			RedBlackIterator(const TreeP& tree, const NodeP &node) : _tree(tree), _node(node)
 			{
 				if (LOG >= LOG_ALL)
-				{
 					std::cerr << GREEN << "[RedBlackIterator] " << END << "tree constructor" << std::endl;
-				}
 			}
-			
-			template<typename U>
-			RedBlackIterator(const RedBlackIterator<U, Compare> &rbtIt, typename ft::enable_if< (ft::are_const_same<T, U>::value), T>::type* = 0) :
+
+			template<typename U, bool C>
+			RedBlackIterator(const RedBlackIterator<U, Compare, C> &rbtIt,
+							typename ft::enable_if< (ft::are_const_same<T, U>::value && ft::sup_or_eq<Const, C>::value), T>::type* = 0) :
 				_tree(rbtIt.baseTree()),
 				_node(rbtIt.baseNode())
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[RedBlackIterator] " << END << "copy constructor" << std::endl;
-
 			}
 
 
@@ -173,8 +187,8 @@ namespace ft
 			// }
 	};
 
-	template<typename T, typename U, class Compare>
-	bool	operator==(const RedBlackIterator<T, Compare> &it1, const RedBlackIterator<U, Compare> &it2)
+	template<typename T, typename U, class Compare, bool Const1, bool Const2>
+	bool	operator==(const RedBlackIterator<T, Compare, Const1> &it1, const RedBlackIterator<U, Compare, Const2> &it2)
 	{
 		Node<T>	*nodeT = reinterpret_cast<Node<T> *>(it1.baseNode());
 		Node<U>	*nodeU = reinterpret_cast<Node<U> *>(it2.baseNode());
@@ -185,13 +199,13 @@ namespace ft
 			&& !nodeT->isLeaf && !nodeU->isLeaf));
 	}
 
-	template<typename T, typename U, class Compare>
-	bool	operator!=(const RedBlackIterator<T, Compare> &it1, const RedBlackIterator<U, Compare> &it2)
+	template<typename T, typename U, class Compare, bool Const1, bool Const2>
+	bool	operator!=(const RedBlackIterator<T, Compare, Const1> &it1, const RedBlackIterator<U, Compare, Const2> &it2)
 	{
 		return (!(operator==(it1, it2)));
 	}
 
-	template <typename T, class Compare>
+	template <typename T, class Compare, bool Const = false>
 	class RedBlackIteratorRev
     {
 		protected:
@@ -223,8 +237,8 @@ namespace ft
 			//	typedefs
 
 			typedef T								value_type;
-			typedef T&								reference;
-			typedef T*   							pointer;
+			typedef typename usefull_types<T, Const>::reference_type	reference;
+			typedef typename usefull_types<T, Const>::pointer_type		pointer;
 			typedef std::bidirectional_iterator_tag	iterator_category;
 			typedef std::ptrdiff_t					difference_type;
 
@@ -243,8 +257,9 @@ namespace ft
 					std::cerr << GREEN << "[RedBlackIteratorRev] " << END << "tree constructor" << std::endl;
 			}
 			
-			template<typename U>
-			RedBlackIteratorRev(const RedBlackIteratorRev<U, Compare> &rbtIt, typename ft::enable_if< (ft::are_const_same<T, U>::value), T>::type* = 0) :
+			template<typename U, bool C>
+			RedBlackIteratorRev(const RedBlackIteratorRev<U, Compare, C> &rbtIt,
+								typename ft::enable_if< (ft::are_const_same<T, U>::value && ft::sup_or_eq<Const, C>::value), T>::type* = 0) :
 				_tree(rbtIt.baseTree()),
 				_node(rbtIt.baseNode())
 			{
@@ -252,15 +267,13 @@ namespace ft
 					std::cerr << GREEN << "[RedBlackIteratorRev] " << END << "copy constructor" << std::endl;
 			}
 
-
-			RedBlackIteratorRev(const RedBlackIterator<T, Compare> &rbtIt) :
+			RedBlackIteratorRev(const RedBlackIterator<T, Compare, Const> &rbtIt) :
 				_tree(rbtIt.baseTree()),
 				_node(rbtIt.baseNode())
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[RedBlackIteratorRev] " << END << "copy constructor" << std::endl;
 			}
-
 
 			//	assignation
 

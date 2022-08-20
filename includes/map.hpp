@@ -76,19 +76,13 @@ namespace ft
 			typedef size_t												size_type;
 			typedef std::ptrdiff_t										difference_type;
 
-		private:
 
-			typedef RedBlackIterator<value_type, value_compare>				rbtIterator;
-			typedef RedBlackIterator<const value_type, value_compare>		rbtIteratorConst;
-			typedef	RedBlackIteratorRev<value_type, value_compare>			rbtIteratorRev;
-			typedef	RedBlackIteratorRev<const value_type, value_compare>	rbtIteratorConstRev;
-		
 		public:
 
-			typedef rbtIterator			iterator;
-			typedef rbtIteratorConst	const_iterator;
-			typedef rbtIteratorRev		reverse_iterator;
-			typedef rbtIteratorConstRev	const_reverse_iterator;
+			typedef RedBlackIterator<value_type, value_compare, false>		iterator;
+			typedef RedBlackIterator<value_type, value_compare, true>		const_iterator;
+			typedef	RedBlackIteratorRev<value_type, value_compare, false>	reverse_iterator;
+			typedef	RedBlackIteratorRev<value_type, value_compare, true>	const_reverse_iterator;
 
 
 			//	constructors
@@ -231,7 +225,7 @@ namespace ft
 					alreadyMapped = false;
 					ptr = _tree->insert(val);
 				}
-				return (ft::make_pair<iterator, bool>(iterator(rbtIterator(_tree, ptr)), alreadyMapped));
+				return (ft::make_pair<iterator, bool>(iterator(_tree, ptr), alreadyMapped));
 			}
 
 			iterator	insert(iterator position, const value_type& val)

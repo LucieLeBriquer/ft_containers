@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/02 16:24:26 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/05/27 14:31:23 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/20 15:25:52 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,24 @@ namespace ft
     	enum { value = 1 };
     	typedef __true_type type;
     };*/
+
+	template<bool B1, bool B2>
+	struct sup_or_eq
+	{
+    	enum { value = 0 };
+	};
+
+	template<bool B2>
+	struct sup_or_eq<true, B2>
+	{
+    	enum { value = 1 };
+	};
+
+	template<bool B>
+	struct sup_or_eq<B, B>
+	{
+    	enum { value = 1 };
+	};
 
 }
 #endif
