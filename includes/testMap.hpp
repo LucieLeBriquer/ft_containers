@@ -20,11 +20,12 @@
 #  include "map.hpp"
 # endif
 
+void	failing(void);
+
 void	mapConstruction(void);
 void	mapElementAccess(void);
 void	mapIterators(void);
 void	mapErase(void);
-
 void	mapInsert(void);
 
 template <typename T>

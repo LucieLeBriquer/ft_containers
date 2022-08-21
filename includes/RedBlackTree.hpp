@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:12:47 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/21 16:31:05 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/21 17:26:29 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -551,7 +551,7 @@ namespace ft
 				return (true);
 			}
 
-			void	remove(const NodeP toRemove)
+			/*void	remove(const NodeP toRemove)
 			{
 				NodeP	toDelete;
 				NodeP	copy;
@@ -611,7 +611,7 @@ namespace ft
 				delete toDelete;
 				if (color == BLACK_C)
 					_deleteUpdate(toFix);	
-			}
+			}*/
 
 
 			//	insertion
@@ -670,6 +670,7 @@ namespace ft
 
 				if (node->right != _leaf && node->right != NULL)
 					return (minimum(node->right));
+				
 				cur = node->parent;
 				while (cur != _leaf && cur != NULL && node == cur->right)
 				{

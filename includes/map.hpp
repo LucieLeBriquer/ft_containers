@@ -246,7 +246,7 @@ namespace ft
 
 			void 		erase(iterator position)
 			{
-				_tree->remove(position.base());
+				_tree->remove(ft::make_pair<key_type, mapped_type>((position.base())->value.first, mapped_type()));
 			}
 
 			size_type	erase(const key_type& k)
@@ -256,11 +256,15 @@ namespace ft
 
 			void		erase(iterator first, iterator last)
 			{
+				std::vector<key_type>	toDelete;
+
 				while (first != last)
 				{
-					_tree->remove(first.base());
+					toDelete.push_back(first.base()->value.first);
 					first++;
 				}
+				for (size_type i = 0; i < toDelete.size(); i++)
+					_tree->remove(ft::make_pair<key_type, mapped_type>(toDelete[i], mapped_type()));
 			}
 
 			void		swap(map& x)
