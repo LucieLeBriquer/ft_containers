@@ -12,18 +12,6 @@
 
 #include "testMap.hpp"
 
-template<typename K, typename T>
-void	showMap(NSP::map<K, T> &map)
-{
-	typename NSP::map<K, T>::iterator	it = map.begin();
-
-	while (it != map.end())
-	{
-		std::cout << "\t" << (*it).first << "\t:\t" << (*it).second << std::endl;
-		it++;
-	}
-}
-
 static void	mapConstructionInt(void)
 {
 	NSP::pair<int, int>	pair1(150, 0);

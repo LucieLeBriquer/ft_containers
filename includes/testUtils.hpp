@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 17:41:12 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/16 17:42:32 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/21 11:50:24 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 #  define NSP ft
 # endif
 # define SIZE 52
+# define RED "\x1B[31m"
+# define GREEN "\x1B[32m"
+# define YELLOW "\x1B[33m"
+# define PURPLE "\x1B[35m"
+# define BLUE "\x1B[36m"
 # define ORANGE "\x1B[34m"
 # define BORANGE "\x1B[1;34m"
 # define BOLD "\x1B[1m"

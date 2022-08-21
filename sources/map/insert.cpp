@@ -6,86 +6,65 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 17:45:48 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/20 17:46:52 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/21 12:24:46 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "testMap.hpp"
 
-#define T1 int
-#define T2 std::string
-typedef NSP::map<T1, T2>::value_type T3;
-typedef NSP::map<T1, T2>::iterator iterator;
+typedef NSP::map<int, std::string>::value_type	mapPair;
+typedef NSP::map<int, std::string>::iterator	mapIt;
 
-#define _pair NSP::pair
-
-static int iter = 0;
-
-template <typename T>
-std::string printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
+template <typename Map, typename U>
+void    insertion(Map &map, U value)
 {
-    o << "key: " << iterator->first << " | value: " << iterator->second;
-    if (nl)
-        o << std::endl;
-    return ("");
+    NSP::pair<mapIt, bool> res;
+
+	std::cout << YELLOW << "trying to insert (" << value.first << "," << value.second << ")" << END << std::endl;
+    res = map.insert(value);
+    std::cout << "[return value]\t(" << res.first->first << "," << res.first->second << ")" << std::endl;
+    std::cout << "[node created]\t" << (res.second ? "yes": "no") << std::endl;
+    printMap(map);
 }
 
-template <typename T_MAP>
-void    printSize(T_MAP const &mp, bool print_content = 1)
+template <typename Map, typename U, typename V>
+void    insertion(Map &map, U it, V value)
 {
-    std::cout << "size: " << mp.size() << std::endl;
-    std::cout << "max_size: " << mp.max_size() << std::endl;
-    if (print_content)
-    {
-        typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
-        std::cout << std::endl << "Content is:" << std::endl;
-        for (; it != ite; ++it)
-            std::cout << "- " << printPair(it, false) << std::endl;
-    }
-    std::cout << "###############################################" << std::endl;
+    mapIt	res;
+
+	std::cout << YELLOW << "trying to insert (" << value.first << "," << value.second << ")" << END << std::endl;
+    res = map.insert(it, value);
+    std::cout << "[return value]\t(" << res->first << "," << res->second << ")" << std::endl;
+    printMap(map);
 }
 
-template <typename MAP, typename U>
-void    ft_insert(MAP &mp, U param)
+void     mapInsert(void)
 {
-    _pair<iterator, bool> tmp;
+    NSP::map<int, std::string>	map;
+	NSP::map<int, std::string>	map2;
 
-    std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-    tmp = mp.insert(param);
-    std::cout << "insert return: " << printPair(tmp.first);
-    std::cout << "Created new node: " << tmp.second << std::endl;
-    printSize(mp);
-}
+	printTitle("map insertion", BORANGE);
 
-template <typename MAP, typename U, typename V>
-void    ft_insert(MAP &mp, U param, V param2)
-{
-    iterator tmp;
+	// classic insertion
+	printSubtitle("classic insertion", ORANGE);
+    insertion(map, mapPair(12, "eleven"));
+	printSubtitle("insertion of a key already in map", ORANGE);
+    insertion(map, mapPair(12, "twelve"));
+	printSubtitle("classic insertions again", ORANGE);
+    insertion(map, mapPair(42, "fourty-two"));
+    insertion(map, mapPair(0, "zero"));
+    insertion(map, mapPair(1, "one"));
+    insertion(map, mapPair(50, "fifty"));
+    insertion(map, mapPair(3, "three"));
 
-    std::cout << "\t-- [" << iter++ << "] --" << std::endl;
-    tmp = mp.insert(param, param2);
-    std::cout << "insert return: " << printPair(tmp);
-    printSize(mp);
-}
+	// insertion with hint
+	printSubtitle("insertion with an hint on the same map", ORANGE);
+    insertion(map, map.begin(), mapPair(2, "two"));
 
-void     fail(void)
-{
-    NSP::map<T1, T2> mp, mp2;
-
-    ft_insert(mp, T3(42, "lol"));
-    ft_insert(mp, T3(42, "mdr"));
-
-    ft_insert(mp, T3(50, "mdr"));
-    ft_insert(mp, T3(35, "funny"));
-
-    ft_insert(mp, T3(45, "bunny"));
-    ft_insert(mp, T3(21, "fizz"));
-    ft_insert(mp, T3(38, "buzz"));
-
-    ft_insert(mp, mp.begin(), T3(55, "fuzzy"));
-
-    ft_insert(mp2, mp2.begin(), T3(1337, "beauty"));
-    ft_insert(mp2, mp2.end(), T3(1000, "Hello"));
-    ft_insert(mp2, mp2.end(), T3(1500, "World"));
+	// insertion with hint
+	printSubtitle("insertions with hints", ORANGE);
+    insertion(map2, map2.begin(), mapPair(4242, "lazy"));
+    insertion(map2, map2.end(), mapPair(10, "ten"));
+    insertion(map2, map2.end(), mapPair(8, "eight"));
 
 }

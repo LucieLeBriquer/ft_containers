@@ -15,12 +15,10 @@
 void     mapIterators(void)
 {
     NSP::map<int, int>					map;
-
     NSP::map<int, int>::iterator		it = map.begin();
     NSP::map<int, int>::const_iterator	cit = map.begin();
 
     NSP::map<int, int>::reverse_iterator		rit(it);
-
     NSP::map<int, int>::const_reverse_iterator	crit(rit);
     NSP::map<int, int>::const_reverse_iterator	crit2(it);
     NSP::map<int, int>::const_reverse_iterator	crit3(cit);
@@ -30,13 +28,12 @@ void     mapIterators(void)
 	(void)cit;
 	(void)crit3;
 
-
 	//shouldn't compile
     //NSP::map<int, int>::reverse_iterator	rit2(crit);
     //NSP::map<int, int>::reverse_iterator 	rit3(cit);
     //NSP::map<int, int>::iterator 			it2(rit);
     //NSP::map<int, int>::const_iterator 	cit2(crit);
 
-
-    std::cout << "OK" << std::endl;
+	printTitle("map iterator", BORANGE);
+    std::cout << std::endl << "All went well" << std::endl;
 }
