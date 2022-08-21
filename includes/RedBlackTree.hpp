@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:12:47 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/21 19:48:21 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/21 16:31:05 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,43 +15,67 @@
 # include "equal.hpp"
 # include "pair.hpp"
 # include "global.hpp"
+# include "iterators_traits.hpp"
 # include <vector>
 # define BLACK_C 0
 # define RED_C 1
 
-namespace ft 
+namespace ft
 {
 
 	/*
-	**		NODE structure
+	**		NODE class
 	*/
 
     template <typename T>
-    struct Node
+    class Node
     {
-		typedef T   value_type;
+		public:
+			typedef T   value_type;
 
-		value_type	value;
-		Node		*left;
-		Node		*right;
-		Node		*parent;
-		int			color;
-		bool		isLeaf;
+			value_type	value;
+			Node		*left;
+			Node		*right;
+			Node		*parent;
+			int			color;
 
-		Node() : value(value_type()), left(NULL), right(NULL), parent(NULL), color(BLACK_C), isLeaf(true)
-		{
-			return ;
-		}
+			Node() : value(value_type()), left(NULL), right(NULL), parent(NULL), color(BLACK_C)
+			{
+				return ;
+			}
 
-		Node(value_type val) : value(val), left(NULL), right(NULL), parent(NULL), color(BLACK_C), isLeaf(true)
-		{
-			return ;
-		}
+			Node(value_type val) : value(val), left(NULL), right(NULL), parent(NULL), color(BLACK_C)
+			{
+				return ;
+			}
 
-		T	*valuePtr()
-		{
-			return (&value);
-		}
+			Node(Node &node) : value(node.value), right(node.right), left(node.left), parent(node.parent), color(node.color)
+			{
+				return ;
+			}
+
+			Node	&operator=(const Node &node)
+			{
+				if (this != &node)
+				{
+					value = node.value;
+					right = node.right;
+					left = node.left;
+					parent = node.parent;
+					color = node.color;
+				}
+				return (*this);
+			}
+
+			~Node()
+			{
+				return ;
+			}
+
+			T	*valuePtr()
+			{
+				return (&value);
+			}
 	};
 	
 
@@ -98,7 +122,6 @@ namespace ft
 				node->left = _leaf;
 				node->right = _leaf;
 				node->color = color;
-				node->isLeaf = false;
 			}
 
 
@@ -199,7 +222,7 @@ namespace ft
 						if (cur->left->color == BLACK_C && cur->right->color == BLACK_C)
 						{
 							cur->color = RED_C;
-							cur = cur->parent;
+							node = node->parent;
 						}
 						else
 						{
@@ -268,9 +291,8 @@ namespace ft
 
 			void	_rotateLeft(NodeP node)
 			{
-				NodeP	save;
+				NodeP	save = node->right;
 
-				save = node->right;
 				node->right = save->left;
 				if (save->left != _leaf)
 					save->left->parent = node;
@@ -322,7 +344,8 @@ namespace ft
 					}
 
 					std::string sColor = root->color ? "RED" : "BLACK";
-					std::cout << root->value.first << " " << root->value.second << "(" << sColor << ") at[" << root << "]" << std::endl;
+					std::cout << root->value.first << "(" << sColor << ") ";
+					std::cout << std::endl;
 					_printTreeRec(root->left, indent, false);
 					_printTreeRec(root->right, indent, true);
 				}
@@ -481,10 +504,7 @@ namespace ft
 				while (node != _leaf)
 				{
 					if (areEqual(value, node->value))
-					{
 						toDelete = node;
-						break;
-					}
 					if (_isLess(node->value, value))
 						node = node->right;
 					else
@@ -540,7 +560,7 @@ namespace ft
 				int		color;
 
 				toDelete = _leaf;
-				while (node != _leaf)
+				while (node != _leaf && node != NULL)
 				{
 					if (toRemove == node)
 					{
@@ -587,6 +607,7 @@ namespace ft
 					copy->left->parent = copy;
 					copy->color = toDelete->color;
 				}
+
 				delete toDelete;
 				if (color == BLACK_C)
 					_deleteUpdate(toFix);	
@@ -598,17 +619,15 @@ namespace ft
 			NodeP	insert(const value_type value)
 			{
 				NodeP	node = new Node<T>(value);
+				_fillNewNode(node, RED_C);
 
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "\tcreates " << END << node << std::endl;
-				NodeP	cur;
-				NodeP	root;
 
-				_fillNewNode(node, RED_C);
+				NodeP	cur = NULL;
+				NodeP	root = _root;
 
-				cur = NULL;
-				root = _root;
-				while (root != _leaf && root != NULL)
+				while (root != _leaf)
 				{
 					cur = root;
 					if (_isLess(node->value, cur->value))
@@ -712,6 +731,11 @@ namespace ft
 			NodeP	getLeaf(void) const
 			{
 				return (_leaf);
+			}
+
+			bool	isLeaf(NodeP node) const
+			{
+				return (node == _leaf);
 			}
 
 

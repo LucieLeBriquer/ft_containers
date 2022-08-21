@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/20 15:19:31 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/21 16:35:22 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,9 @@ namespace ft
 			 	return (_node);
 			}
 
-			void	*base(void) const
+			NodeP	base(void) const
 			{
-			 	return (_node);
+			 	return (_getNode());
 			}
 
 			void	*baseTree(void) const
@@ -171,6 +171,13 @@ namespace ft
 			 	return (_tree);
 			}
 
+			bool	isLeaf(void) const
+			{
+				NodeP	node = _getNode();
+				TreeP	tree = _getTree();
+
+				return (tree->isLeaf(node));
+			}
 
 			//	compare
 
@@ -194,9 +201,9 @@ namespace ft
 		Node<U>	*nodeU = reinterpret_cast<Node<U> *>(it2.baseNode());
 		RedBlackTree<T, Compare> *treeT = reinterpret_cast<RedBlackTree<T, Compare> *>(it1.baseTree());
 
-		return ((nodeT->isLeaf && nodeU->isLeaf) ||
+		return ((it1.isLeaf() && it2.isLeaf()) ||
 			(treeT->areEqual(nodeT->value, nodeU->value)
-			&& !nodeT->isLeaf && !nodeU->isLeaf));
+			&& !it1.isLeaf() && !it2.isLeaf()));
 	}
 
 	template<typename T, typename U, class Compare, bool Const1, bool Const2>
@@ -338,14 +345,22 @@ namespace ft
 			 	return (_node);
 			}
 
-			void	*base(void) const
+			NodeP	base(void) const
 			{
-			 	return (_node);
+			 	return (_getNode());
 			}
 
 			void	*baseTree(void) const
 			{
 			 	return (_tree);
+			}
+
+			bool	isLeaf(void) const
+			{
+				NodeP	node = _getNode();
+				TreeP	tree = _getTree();
+
+				return (tree->isLeaf(node));
 			}
 	};
 
@@ -357,9 +372,9 @@ namespace ft
 		Node<U>	*nodeU = reinterpret_cast<Node<U> *>(it2.baseNode());
 		RedBlackTree<T, Compare> *treeT = reinterpret_cast<RedBlackTree<T, Compare> *>(it1.baseTree());
 
-		return ((nodeT->isLeaf && nodeU->isLeaf) ||
+		return ((it1.isLeaf() && it2.isLeaf()) ||
 			(treeT->areEqual(nodeT->value, nodeU->value)
-			&& !nodeT->isLeaf && !nodeU->isLeaf));
+			&& !it1.isLeaf() && !it2.isLeaf()));
 	}
 
 	template<typename T, typename U, class Compare, bool Const1, bool Const2>

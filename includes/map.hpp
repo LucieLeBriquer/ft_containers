@@ -206,7 +206,7 @@ namespace ft
 				NodeP		ptr;
 
 				ptr = _tree->search(pair);
-				if (!ptr || ptr->isLeaf)
+				if (!ptr || _tree->isLeaf(ptr))
 					ptr = _tree->insert(pair);
 				return (ptr->value.second);
 			}
@@ -220,7 +220,7 @@ namespace ft
 				bool		alreadyMapped = true;
 
 				ptr = _tree->search(val);
-				if (!ptr || ptr->isLeaf)
+				if (!ptr || _tree->isLeaf(ptr))
 				{
 					alreadyMapped = false;
 					ptr = _tree->insert(val);
@@ -258,7 +258,7 @@ namespace ft
 			{
 				while (first != last)
 				{
-					_tree->remove(first->base());
+					_tree->remove(first.base());
 					first++;
 				}
 			}
