@@ -17,8 +17,7 @@ int	main(void)
 	/*
 	**		MAP
 	*/
-	failing();
-	return (0);
+
 	// construction
 	mapConstruction();
 	

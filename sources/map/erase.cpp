@@ -61,18 +61,3 @@ void	mapErase(void)
     printMap(map);
     eraseAndPrint(map, map.begin(), map.end());
 }
-
-
-// fail
-
-
-void	failing(void)
-{
-	 std::list<T3> lst;
-    unsigned int lst_size = 10;
-    for (unsigned int i = 0; i < lst_size; ++i)
-        lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
-    NSP::map<T1, T2> mp(lst.begin(), lst.end());
-    printMap(mp);
-    eraseAndPrint(mp, --(--(--mp.end())), --mp.end());
-}
