@@ -37,8 +37,8 @@ namespace ft
       	typedef typename allocator_type::const_reference	const_reference;
       	typedef normal_iterator<pointer, vector>			iterator;
       	typedef normal_iterator<const_pointer, vector>		const_iterator;
-      	typedef reverse_iterator<const_iterator>			const_reverse_iterator;
-      	typedef reverse_iterator<iterator>					reverse_iterator;
+      	typedef reverseIterator<const_iterator>				const_reverse_iterator;
+      	typedef reverseIterator<iterator>					reverse_iterator;
       	typedef size_t										size_type;
       	typedef std::ptrdiff_t								difference_type;
 		
