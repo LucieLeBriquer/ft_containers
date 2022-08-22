@@ -8,7 +8,7 @@ NAME_STL	= $(NAME)STL
 TEST		= .$(NAME_SHORT).res
 TEST_STL	= .$(NAME_SHORT)STL.res
 
-INCS_DIR	= ./includes/
+INCS_DIR	= ./includes/tests/
 MAIN_INC	= -I$(INCS_DIR)
 INCS		= $(shell find $(INCS_DIR) -type f -name "*.hpp")
 

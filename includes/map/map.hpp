@@ -6,16 +6,15 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/19 10:52:31 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/22 19:00:00 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MAP_HPP
 # define MAP_HPP
-# include "reverse_iterator.hpp"
+# include "../iterators/reverse_iterator.hpp"
 # include "RedBlackTree.hpp"
 # include "rbt_iterator.hpp"
-# include "normal_iterator.hpp"
 
 namespace ft
 {
@@ -81,6 +80,7 @@ namespace ft
 
 			typedef RedBlackIterator<value_type, value_compare, false>	iterator;
 			typedef RedBlackIterator<value_type, value_compare, true>	const_iterator;
+			
 			typedef reverseIterator<iterator>							reverse_iterator;
 			typedef	reverseIterator<const_iterator>						const_reverse_iterator;
 

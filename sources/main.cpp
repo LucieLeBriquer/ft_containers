@@ -26,7 +26,7 @@ int	main(void)
 
 	// iterators
 	mapIterators();
-	return (0);
+	
 	// insertion
 	mapInsert();
 

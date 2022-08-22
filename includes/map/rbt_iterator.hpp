@@ -13,9 +13,8 @@
 #ifndef RBT_ITERATOR_HPP
 # define RBT_ITERATOR_HPP
 # include "RedBlackTree.hpp"
-# include "iterators_traits.hpp"
-# include "global.hpp"
-# include <cstdlib>
+# include "../iterators/iterators_traits.hpp"
+# include "../utils/global.hpp"
 
 namespace ft
 {

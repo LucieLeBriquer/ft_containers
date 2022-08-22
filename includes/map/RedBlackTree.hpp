@@ -12,10 +12,10 @@
 
 #ifndef REDBLACKTREE_HPP
 # define REDBLACKTREE_HPP
-# include "equal.hpp"
-# include "pair.hpp"
-# include "global.hpp"
-# include "iterators_traits.hpp"
+# include "../utils/equal.hpp"
+# include "../utils/pair.hpp"
+# include "../utils/global.hpp"
+# include "../iterators/iterators_traits.hpp"
 # include <vector>
 # define BLACK_C 0
 # define RED_C 1

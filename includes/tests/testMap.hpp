@@ -17,7 +17,7 @@
 # ifdef USESTL
 #  include <map>
 # else
-#  include "map.hpp"
+#  include "../map/map.hpp"
 # endif
 
 void	failing(void);
