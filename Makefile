@@ -18,8 +18,8 @@ SRCS_DIR 	= ./sources/
 SRCS		= $(shell find $(SRCS_DIR) -type f -name "*.cpp" -not -name $(MAIN_SRC))
 MAIN		= $(SRCS_DIR)$(MAIN_SRC)
 
-OBJS_DIR	= ./objects/
-OBJSSTL_DIR	= ./objects/STL
+OBJS_DIR	= ./objects/objectsFT/
+OBJSSTL_DIR	= ./objects/objectsSTL/
 OBJS		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJS_DIR)%.o)
 OBJSSTL		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJSSTL_DIR)%.o)
 
@@ -59,11 +59,7 @@ $(NAME_STL)	: $(OBJSSTL) $(INCS) $(MAIN)
 			@echo "$(_OK) $(NAME_SHORT)STL compiled"
 
 clean		:
-ifeq ($(OBJS_DIR), ./)
-			@$(RM) $(OBJS)
-else
-			@$(RM) $(OBJS_DIR)
-endif
+			@$(RM) "./objects"
 
 fclean		: clean
 			@$(RM) $(NAME) $(NAME_STL)

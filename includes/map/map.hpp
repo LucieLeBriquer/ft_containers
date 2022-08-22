@@ -12,9 +12,9 @@
 
 #ifndef MAP_HPP
 # define MAP_HPP
-# include "../iterators/reverse_iterator.hpp"
+# include "../iterators/reverseIterator.hpp"
 # include "RedBlackTree.hpp"
-# include "rbt_iterator.hpp"
+# include "RedBlackIterator.hpp"
 
 namespace ft
 {

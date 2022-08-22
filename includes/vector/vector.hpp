@@ -12,15 +12,15 @@
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
-# include "normal_iterator.hpp"
-# include "reverse_iterator.hpp"
+# include "normalIterator.hpp"
+# include "reverseIterator.hpp"
 # include "enable_if.hpp"
 # include "is_integral.hpp"
-# include <memory>
 # include <iostream>
-# include <cstddef>
-# include <stdexcept>
-# include <sstream>
+# include <memory>
+//# include <cstddef>
+//# include <stdexcept>
+//# include <sstream>
 
 namespace ft
 {
@@ -35,8 +35,8 @@ namespace ft
     	typedef typename allocator_type::const_pointer		const_pointer;
       	typedef typename allocator_type::reference			reference;
       	typedef typename allocator_type::const_reference	const_reference;
-      	typedef normal_iterator<pointer, vector>			iterator;
-      	typedef normal_iterator<const_pointer, vector>		const_iterator;
+      	typedef normalIterator<pointer, vector>				iterator;
+      	typedef normalIterator<const_pointer, vector>		const_iterator;
       	typedef reverseIterator<const_iterator>				const_reverse_iterator;
       	typedef reverseIterator<iterator>					reverse_iterator;
       	typedef size_t										size_type;

@@ -12,7 +12,6 @@
 
 #ifndef ITERATORS_TRAITS_HPP
 # define ITERATORS_TRAITS_HPP
-# include "iterator.hpp"
 # include <iterator>
 
 // https://www.cplusplus.com/reference/iterator/iterator_traits/

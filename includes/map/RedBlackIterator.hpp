@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rbt_iterator.hpp                                   :+:      :+:    :+:   */
+/*   RedBlackIterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/27 18:50:32 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/21 16:35:22 by lle-briq         ###   ########.fr       */
+/*   Created: 2022/08/22 19:25:08 by lle-briq          #+#    #+#             */
+/*   Updated: 2022/08/22 19:25:08 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RBT_ITERATOR_HPP
-# define RBT_ITERATOR_HPP
+#ifndef REDBLACKITERATOR_HPP
+# define REDBLACKITERATOR_HPP
 # include "RedBlackTree.hpp"
 # include "../iterators/iterators_traits.hpp"
 # include "../utils/global.hpp"
@@ -159,11 +159,6 @@ namespace ft
 			{
 			 	return (_node);
 			}
-
-			/*NodeP	base(void) const
-			{
-			 	return (_getNode());
-			}*/
 
 			void	*baseTree(void) const
 			{
