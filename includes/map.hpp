@@ -79,10 +79,10 @@ namespace ft
 
 		public:
 
-			typedef RedBlackIterator<value_type, value_compare, false>		iterator;
-			typedef RedBlackIterator<value_type, value_compare, true>		const_iterator;
-			typedef	RedBlackIteratorRev<value_type, value_compare, false>	reverse_iterator;
-			typedef	RedBlackIteratorRev<value_type, value_compare, true>	const_reverse_iterator;
+			typedef RedBlackIterator<value_type, value_compare, false>	iterator;
+			typedef RedBlackIterator<value_type, value_compare, true>	const_iterator;
+			typedef reverseIterator<iterator>							reverse_iterator;
+			typedef	reverseIterator<const_iterator>						const_reverse_iterator;
 
 
 			//	constructors
@@ -161,22 +161,22 @@ namespace ft
 			
 			reverse_iterator rbegin()
 			{
-				return (reverse_iterator(_tree, _tree->maximum()));
+				return (reverse_iterator(iterator(_tree, _tree->getLeaf())));
 			}
 
 			const_reverse_iterator rbegin() const
 			{
-				return (const_reverse_iterator(_tree, _tree->maximum()));
+				return (reverse_iterator(const_iterator(_tree, _tree->getLeaf())));
 			}
 
 			reverse_iterator rend()
 			{
-				return (reverse_iterator(_tree, _tree->getLeaf()));
+				return (reverse_iterator(iterator(_tree, _tree->minimum())));
 			}
 
 			const_reverse_iterator rend() const
 			{
-				return (const_reverse_iterator(_tree, _tree->getLeaf()));
+				return (reverse_iterator(const_iterator(_tree, _tree->minimum())));
 			}
 
 
@@ -246,7 +246,7 @@ namespace ft
 
 			void 		erase(iterator position)
 			{
-				_tree->remove(ft::make_pair<key_type, mapped_type>((position.base())->value.first, mapped_type()));
+				_tree->remove(ft::make_pair<key_type, mapped_type>(position->first, mapped_type()));
 			}
 
 			size_type	erase(const key_type& k)
@@ -260,7 +260,7 @@ namespace ft
 
 				while (first != last)
 				{
-					toDelete.push_back(first.base()->value.first);
+					toDelete.push_back(first->first);
 					first++;
 				}
 				for (size_type i = 0; i < toDelete.size(); i++)

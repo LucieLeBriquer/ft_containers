@@ -62,7 +62,7 @@ void	failing(void)
     std::cout << (it_ == it.base()) << std::endl;
     std::cout << (it_ == dec(it, 3).base()) << std::endl;
 
-    printPair(it);
+    //printPair(it);
     printPair(inc(it.base(), 1));
 
     std::cout << "TEST OFFSET" << std::endl;
@@ -103,6 +103,5 @@ void     mapIterators(void)
 
 	printTitle("map iterator", BORANGE);
     std::cout << std::endl << "All went well" << std::endl;
-
 	failing();
 }
