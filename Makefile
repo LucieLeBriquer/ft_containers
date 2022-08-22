@@ -72,6 +72,9 @@ diff		: $(NAME) $(NAME_STL)
 			@diff $(TEST) $(TEST_STL) && echo -n "$(_OK) No o" || echo -n "$(_KO) O"
 			@echo "utput differences"
 			@rm $(TEST) $(TEST_STL)
+
+test		:
+			@cd tester; ./do.sh map; echo -n ""
 			
 
-.PHONY		: all clean fclean re diff
+.PHONY		: all clean fclean re diff test

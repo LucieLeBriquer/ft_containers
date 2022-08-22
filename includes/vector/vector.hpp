@@ -12,15 +12,12 @@
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
-# include "normalIterator.hpp"
-# include "reverseIterator.hpp"
-# include "enable_if.hpp"
-# include "is_integral.hpp"
+# include "../iterators/normalIterator.hpp"
+# include "../iterators/reverseIterator.hpp"
+# include "../utils/enable_if.hpp"
+# include "../utils/is_integral.hpp"
 # include <iostream>
-# include <memory>
-//# include <cstddef>
-//# include <stdexcept>
-//# include <sstream>
+# include <sstream>
 
 namespace ft
 {
