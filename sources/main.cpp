@@ -20,7 +20,7 @@ int	main(void)
 
 	// construction
 	mapConstruction();
-	
+	return (0);	
 	// element access
 	mapElementAccess();
 

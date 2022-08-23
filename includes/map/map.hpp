@@ -103,7 +103,7 @@ namespace ft
 					std::cerr << GREEN << "[Map] " << END << "iterator constructor" << std::endl;
 				while (first != last)
 				{
-					_tree->insert(*first);
+					insert(*first);
 					first++;				
 				}
 			}
@@ -220,7 +220,7 @@ namespace ft
 				bool		alreadyMapped = true;
 
 				ptr = _tree->search(val);
-				if (!ptr || _tree->isLeaf(ptr))
+				if (!ptr)
 				{
 					alreadyMapped = false;
 					ptr = _tree->insert(val);
@@ -306,13 +306,6 @@ namespace ft
 			allocator_type	get_allocator() const
 			{
 				return (allocator_type(_alloc));
-			}
-
-
-			//	todelete
-			void	print(void) const
-			{
-				_tree->print();
 			}
 		};
 }

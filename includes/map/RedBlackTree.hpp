@@ -129,7 +129,9 @@ namespace ft
 
 			NodeP	_searchNode(NodeP node, const value_type value) const
 			{
-				if (node == _leaf || node == NULL || areEqual(value, node->value))
+				if (node == _leaf || node == NULL)
+					return (NULL);
+				if (areEqual(value, node->value))
 					return (node);
 				if (_isLess(value, node->value))
 					return (_searchNode(node->left, value));
@@ -138,7 +140,9 @@ namespace ft
 
 			NodeP	_searchNode(NodeP node, const NodeP nodeToFind) const
 			{
-				if (node == _leaf || node == NULL || node == nodeToFind)
+				if (node == _leaf || node == NULL)
+					return (NULL);
+				if (node == nodeToFind)
 					return (node);
 				if (_isLess(nodeToFind->value, node->value))
 					return (_searchNode(node->left, nodeToFind));
