@@ -39,6 +39,7 @@ void	printTitle(std::string title, std::string color, bool toUpper)
 	std::cout << toPrint.substr(n / 2, n - n / 2);
 	std::cout << std::setfill(c) << std::setw(size - size / 2 - n + n / 2) << "" << std::endl;
 	std::cout << std::setfill(c) << std::setw(size) << "" << END <<  std::endl;
+	std::cout << std::setfill(' ');
 }
 
 void	printSubtitle(std::string subtitle, std::string color)

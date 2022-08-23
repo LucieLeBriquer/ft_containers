@@ -24,6 +24,7 @@ void	mapElementAccess(void)
 	map.insert(pair2);
 	map.insert(pair3);
 	map.insert(pair4);
+	printMap(map);
 
 	printTitle("map element access", BORANGE);
 
@@ -31,18 +32,26 @@ void	mapElementAccess(void)
 	printSubtitle("access with iterator", ORANGE);
 	NSP::map<int, int>::iterator		it = map.begin();
 	NSP::map<int, int>::const_iterator	ite = map.end();
+
+	std::cout << "it->first\tit->second" << std::endl;
 	while (it != ite)
 	{
-		std::cout << it->first << " : " << it->second << std::endl;
+		std::cout << std::setw(9) << it->first;
+		std::cout << "\t";;
+		std::cout << std::setw(10) << it->second << std::endl;
 		it++;
 	}
 
 	printSubtitle("access with reverse iterator", ORANGE);
 	NSP::map<int, int>::reverse_iterator		rit = map.rbegin();
 	NSP::map<int, int>::const_reverse_iterator	rite = map.rend();
+	
+	std::cout << "it->first\tit->second" << std::endl;
 	while (rit != rite)
 	{
-		std::cout << rit->first << " : " << rit->second << std::endl;
+		std::cout << std::setw(9) << rit->first;
+		std::cout << "\t";;
+		std::cout << std::setw(10) << rit->second << std::endl;
 		rit++;
 	}
 
@@ -54,13 +63,14 @@ void	mapElementAccess(void)
 	std::cout << "map[150] = " << map[150] << std::endl;
 	std::cout << "map[0] = " << map[0] << std::endl;
 	std::cout << std::endl;
-	showMap(map);
 	std::cout << "/!\\ map[0] should be created" << std::endl;
+	printMap(map);
 
 	printSubtitle("assign with operator[]", ORANGE);
 	map[150] = -4;
 	map[2] = -1;
 	map[100] = -2;
 	map[1] = -3;
-	showMap(map);
+	map[0] = -5;
+	printMap(map);
 }

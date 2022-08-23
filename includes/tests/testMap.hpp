@@ -19,14 +19,14 @@
 # else
 #  include "../map/map.hpp"
 # endif
-
-void	failing(void);
+# include <list>
 
 void	mapConstruction(void);
 void	mapElementAccess(void);
 void	mapIterators(void);
 void	mapErase(void);
 void	mapInsert(void);
+void	mapObservers(void);
 
 template <typename T>
 void	printPair(const T &iterator)
@@ -53,16 +53,26 @@ void    printMap(Map const &mp, bool showContent = true)
 	std::cout << std::endl;
 }
 
-template<typename K, typename T>
-void	showMap(NSP::map<K, T> &map)
-{
-	typename NSP::map<K, T>::iterator	it = map.begin();
 
-	while (it != map.end())
-	{
-		std::cout << "\t" << (*it).first << "\t:\t" << (*it).second << std::endl;
-		it++;
-	}
+template <typename Map>
+void    printMapRev(Map const &mp, bool showContent = true)
+{
+	typedef typename Map::const_iterator mapIt;
+	
+    std::cout << "[size of map] \t" << mp.size() << "/" << mp.max_size() << std::endl;
+    std::cout << "[reverse content] " << std::endl;
+    if (showContent)
+    {
+        mapIt	it = mp.end();
+		mapIt	ite = mp.begin();
+
+        while (it != ite)
+		{
+			it--;
+			printPair(it);
+		}
+    }
+	std::cout << std::endl;
 }
 
 #endif

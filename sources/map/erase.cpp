@@ -6,17 +6,11 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 12:54:38 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/21 17:09:54 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/23 18:33:12 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "testMap.hpp"
-
-#include <list>
-
-#define T1 int
-#define T2 std::string
-typedef NSP::pair<const T1, T2> T3;
 
 template <typename Map, typename U>
 void	eraseAndPrint(Map &map, U val)
@@ -31,33 +25,52 @@ void	eraseAndPrint(Map &map, U start, V end)
 	printMap(map);
 }
 
+typedef NSP::pair<int, std::string> Pair;
+
 void	mapErase(void)
 {
-	std::list<T3> lst;
-    unsigned int lst_size = 10;
-    for (unsigned int i = 0; i < lst_size; ++i)
-        lst.push_back(T3(i, std::string((lst_size - i), i + 65)));
-    NSP::map<T1, T2> map(lst.begin(), lst.end());
+	printTitle("map erase", BORANGE);
+	std::list<Pair> lst;
 
+    lst.push_back(Pair(1, "one"));
+    lst.push_back(Pair(2, "two"));
+    lst.push_back(Pair(3, "three"));
+    lst.push_back(Pair(4, "four"));
+    lst.push_back(Pair(5, "five"));
+    lst.push_back(Pair(6, "six"));
+    lst.push_back(Pair(7, "seven"));
+    lst.push_back(Pair(8, "eight"));
+    lst.push_back(Pair(9, "nine"));
+    lst.push_back(Pair(10, "ten"));
+
+    NSP::map<int, std::string> map(lst.begin(), lst.end());
+	std::cout << std::endl;
 	printMap(map);
+
+	std::cout << YELLOW << "erase(begin(), begin() + 2)" << END << std::endl;
 	map.erase(map.begin(), ++(++(map.begin())));
 	printMap(map);
 
+	std::cout << YELLOW << "erase(begin())" << END << std::endl;
 	eraseAndPrint(map, map.begin());
+
+	std::cout << YELLOW << "erase(--end())" << END << std::endl;
     eraseAndPrint(map, --map.end());
 
+	std::cout << YELLOW << "erase(begin(), begin() + 3)" << END << std::endl;
     eraseAndPrint(map, map.begin(), ++(++(++map.begin())));
+
+	std::cout << YELLOW << "erase(end() - 3, end() - 1)" << END << std::endl;
     eraseAndPrint(map, --(--(--map.end())), --map.end());
 
-    map[10] = "Hello";
-    map[11] = "Hi there";
+	std::cout << YELLOW << "assign some value" << END << std::endl;
+	std::cout << YELLOW << "" << END << std::endl;
+    map[12] = "twelve";
+    map[13] = "thirteen";
+    map[14] = "fourteen";
+    map[15] = "fifteen";
     printMap(map);
-    eraseAndPrint(map, --(--(--map.end())), map.end());
 
-    map[12] = "ONE";
-    map[13] = "TWO";
-    map[14] = "THREE";
-    map[15] = "FOUR";
-    printMap(map);
+	std::cout << YELLOW << "erase(begin(), end())" << END << std::endl;
     eraseAndPrint(map, map.begin(), map.end());
 }

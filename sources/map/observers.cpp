@@ -1,36 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   observers.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/16 15:27:40 by lle-briq         ###   ########.fr       */
+/*   Created: 2022/08/23 17:51:22 by lle-briq          #+#    #+#             */
+/*   Updated: 2022/08/23 17:51:22 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "testMap.hpp"
 
-int	main(void)
+void	mapObservers(void)
 {
-	/*
-	**		MAP
-	*/
-
-	// construction
-	mapConstruction();
-
-	// element access
-	mapElementAccess();
-
-	// iterators
-	mapIterators();
 	
-	// insertion
-	mapInsert();
-
-	// erase
-	mapErase();
-
 }

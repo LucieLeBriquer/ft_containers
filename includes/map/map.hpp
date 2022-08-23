@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/22 19:00:00 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/23 17:40:17 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,8 +288,15 @@ namespace ft
 
 
 			// observers
-			key_compare		key_comp() const;
-			value_compare	value_comp() const;
+			key_compare		key_comp() const
+			{
+				return (_comp);
+			}
+
+			value_compare	value_comp() const
+			{
+				return (value_compare());
+			}
 
 			// operations
 			iterator		find(const key_type& k);

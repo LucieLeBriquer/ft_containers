@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:18:58 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/23 11:08:42 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/23 17:44:32 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,17 @@ static void	mapConstructionInt(void)
 	map.insert(pair2);
 	map.insert(pair3);
 	map.insert(pair4);
-	showMap(map);
+	printMap(map);
 
 	// copy constructor
 	printSubtitle("copy constructor", ORANGE);
 	NSP::map<int, int>	mapCopy(map);
 	map.clear();
 	std::cout << "original map cleared" << std::endl << std::endl;
-	std::cout << "copy :" << std::endl;
-	showMap(mapCopy);
-	std::cout << std::endl << "original :" << std::endl;
-	showMap(map);
+	std::cout << YELLOW << "> copy" << END << std::endl;
+	printMap(mapCopy);
+	std::cout << std::endl << YELLOW << "> original"  << END << std::endl;
+	printMap(map);
 
 	// iterator constructor
 	printSubtitle("iterator constructor", ORANGE);
@@ -49,7 +49,7 @@ static void	mapConstructionInt(void)
 	v.push_back(pair4);
 
 	map.insert(v.rbegin(), v.rend());
-	showMap(map);
+	printMap(map);
 }
 
 static void	mapConstructionString(void)
@@ -68,17 +68,17 @@ static void	mapConstructionString(void)
 	map.insert(pair2);
 	map.insert(pair3);
 	map.insert(pair4);
-	showMap(map);
+	printMap(map);
 
 	// copy constructor
 	printSubtitle("copy constructor", ORANGE);
 	NSP::map<int, std::string>	mapCopy(map);
 	map.clear();
 	std::cout << "original map cleared" << std::endl << std::endl;
-	std::cout << "copy :" << std::endl;
-	showMap(mapCopy);
-	std::cout << std::endl << "original :" << std::endl;
-	showMap(map);
+	std::cout << YELLOW << "> copy" << END << std::endl;
+	printMap(mapCopy);
+	std::cout << std::endl << YELLOW << "> original"  << END << std::endl;
+	printMap(map);
 
 	// iterator constructor
 	printSubtitle("iterator constructor", ORANGE);
@@ -89,38 +89,37 @@ static void	mapConstructionString(void)
 	v.push_back(pair4);
 
 	map.insert(v.rbegin(), v.rend());
-	showMap(map);
+	printMap(map);
 }
 
-#define T1 int
-#define T2 std::string
-typedef NSP::map<T1, T2>::value_type T3;
-#include <list>
 static void	mapConstructionTricky(void)
 {
-    std::list<T3> lst;
-    std::list<T3>::iterator itlst;
+	printTitle("map tricky iterator construction", BORANGE);
 
-    lst.push_back(T3(42, "lol"));
-    lst.push_back(T3(50, "mdr"));
-    lst.push_back(T3(35, "funny"));
-    lst.push_back(T3(45, "bunny"));
-    lst.push_back(T3(21, "fizz"));
-    lst.push_back(T3(35, "this key is already inside"));
-    lst.push_back(T3(55, "fuzzy"));
-    lst.push_back(T3(38, "buzz"));
-    lst.push_back(T3(55, "inside too"));
+	printSubtitle("same keys in list before construction", ORANGE);
+	typedef NSP::map<int, std::string>::value_type Pair;
+    std::list<Pair> lst;
+    std::list<Pair>::iterator it;
 
-    std::cout << "List contains: " << lst.size() << " elements." << std::endl;
-    for (itlst = lst.begin(); itlst != lst.end(); ++itlst)
-        printPair(itlst);
-    std::cout << "---------------------------------------------" << std::endl;
+    lst.push_back(Pair(1, "one"));
+    lst.push_back(Pair(2, "two"));
+    lst.push_back(Pair(1, "un"));
+    lst.push_back(Pair(3, "three"));
+    lst.push_back(Pair(4, "four"));
+    lst.push_back(Pair(5, "five"));
+    lst.push_back(Pair(2, "deux"));
+    lst.push_back(Pair(6, "six"));
+    lst.push_back(Pair(7, "seven"));
+    lst.push_back(Pair(5, "cinq"));
 
-    NSP::map<T1, T2> mp(lst.begin(), lst.end());
-	mp.insert(T3(42, "blblbl"));
+	std::cout << "[size of list]\t" << lst.size() << std::endl;
+    for (it = lst.begin(); it != lst.end(); ++it)
+		printPair(it);
+	std::cout << std::endl;
+
+    NSP::map<int, std::string> map(lst.begin(), lst.end());
     lst.clear();
-
-    printMap(mp);
+    printMap(map);
 }
 
 void	mapConstruction(void)
