@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:12:47 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/21 17:26:29 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:19:45 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,12 @@ namespace ft
 
 			bool	_isLess(value_type const value1, value_type const value2) const
 			{
-				return (_comp(value1, value2));
+				return (_comp(value1.first, value2.first));
 			}
 
 			bool	_isGreater(value_type const value1, const value_type value2) const
 			{
-				return (_comp(value2, value1));
+				return (_comp(value2.first, value1.first));
 			}
 
 

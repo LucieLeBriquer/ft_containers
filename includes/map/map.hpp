@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/23 17:40:17 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/24 11:35:12 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ namespace ft
 
 			class value_compare
 			{
+				friend class map;
+
 				protected:
-					Compare _comp;
-					value_compare(Compare c) : _comp(c) { }
+					key_compare	_comp;
+					value_compare(key_compare c) : _comp(c) { }
 
 				public:
-					//constructors
-					value_compare() : _comp(Compare()) { }
 
 					bool operator()(const value_type& x, const value_type& y) const
 					{
@@ -56,8 +56,8 @@ namespace ft
 			// typedef
 			
 			typedef Node<value_type> *NodeP;
-			typedef RedBlackTree<value_type, value_compare> *TreeP;
-			typedef RedBlackTree<value_type, value_compare> Tree;
+			typedef RedBlackTree<value_type, Compare> *TreeP;
+			typedef RedBlackTree<value_type, Compare> Tree;
 
 			TreeP									_tree;
 			allocator_type							_alloc;
@@ -78,17 +78,17 @@ namespace ft
 
 		public:
 
-			typedef RedBlackIterator<value_type, value_compare, false>	iterator;
-			typedef RedBlackIterator<value_type, value_compare, true>	const_iterator;
+			typedef RedBlackIterator<value_type, Compare, false>	iterator;
+			typedef RedBlackIterator<value_type, Compare, true>		const_iterator;
 			
-			typedef reverseIterator<iterator>							reverse_iterator;
-			typedef	reverseIterator<const_iterator>						const_reverse_iterator;
+			typedef reverseIterator<iterator>						reverse_iterator;
+			typedef	reverseIterator<const_iterator>					const_reverse_iterator;
 
 
 			//	constructors
 
 			explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
-				_tree(new RedBlackTree<value_type, value_compare>()), _alloc(alloc), _comp(comp)
+				_tree(new RedBlackTree<value_type, Compare>()), _alloc(alloc), _comp(comp)
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[Map] " << END << "constructor" << std::endl;
@@ -97,7 +97,7 @@ namespace ft
 			template <class InputIterator>
 			map(InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
 				const allocator_type& alloc = allocator_type()) :
-				_tree(new RedBlackTree<value_type, value_compare>()), _alloc(alloc), _comp(comp)
+				_tree(new RedBlackTree<value_type, Compare>()), _alloc(alloc), _comp(comp)
 			{
 				if (LOG >= LOG_ALL)
 					std::cerr << GREEN << "[Map] " << END << "iterator constructor" << std::endl;
@@ -288,6 +288,7 @@ namespace ft
 
 
 			// observers
+			
 			key_compare		key_comp() const
 			{
 				return (_comp);
@@ -295,13 +296,45 @@ namespace ft
 
 			value_compare	value_comp() const
 			{
-				return (value_compare());
+				return (value_compare(_comp));
 			}
 
+
 			// operations
-			iterator		find(const key_type& k);
-			const_iterator	find(const key_type& k) const;
-			size_type		count(const key_type& k) const;
+
+			iterator		find(const key_type& k)
+			{
+				NodeP		ptr;
+				value_type	pair(k, mapped_type());
+
+				ptr = _tree->search(pair);
+				if (!ptr)
+					return (end());
+				return (iterator(_tree, ptr));
+			}
+
+			const_iterator	find(const key_type& k) const
+			{
+				NodeP		ptr;
+				value_type	pair(k, mapped_type());
+
+				ptr = _tree->search(pair);
+				if (!ptr)
+					return (end());
+				return (const_iterator(_tree, ptr));
+			}
+
+			size_type		count(const key_type& k) const
+			{
+				NodeP		ptr;
+				value_type	pair(k, mapped_type());
+
+				ptr = _tree->search(pair);
+				if (!ptr)
+					return (0);
+				return (1);
+			}
+			
 			iterator		lower_bound(const key_type& k);
 			const_iterator	lower_bound(const key_type& k) const;
 			iterator		upper_bound(const key_type& k);

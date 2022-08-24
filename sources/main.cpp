@@ -33,4 +33,10 @@ int	main(void)
 	// erase
 	mapErase();
 
+	// observers
+	mapObservers();
+
+	// find
+	mapFind();
+
 }
