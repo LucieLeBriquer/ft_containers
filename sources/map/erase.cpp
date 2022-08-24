@@ -25,7 +25,7 @@ void	eraseAndPrint(Map &map, U start, V end)
 	printMap(map);
 }
 
-typedef NSP::pair<int, std::string> Pair;
+typedef NSP::pair<const int, std::string> Pair;
 
 void	mapErase(void)
 {
