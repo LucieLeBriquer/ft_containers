@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:25:08 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/22 19:25:08 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:24:05 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,16 @@ namespace ft
 			NodeP	_getNode(void) const
 			{
 				return (reinterpret_cast<NodeP>(_node));
+			}
+
+			bool	_isLeaf(void) const
+			{
+				if (!_tree)
+					return (true);
+				NodeP	node = _getNode();
+				TreeP	tree = _getTree();
+
+				return (tree->isLeaf(node));
 			}
 
 
@@ -165,46 +175,25 @@ namespace ft
 			 	return (_tree);
 			}
 
-			bool	isLeaf(void) const
-			{
-				NodeP	node = _getNode();
-				TreeP	tree = _getTree();
-
-				return (tree->isLeaf(node));
-			}
-
 			//	compare
 
-			// friend bool	operator==(const RedBlackIterator &it1, const RedBlackIterator &it2)
-			// {
-			// 	return ((it1._node->isLeaf && it2._node->isLeaf) ||
-			// 		(it1._tree->areEqual(it1._node->value, it2._node->value)
-			// 		&& !it1._node->isLeaf && !it2._node->isLeaf));
-			// }
+			template<class Compare2, bool Const2>
+			friend bool	operator==(const RedBlackIterator &it1, 
+					const RedBlackIterator<T, Compare2, Const2> &it2)
+			{
+				Compare	comp;
 
-			// friend bool	operator!=(const RedBlackIterator &it1, const RedBlackIterator &it2)
-			// {
-			// 	return (!(operator==(it1, it2)));
-			// }
+				return ((it1._isLeaf() && it2._isLeaf()) 
+					|| (!comp(it1->first, it2->first) && !comp(it2->first, it1->first) && !it1._isLeaf() && !it2._isLeaf()));
+			}
+
+			template<class Compare2, bool Const2>
+			friend bool	operator!=(const RedBlackIterator &it1, 
+					const RedBlackIterator<T, Compare2, Const2> &it2)
+			{
+				return (!(operator==(it1, it2)));
+			}
 	};
-
-	template<typename T, typename U, class Compare, bool Const1, bool Const2>
-	bool	operator==(const RedBlackIterator<T, Compare, Const1> &it1, const RedBlackIterator<U, Compare, Const2> &it2)
-	{
-		Node<T>	*nodeT = reinterpret_cast<Node<T> *>(it1.baseNode());
-		Node<U>	*nodeU = reinterpret_cast<Node<U> *>(it2.baseNode());
-		RedBlackTree<T, Compare> *treeT = reinterpret_cast<RedBlackTree<T, Compare> *>(it1.baseTree());
-
-		return ((it1.isLeaf() && it2.isLeaf()) ||
-			(treeT->areEqual(nodeT->value, nodeU->value)
-			&& !it1.isLeaf() && !it2.isLeaf()));
-	}
-
-	template<typename T, typename U, class Compare, bool Const1, bool Const2>
-	bool	operator!=(const RedBlackIterator<T, Compare, Const1> &it1, const RedBlackIterator<U, Compare, Const2> &it2)
-	{
-		return (!(operator==(it1, it2)));
-	}
 
 }
 

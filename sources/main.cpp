@@ -39,4 +39,6 @@ int	main(void)
 	// find
 	mapFind();
 
+	// bound
+	mapBound();
 }

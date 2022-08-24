@@ -28,6 +28,7 @@ void	mapErase(void);
 void	mapInsert(void);
 void	mapObservers(void);
 void	mapFind(void);
+void	mapBound(void);
 
 template <typename T>
 void	printPair(const T &iterator)

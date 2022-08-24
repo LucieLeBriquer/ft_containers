@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 15:03:17 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/23 18:15:14 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:09:00 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,10 @@ void     mapIterators(void)
 	std::cout << std::endl;
     std::cout << YELLOW << "from end() to begin()" << END << std::endl;
 	printMapRev(map2);
+	
+	NSP::map<char, int>::iterator itt;
+    NSP::map<const char, int>::const_iterator itte;
+
+	std::cout << "let's go segfault" << std::endl;
+    std::cout << (itt != itte) << std::endl;
 }

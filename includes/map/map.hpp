@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/24 11:35:12 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:04:33 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ namespace ft
 
 			//	typedef
 
-			typedef Key						key_type;
-			typedef T						mapped_type;
-			typedef ft::pair<Key, T>		value_type;
-			typedef Compare					key_compare;
-			typedef Alloc					allocator_type;
+			typedef typename ft::remove_const<Key>::type	key_type;
+			typedef T										mapped_type;
+			typedef ft::pair<key_type, T>					value_type;
+			typedef Compare									key_compare;
+			typedef Alloc									allocator_type;
 
 
 			//	value_compare class to compare key values
@@ -44,7 +44,6 @@ namespace ft
 					value_compare(key_compare c) : _comp(c) { }
 
 				public:
-
 					bool operator()(const value_type& x, const value_type& y) const
 					{
 						return (_comp(x.first, y.first));
@@ -335,12 +334,51 @@ namespace ft
 				return (1);
 			}
 			
-			iterator		lower_bound(const key_type& k);
-			const_iterator	lower_bound(const key_type& k) const;
-			iterator		upper_bound(const key_type& k);
-			const_iterator	upper_bound(const key_type& k) const;
-			pair<const_iterator,const_iterator>	equal_range(const key_type& k) const;
-			pair<iterator,iterator>				equal_range(const key_type& k);
+			iterator		lower_bound(const key_type& k)
+			{
+				iterator	it = begin();
+
+				while (it != end() && _comp(it->first, k))
+					it++;
+				return (it);
+			}
+
+			const_iterator	lower_bound(const key_type& k) const
+			{
+				const_iterator	it = begin();
+
+				while (it != end() && _comp(it->first, k))
+					it++;
+				return (it);
+			}
+
+			iterator		upper_bound(const key_type& k)
+			{
+				iterator	it = begin();
+
+				while (it != end() && !_comp(k, it->first))
+					it++;
+				return (it);
+			}
+
+			const_iterator	upper_bound(const key_type& k) const
+			{
+				const_iterator	it = begin();
+
+				while (it != end() && !_comp(k, it->first))
+					it++;
+				return (it);
+			}
+
+			pair<const_iterator,const_iterator>	equal_range(const key_type& k) const
+			{
+				return (ft::make_pair<const_iterator, const_iterator>(lower_bound(k), upper_bound(k)));
+			}
+
+			pair<iterator,iterator>				equal_range(const key_type& k)
+			{
+				return (ft::make_pair<iterator, iterator>(lower_bound(k), upper_bound(k)));
+			}
 
 			// allocator
 			allocator_type	get_allocator() const
