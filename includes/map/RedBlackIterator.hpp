@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:25:08 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/24 13:24:05 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:17:30 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,16 +58,6 @@ namespace ft
 			NodeP	_getNode(void) const
 			{
 				return (reinterpret_cast<NodeP>(_node));
-			}
-
-			bool	_isLeaf(void) const
-			{
-				if (!_tree)
-					return (true);
-				NodeP	node = _getNode();
-				TreeP	tree = _getTree();
-
-				return (tree->isLeaf(node));
 			}
 
 
@@ -175,6 +165,16 @@ namespace ft
 			 	return (_tree);
 			}
 
+			bool	isLeaf(void) const
+			{
+				if (!_tree)
+					return (true);
+				NodeP	node = _getNode();
+				TreeP	tree = _getTree();
+
+				return (tree->isLeaf(node));
+			}
+
 			//	compare
 
 			template<class Compare2, bool Const2>
@@ -183,8 +183,8 @@ namespace ft
 			{
 				Compare	comp;
 
-				return ((it1._isLeaf() && it2._isLeaf()) 
-					|| (!comp(it1->first, it2->first) && !comp(it2->first, it1->first) && !it1._isLeaf() && !it2._isLeaf()));
+				return ((it1.isLeaf() && it2.isLeaf()) 
+					|| (!comp(it1->first, it2->first) && !comp(it2->first, it1->first) && !it1.isLeaf() && !it2.isLeaf()));
 			}
 
 			template<class Compare2, bool Const2>
@@ -194,6 +194,22 @@ namespace ft
 				return (!(operator==(it1, it2)));
 			}
 	};
+
+	template<typename T, class Compare1, class Compare2, bool Const1, bool Const2>
+	bool	operator==(const RedBlackIterator<T, Compare1, Const1> &it1, 
+					const RedBlackIterator<T, Compare2, Const2> &it2)
+	{
+		Compare1	comp;
+		return ((it1.isLeaf() && it2.isLeaf()) 
+			|| (!comp(it1->first, it2->first) && !comp(it2->first, it1->first) && !it1.isLeaf() && !it2.isLeaf()));
+	}
+
+	template<typename T, class Compare1, class Compare2, bool Const1, bool Const2>
+	bool	operator!=(const RedBlackIterator<T, Compare1, Const1> &it1,
+					const RedBlackIterator<T, Compare2, Const2> &it2)
+	{
+		return (!(operator==(it1, it2)));
+	}
 
 }
 

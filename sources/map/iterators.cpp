@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "testMap.hpp"
-#include <list>
 
 void     mapIterators(void)
 {
@@ -77,10 +76,4 @@ void     mapIterators(void)
 	std::cout << std::endl;
     std::cout << YELLOW << "from end() to begin()" << END << std::endl;
 	printMapRev(map2);
-	
-	NSP::map<char, int>::iterator itt;
-    NSP::map<const char, int>::const_iterator itte;
-
-	std::cout << "let's go segfault" << std::endl;
-    std::cout << (itt != itte) << std::endl;
 }
