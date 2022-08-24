@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/24 13:04:33 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/08/24 13:40:53 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -386,6 +386,48 @@ namespace ft
 				return (allocator_type(_alloc));
 			}
 		};
+
+		/*
+		**		COMPARISONS
+		*/
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator==(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs)
+		{
+			if (lhs.size() != rhs.size())
+				return (false);
+			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator!=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs)
+		{
+			return (!(lhs == rhs));
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator<(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs)
+		{
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator<=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs)
+		{
+			return (!(rhs < lhs));
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator>(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs)
+		{
+			return (rhs < lhs);
+		}
+
+		template <class Key, class T, class Compare, class Alloc>
+		bool operator>=(const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs)
+		{
+			return (!(lhs < rhs));
+		}
 }
 
 #endif
