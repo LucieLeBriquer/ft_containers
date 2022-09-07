@@ -45,6 +45,7 @@ SRCS		= $(addprefix $(SRCS_DIR), \
 					) \
 					$(addprefix utils/, \
 						print.cpp \
+						subject.cpp \
 					) \
 			)
 MAIN		= $(SRCS_DIR)$(MAIN_SRC)

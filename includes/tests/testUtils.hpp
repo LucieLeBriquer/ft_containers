@@ -35,5 +35,6 @@
 void	printTitle(std::string title, std::string color, bool toUpper = true);
 void	printMainTitle(std::string title, std::string color, bool toUpper = true);
 void	printSubtitle(std::string subtitle, std::string color);
+void 	subjectTest(void);
 
 #endif
