@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:12:47 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/24 13:14:13 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:27:35 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -409,16 +409,12 @@ namespace ft
 
 			RedBlackTree() : _comp(Compare())
 			{
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "[RedBlackTree] " << END << "constructor" << std::endl;
 				_leaf = new Node<T>;
 				_root = _leaf;
 			}
 
 			RedBlackTree(const RedBlackTree &tree)
 			{
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "[RedBlackTree] " << END << "copy constructor" << std::endl;
 				if (this != &tree)
 				{
 					_leaf = new Node<T>;
@@ -429,8 +425,6 @@ namespace ft
 
 			~RedBlackTree()
 			{
-				if (LOG >= LOG_ALL)
-					std::cerr << RED << "[RedBlackTree] " << END << "destructor" << std::endl;
 				if (_root != _leaf && _root != NULL)
 					_deleteNodes();
 				delete _leaf;
@@ -554,69 +548,7 @@ namespace ft
 					_deleteUpdate(toFix);	
 				return (true);
 			}
-
-			/*void	remove(const NodeP toRemove)
-			{
-				NodeP	toDelete;
-				NodeP	copy;
-				NodeP	toFix;
-				NodeP	node = _root;
-				int		color;
-
-				toDelete = _leaf;
-				while (node != _leaf && node != NULL)
-				{
-					if (toRemove == node)
-					{
-						toDelete = node;
-						break;
-					}
-					if (_isLess(node->value, toRemove->value))
-						node = node->right;
-					else
-						node = node->left;
-				}
-
-				// TODO didn't found key -> see how maps deals with it (exception ?)
-				if (toDelete == _leaf)
-					return ;
-
-				copy = toDelete;
-				color = copy->color;
-				if (toDelete->left == _leaf)
-				{
-					toFix = toDelete->right;
-					_replace(toDelete, toDelete->right);
-				}
-				else if (toDelete->right == _leaf)
-				{
-					toFix = toDelete->left;
-					_replace(toDelete, toDelete->left);
-				}
-				else
-				{
-					copy = minimum(toDelete->right);
-					color = copy->color;
-					toFix = copy->right;
-					if (copy->parent == toDelete)
-						toFix->parent = copy;
-					else
-					{
-						_replace(copy, copy->right);
-						copy->right = toDelete->right;
-						copy->right->parent = copy;
-					}
-					_replace(toDelete, copy);
-					copy->left = toDelete->left;
-					copy->left->parent = copy;
-					copy->color = toDelete->color;
-				}
-
-				delete toDelete;
-				if (color == BLACK_C)
-					_deleteUpdate(toFix);	
-			}*/
-
+			
 
 			//	insertion
 			
@@ -625,8 +557,6 @@ namespace ft
 				NodeP	node = new Node<T>(value);
 				_fillNewNode(node, RED_C);
 
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "\tcreates " << END << node << std::endl;
 
 				NodeP	cur = NULL;
 				NodeP	root = _root;

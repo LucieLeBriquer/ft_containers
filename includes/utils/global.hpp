@@ -20,10 +20,6 @@
 # define BLUE "\x1B[36m"
 # define BOLD "\x1B[1m"
 # define END "\x1B[0m"
-# define LOG_ALL 1
-# define LOG_MIN 0
-# define LOG_NADA -1
-# define LOG LOG_NADA
 # include <iostream>
 
 #endif

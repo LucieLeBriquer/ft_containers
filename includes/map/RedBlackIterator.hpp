@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/22 19:25:08 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/24 13:17:30 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:25:29 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,12 @@ namespace ft
 
 			RedBlackIterator() : _tree(NULL), _node(NULL)
 			{
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "[RedBlackIterator] " << END << "constructor" << std::endl;
+				return ;
 			}
 			
 			RedBlackIterator(const TreeP& tree, const NodeP &node) : _tree(tree), _node(node)
 			{
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "[RedBlackIterator] " << END << "tree constructor" << std::endl;
+				return ;
 			}
 
 			template<typename U, bool C>
@@ -92,8 +90,7 @@ namespace ft
 				_tree(rbtIt.baseTree()),
 				_node(rbtIt.baseNode())
 			{
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "[RedBlackIterator] " << END << "copy constructor" << std::endl;
+				return ;
 			}
 
 
@@ -103,8 +100,6 @@ namespace ft
 			{
 				if (this != &rbtIt)
 				{
-					if (LOG >= LOG_ALL)
-						std::cerr << YELLOW << "[RedBlackIterator] " << END << "assignation" << std::endl;
 					_tree = rbtIt._tree;
 					_node = rbtIt._node;
 				}

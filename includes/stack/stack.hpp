@@ -47,7 +47,7 @@ namespace ft
 			return (*this);
 		}
 
-		virtual ~stack()
+		~stack()
 		{
 			return ;
 		}

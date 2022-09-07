@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 16:15:54 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/24 13:40:53 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:28:09 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ namespace ft
 
 
 		private:
+
 			// typedef
 			
 			typedef Node<value_type> *NodeP;
@@ -89,8 +90,7 @@ namespace ft
 			explicit map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()) :
 				_tree(new RedBlackTree<value_type, Compare>()), _alloc(alloc), _comp(comp)
 			{
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "[Map] " << END << "constructor" << std::endl;
+				return ;
 			}
 
 			template <class InputIterator>
@@ -98,8 +98,6 @@ namespace ft
 				const allocator_type& alloc = allocator_type()) :
 				_tree(new RedBlackTree<value_type, Compare>()), _alloc(alloc), _comp(comp)
 			{
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "[Map] " << END << "iterator constructor" << std::endl;
 				while (first != last)
 				{
 					insert(*first);
@@ -109,15 +107,11 @@ namespace ft
 
 			map(const map& x)
 			{
-				if (LOG >= LOG_ALL)
-					std::cerr << GREEN << "[Map] " << END << "copy constructor" << std::endl;
 				*this = x;
 			}
 
 			~map()
 			{
-				if (LOG >= LOG_ALL)
-					std::cerr << RED << "[Map] " << END << "destructor" << std::endl;
 				delete _tree;
 			}
 

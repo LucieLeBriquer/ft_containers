@@ -68,6 +68,7 @@ namespace ft
 	public:
 	
 		// constructors and destructor
+		
       	explicit vector(void) : _base(NULL), _capacity(0), _size(0), _alloc(allocator_type()) { }
 		
 		explicit vector(size_type n, const value_type& val = value_type()) :
@@ -88,7 +89,7 @@ namespace ft
 			*this = v;
 		}
 
-		virtual ~vector()
+		~vector()
 		{
 			for (size_type i = 0; i < _size; i++)
 				_alloc.destroy(_base + i);
@@ -101,7 +102,9 @@ namespace ft
 			return (*this);
 		}
 
+
 		// iterators
+
 		iterator begin()
 		{
 			return (iterator(_base));
@@ -144,6 +147,7 @@ namespace ft
 
 
 		// capacity
+
 		size_type size() const
 		{
 			return (_size);
@@ -192,7 +196,9 @@ namespace ft
 				_alloc.construct(_base + i, *(copy + i));
 		}
 
+
 		// element access
+
 		reference operator[](size_type n)
 		{
 			return (reference(*(_base + n)));
@@ -237,7 +243,9 @@ namespace ft
 			return (*(_base + _size - 1));
 		}
 		
+
 		// modifiers
+
 		template <class It>
   		void assign(It first, It last, typename ft::enable_if<!ft::is_integral<It>::value, It>::type* = 0)
 		{
@@ -384,7 +392,9 @@ namespace ft
 			_size = 0;
 		}
 
+
 		// allocator
+
 		allocator_type get_allocator() const
 		{
 			return (allocator_type());
@@ -392,7 +402,8 @@ namespace ft
 		
     };
 
-	// Non-member function overloads
+
+	// non-member function overloads
 
 	template <class T>
 	bool operator==(const vector<T>& v1, const vector<T>& v2)

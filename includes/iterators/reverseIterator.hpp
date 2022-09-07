@@ -17,7 +17,7 @@
 namespace ft
 {
 	/*
-	**		CLASSIC reverse iterator
+	**		reverse iterator
 	*/
 
 	template<typename Iterator>
