@@ -6,12 +6,13 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/09/07 13:04:17 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:00:56 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "testMap.hpp"
 #include "testVector.hpp"
+#include "testStack.hpp"
 
 static void	testMap(void)
 {
@@ -39,7 +40,9 @@ static void	testVector(void)
 
 static void	testStack(void)
 {
-
+	printMainTitle("stack", BORANGE);
+	constructStack();
+	compareStack();
 }
 
 typedef void (*testFunction)(void);
@@ -69,6 +72,7 @@ int	main(int argc, char *argv[])
 	{
 		testMap();
 		testVector();
+		testStack();
 	}
 	else
 	{

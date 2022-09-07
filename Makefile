@@ -23,7 +23,7 @@ OBJSSTL_DIR	= ./objects/objectsSTL/
 OBJS		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJS_DIR)%.o)
 OBJSSTL		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJSSTL_DIR)%.o)
 
-SUB			= map vector utils
+SUB			= map vector stack utils
 
 SUB_DIRS	= $(addprefix $(OBJS_DIR), $(SUB))
 SUBSTL_DIRS	= $(addprefix $(OBJSSTL_DIR), $(SUB))
@@ -79,11 +79,14 @@ TEST_INC_MAP 	= include_path=\"..\/includes\/map\"
 TEST_INC_STACK	= include_path=\"..\/includes\/stack\"
 
 test		:
-			@if [ ! -d "tester" ]; then git clone git@github.com:mli42/containers_test.git tester; fi
+			@$(RM) "tester"
+			@git clone git@github.com:mli42/containers_test.git tester
+			@sed -i 's/$(TEST_INC_BASE)/$(TEST_INC_STACK)/' tester/fct.sh
+			@cd tester; ./do.sh stack; echo ""
 			@sed -i 's/$(TEST_INC_BASE)/$(TEST_INC_VECTOR)/' tester/fct.sh
-			@cd tester; ./do.sh vector; echo -n ""
+			@cd tester; ./do.sh vector; echo ""
 			@sed -i 's/$(TEST_INC_BASE)/$(TEST_INC_MAP)/' tester/fct.sh
-			@cd tester; ./do.sh map; echo -n ""
+			@cd tester; ./do.sh map; echo ""
 			
 
 .PHONY		: all clean fclean re diff test
