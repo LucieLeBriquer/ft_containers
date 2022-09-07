@@ -23,7 +23,7 @@ OBJSSTL_DIR	= ./objects/objectsSTL/
 OBJS		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJS_DIR)%.o)
 OBJSSTL		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJSSTL_DIR)%.o)
 
-SUB			= map utils
+SUB			= map vector utils
 
 SUB_DIRS	= $(addprefix $(OBJS_DIR), $(SUB))
 SUBSTL_DIRS	= $(addprefix $(OBJSSTL_DIR), $(SUB))
@@ -73,7 +73,16 @@ diff		: $(NAME) $(NAME_STL)
 			@echo "utput differences"
 			@rm $(TEST) $(TEST_STL)
 
+TEST_INC_BASE	= ^include_path=.*$
+TEST_INC_VECTOR = include_path=\"..\/includes\/vector\"
+TEST_INC_MAP 	= include_path=\"..\/includes\/map\"
+TEST_INC_STACK	= include_path=\"..\/includes\/stack\"
+
 test		:
+			@if [ ! -d "tester" ]; then git clone git@github.com:mli42/containers_test.git tester; fi
+			@sed -i 's/$(TEST_INC_BASE)/$(TEST_INC_VECTOR)/' tester/fct.sh
+			@cd tester; ./do.sh vector; echo -n ""
+			@sed -i 's/$(TEST_INC_BASE)/$(TEST_INC_MAP)/' tester/fct.sh
 			@cd tester; ./do.sh map; echo -n ""
 			
 

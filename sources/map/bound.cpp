@@ -14,7 +14,7 @@
 
 void	mapBound(void)
 {
-	printTitle("map bound/range functions", BORANGE);
+	printTitle("map bound functions", BORANGE);
 	printSubtitle("upper_bound(), lower_bound()", ORANGE);
 	NSP::map<char,int>				mapB;
   	NSP::map<char,int>::iterator	itlow,itlow2,itup,itup2;
@@ -42,6 +42,4 @@ void	mapBound(void)
 	std::cout << "upper_bound(d)" << std::endl;
 	printPair(itup);
 	std::cout << std::endl;
-
-	printSubtitle("equal_range()", ORANGE);
 }

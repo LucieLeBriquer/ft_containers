@@ -24,13 +24,16 @@
 # define PURPLE "\x1B[35m"
 # define BLUE "\x1B[36m"
 # define ORANGE "\x1B[34m"
+# define BYELLOW "\x1B[1;33m"
 # define BORANGE "\x1B[1;34m"
+# define BBLUE "\x1B[1;36m"
 # define BOLD "\x1B[1m"
 # define END "\x1B[0m"
 # include <iostream>
 # include <iomanip>
 
 void	printTitle(std::string title, std::string color, bool toUpper = true);
+void	printMainTitle(std::string title, std::string color, bool toUpper = true);
 void	printSubtitle(std::string subtitle, std::string color);
 
 #endif

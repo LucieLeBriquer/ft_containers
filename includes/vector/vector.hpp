@@ -345,7 +345,7 @@ namespace ft
 			size_type	toDelete = end() - first;
 			size_type	toCopy = end() - last;
 			iterator	save = first;
-
+			
 			while (first != last)
 			{
 				first++;

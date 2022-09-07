@@ -35,10 +35,43 @@ void	printTitle(std::string title, std::string color, bool toUpper)
 	}
 	std::cout << std::endl;
 	std::cout << color << std::setfill(c) << std::setw(size) << "" << std::endl;
-	std::cout << std::setw(size / 2) << toPrint.substr(0, n / 2);
+	std::cout << ' ' << std::setfill(' ') << std::setw(size / 2 - 1) << toPrint.substr(0, n / 2);
 	std::cout << toPrint.substr(n / 2, n - n / 2);
-	std::cout << std::setfill(c) << std::setw(size - size / 2 - n + n / 2) << "" << std::endl;
-	std::cout << std::setfill(c) << std::setw(size) << "" << END <<  std::endl;
+	std::cout << std::setfill(' ') << std::setw(size - size / 2 - n + n / 2) << ' ' << std::endl;
+	std::cout << std::setfill(c) << std::setw(size) << "" << END << std::endl;
+	std::cout << std::setfill(' ');
+}
+
+
+void	printMainTitle(std::string title, std::string color, bool toUpper)
+{
+	std::string		toPrint;
+	unsigned int	size = (SIZE > 10 ? SIZE : 10);
+	char			c = '*';
+	unsigned int	n;
+
+	toPrint = " " + title + " ";
+	if (toUpper)
+	{
+		for (int i = 0; toPrint[i]; i++)
+			toPrint[i] = toupper(toPrint[i]);
+	}
+	n = toPrint.size();
+	if (n > size)
+	{
+		toPrint = toPrint.substr(0, size - 2);
+		toPrint[size - 4] = '.';
+		toPrint[size - 3] = ' ';
+		n = toPrint.size();
+	}
+	std::cout << std::endl;
+	std::cout << color << std::setfill(c) << std::setw(size) << "" << std::endl;
+	std::cout << c << std::setfill(' ') << std::setw(size - 1) << c << std::endl;
+	std::cout << c << std::setw(size / 2 - 1) << toPrint.substr(0, n / 2);
+	std::cout << toPrint.substr(n / 2, n - n / 2);
+	std::cout << std::setfill(' ') << std::setw(size - size / 2 - n + n / 2) << c << std::endl;
+	std::cout << c << std::setfill(' ') << std::setw(size - 1) << c << std::endl;
+	std::cout << std::setfill(c) << std::setw(size) << "" << END << std::endl;
 	std::cout << std::setfill(' ');
 }
 
