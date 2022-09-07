@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 13:58:23 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/09/07 13:58:36 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:04:09 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	vectorIterators(void)
 {
-	printTitle("iterators", BORANGE);
+	printTitle("vector iterators", BORANGE);
 
 	std::list<int>		lst;
 	for (int i = 0; i < 10; i++)

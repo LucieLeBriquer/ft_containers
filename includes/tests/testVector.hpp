@@ -26,6 +26,7 @@ void	vectorInsert(void);
 void	vectorErase(void);
 void	vectorAccess(void);
 void	vectorIterators(void);
+void	vectorCompare(void);
 
 template <typename Vector>
 void	printVector(const Vector &v, bool showContent = true)

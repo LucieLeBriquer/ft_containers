@@ -34,6 +34,7 @@ static void	testVector(void)
 	vectorErase();
 	vectorAccess();
 	vectorIterators();
+	vectorCompare();
 }
 
 static void	testStack(void)
