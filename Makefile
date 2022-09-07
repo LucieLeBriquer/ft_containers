@@ -10,12 +10,43 @@ TEST_STL	= .$(NAME_SHORT)STL.res
 
 INCS_DIR	= ./includes/tests/
 MAIN_INC	= -I$(INCS_DIR)
-INCS		= $(shell find $(INCS_DIR) -type f -name "*.hpp")
+INCS		= $(addprefix $(INCS_DIR), \
+				testMap.hpp \
+				testStack.hpp \
+				testUtils.hpp \
+				testVector.hpp \
+			)
 
 MAIN_SRC	= main.cpp
 
 SRCS_DIR 	= ./sources/
-SRCS		= $(shell find $(SRCS_DIR) -type f -name "*.cpp" -not -name $(MAIN_SRC))
+SRCS		= $(addprefix $(SRCS_DIR), \
+					$(addprefix map/, \
+						access.cpp \
+						bound.cpp \
+						construct.cpp \
+						erase.cpp \
+						find.cpp \
+						insert.cpp \
+						iterators.cpp \
+						observers.cpp \
+					) \
+					$(addprefix vector/, \
+						access.cpp \
+						compare.cpp \
+						construct.cpp \
+						erase.cpp \
+						insert.cpp \
+						iterators.cpp \
+					) \
+					$(addprefix stack/, \
+						compare.cpp \
+						containers.cpp \
+					) \
+					$(addprefix utils/, \
+						print.cpp \
+					) \
+			)
 MAIN		= $(SRCS_DIR)$(MAIN_SRC)
 
 OBJS_DIR	= ./objects/objectsFT/
