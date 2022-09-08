@@ -6,17 +6,13 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/28 17:12:47 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/09/07 15:27:35 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/08 12:05:13 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef REDBLACKTREE_HPP
 # define REDBLACKTREE_HPP
-# include "../utils/equal.hpp"
-# include "../utils/pair.hpp"
 # include "../utils/global.hpp"
-# include "../iterators/iterators_traits.hpp"
-# include <vector>
 # define BLACK_C 0
 # define RED_C 1
 
@@ -105,12 +101,12 @@ namespace ft
 
 			bool	_isLess(value_type const value1, value_type const value2) const
 			{
-				return (_comp(value1.first, value2.first));
+				return (_comp(value1, value2));
 			}
 
 			bool	_isGreater(value_type const value1, const value_type value2) const
 			{
-				return (_comp(value2.first, value1.first));
+				return (_comp(value2, value1));
 			}
 
 
@@ -235,7 +231,7 @@ namespace ft
 								cur->left->color = BLACK_C;
 								cur->color = RED_C;
 								_rotateRight(cur);
-								cur = cur->parent->right;
+								cur = node->parent->right;
 							}
 							cur->color = node->parent->color;
 							node->parent->color = BLACK_C;
@@ -328,31 +324,6 @@ namespace ft
 					node->parent->left = save;
 				save->right = node;
 				node->parent = save;
-			}
-
-			// to delete
-			void	_printTreeRec(NodeP root, std::string indent, bool last) const
-			{
-				if (root != _leaf)
-				{
-					std::cout << indent;
-					if (last)
-					{
-						std::cout << "R----";
-						indent += "   ";
-					}
-					else
-					{
-						std::cout << "L----";
-						indent += "|  ";
-					}
-
-					std::string sColor = root->color ? "RED" : "BLACK";
-					std::cout << root->value.first << "(" << sColor << ") ";
-					std::cout << std::endl;
-					_printTreeRec(root->left, indent, false);
-					_printTreeRec(root->right, indent, true);
-				}
 			}
 
 
@@ -703,13 +674,6 @@ namespace ft
 			{
 				_deleteNodes();
 			}
-
-			//	to delete
-			void	print(void) const
-			{
-				_printTreeRec(_root, "", true);
-			}
-
 	};
 }
 

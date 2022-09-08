@@ -179,7 +179,7 @@ namespace ft
 				Compare	comp;
 
 				return ((it1.isLeaf() && it2.isLeaf()) 
-					|| (!comp(it1->first, it2->first) && !comp(it2->first, it1->first) && !it1.isLeaf() && !it2.isLeaf()));
+					|| (!comp(*it1, *it2) && !comp(*it2, *it1) && !it1.isLeaf() && !it2.isLeaf()));
 			}
 
 			template<class Compare2, bool Const2>
@@ -196,7 +196,7 @@ namespace ft
 	{
 		Compare1	comp;
 		return ((it1.isLeaf() && it2.isLeaf()) 
-			|| (!comp(it1->first, it2->first) && !comp(it2->first, it1->first) && !it1.isLeaf() && !it2.isLeaf()));
+			|| (!comp(*it1, *it2) && !comp(*it2, *it1) && !it1.isLeaf() && !it2.isLeaf()));
 	}
 
 	template<typename T, class Compare1, class Compare2, bool Const1, bool Const2>

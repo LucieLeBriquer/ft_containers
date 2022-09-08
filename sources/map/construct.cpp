@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:18:58 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/23 17:44:32 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:40:37 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static void	mapConstructionTricky(void)
 
 	std::cout << "[size of list]\t" << lst.size() << std::endl;
     for (it = lst.begin(); it != lst.end(); ++it)
-		printPair(it);
+		printPairMap(it);
 	std::cout << std::endl;
 
     NSP::map<int, std::string> map(lst.begin(), lst.end());

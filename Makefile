@@ -15,33 +15,17 @@ INCS		= $(addprefix $(INCS_DIR), \
 				testStack.hpp \
 				testUtils.hpp \
 				testVector.hpp \
+				testSet.hpp \
 			)
 
 MAIN_SRC	= main.cpp
 
 SRCS_DIR 	= ./sources/
 SRCS		= $(addprefix $(SRCS_DIR), \
-					$(addprefix map/, \
-						access.cpp \
-						bound.cpp \
+					$(addprefix set/, \
+						insert.cpp \
 						construct.cpp \
 						erase.cpp \
-						find.cpp \
-						insert.cpp \
-						iterators.cpp \
-						observers.cpp \
-					) \
-					$(addprefix vector/, \
-						access.cpp \
-						compare.cpp \
-						construct.cpp \
-						erase.cpp \
-						insert.cpp \
-						iterators.cpp \
-					) \
-					$(addprefix stack/, \
-						compare.cpp \
-						containers.cpp \
 					) \
 					$(addprefix utils/, \
 						print.cpp \
@@ -55,7 +39,7 @@ OBJSSTL_DIR	= ./objects/objectsSTL/
 OBJS		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJS_DIR)%.o)
 OBJSSTL		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJSSTL_DIR)%.o)
 
-SUB			= map vector stack utils
+SUB			= set utils
 
 SUB_DIRS	= $(addprefix $(OBJS_DIR), $(SUB))
 SUBSTL_DIRS	= $(addprefix $(OBJSSTL_DIR), $(SUB))
@@ -109,10 +93,13 @@ TEST_INC_BASE	= ^include_path=.*$
 TEST_INC_VECTOR = include_path=\"..\/includes\/vector\"
 TEST_INC_MAP 	= include_path=\"..\/includes\/map\"
 TEST_INC_STACK	= include_path=\"..\/includes\/stack\"
+TEST_INC_SET	= include_path=\"..\/includes\/set\"
 
 test		:
 			@$(RM) "tester"
 			@git clone git@github.com:mli42/containers_test.git tester
+			@sed -i 's/$(TEST_INC_BASE)/$(TEST_INC_SET)/' tester/fct.sh
+			@cd tester; ./do.sh set; echo ""
 			@sed -i 's/$(TEST_INC_BASE)/$(TEST_INC_STACK)/' tester/fct.sh
 			@cd tester; ./do.sh stack; echo ""
 			@sed -i 's/$(TEST_INC_BASE)/$(TEST_INC_VECTOR)/' tester/fct.sh

@@ -12,8 +12,10 @@
 
 #ifndef EQUAL_HPP
 # define EQUAL_HPP
+# include "../iterators/iterators_traits.hpp"
 # include "is_integral.hpp"
 # include "type_traits.hpp"
+# include "enable_if.hpp"
 
 namespace ft
 {

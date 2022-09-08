@@ -6,13 +6,14 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/09/07 15:44:15 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:50:23 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "testMap.hpp"
 #include "testVector.hpp"
 #include "testStack.hpp"
+#include "testSet.hpp"
 
 static void	testMap(void)
 {
@@ -25,6 +26,15 @@ static void	testMap(void)
 	mapObservers();
 	mapFind();
 	mapBound();
+}
+
+
+static void	testSet(void)
+{
+	printMainTitle("set", BORANGE);
+	setInsert();
+	setConstruction();
+	setErase();
 }
 
 static void	testVector(void)
@@ -55,9 +65,9 @@ typedef void (*testFunction)(void);
 
 static void testContainer(const std::string &str)
 {
-	const int			nbContainers = 4;
-	const std::string	containers[nbContainers] = { "vector", "map", "stack", "subject" };
-	testFunction		func[nbContainers] = { testVector, testMap, testStack, testSubject };
+	const int			nbContainers = 5;
+	const std::string	containers[nbContainers] = { "vector", "map", "stack", "set", "subject" };
+	testFunction		func[nbContainers] = { testVector, testMap, testStack, testSet, testSubject };
 	int					idContainer = -1;
 
 	for (int i = 0; i < nbContainers; i++)
@@ -79,7 +89,8 @@ int	main(int argc, char *argv[])
 		testMap();
 		testVector();
 		testStack();
-		testSubject();
+		testSet();
+		//testSubject();
 	}
 	else
 	{

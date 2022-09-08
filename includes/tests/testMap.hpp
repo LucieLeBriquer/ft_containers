@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/16 15:22:25 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/08/21 12:02:53 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/07 18:40:37 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	mapFind(void);
 void	mapBound(void);
 
 template <typename T>
-void	printPair(const T &iterator)
+void	printPairMap(const T &iterator)
 {
     std::cout << "\t" << std::setfill(' ') << std::setw(6) << iterator->first;
 	std::cout << "\t" << iterator->second << std::endl;
@@ -50,7 +50,7 @@ void    printMap(Map const &mp, bool showContent = true)
 		mapIt	ite = mp.end();
 
         for (; it != ite; ++it)
-			printPair(it);
+			printPairMap(it);
     }
 	std::cout << std::endl;
 }
@@ -71,7 +71,7 @@ void    printMapRev(Map const &mp, bool showContent = true)
         while (it != ite)
 		{
 			it--;
-			printPair(it);
+			printPairMap(it);
 		}
     }
 	std::cout << std::endl;
