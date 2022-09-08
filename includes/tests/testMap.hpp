@@ -55,7 +55,6 @@ void    printMap(Map const &mp, bool showContent = true)
 	std::cout << std::endl;
 }
 
-
 template <typename Map>
 void    printMapRev(Map const &mp, bool showContent = true)
 {

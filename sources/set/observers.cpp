@@ -10,40 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "testMap.hpp"
+#include "testSet.hpp"
 
-void	mapObservers(void)
+void	setObservers(void)
 {
-	printTitle("map observers", BORANGE);
+	printTitle("set observers", BORANGE);
 	printSubtitle("key_comp()", ORANGE);
-	NSP::map<char,int> mapK;
-  	NSP::map<char,int>::key_compare compare = mapK.key_comp();
-	mapK['a']=100;
-	mapK['b']=200;
-	mapK['c']=300;
-	printMap(mapK);
+	NSP::set<char> 				setK;
+  	NSP::set<char>::key_compare	compare = setK.key_comp();
+	setK.insert('a');
+	setK.insert('b');
+	setK.insert('c');
+	printSet(setK);
 	
-	std::cout << "map contains:" << std::endl;
-	char highest = mapK.rbegin()->first;
-	NSP::map<char,int>::iterator it = mapK.begin();
+	std::cout << "set contains:" << std::endl;
+	char highest = *(setK.rbegin());
+	NSP::set<char>::iterator it = setK.begin();
 	do {
-		std::cout << it->first << " => " << it->second << std::endl;
-	} while (compare((*it++).first, highest));
+		std::cout << *it << std::endl;
+	} while (compare((*it++), highest));
 	std::cout << std::endl;
 
 	printSubtitle("value_comp()", ORANGE);
-	NSP::map<char,int> mapV;
+	NSP::set<char> setV;
 
-	mapV['x']=1001;
-	mapV['y']=2002;
-	mapV['z']=3003;
+	setV.insert('x');
+	setV.insert('y');
+	setV.insert('z');
 
-	std::cout << "map contains:\n";
+	std::cout << "set contains:\n";
 
-	NSP::pair<char,int> high = *mapV.rbegin();
+	char high = *setV.rbegin();
 
-	NSP::map<char,int>::iterator itV = mapV.begin();
+	NSP::set<char>::iterator itV = setV.begin();
 	do {
-		std::cout << itV->first << " => " << itV->second << '\n';
-	} while ( mapV.value_comp()(*itV++, high) );
+		std::cout << *itV << std::endl;
+	} while ( setV.value_comp()(*itV++, high) );
 }

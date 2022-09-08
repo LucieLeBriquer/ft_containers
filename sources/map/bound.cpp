@@ -27,7 +27,7 @@ void	mapBound(void)
 
  	itlow = mapB.lower_bound('b');
 	itlow2 = mapB.lower_bound('c');
-  	itup = mapB.upper_bound('d');
+  	itup = mapB.upper_bound('a');
 	itup2 = mapB.upper_bound('b');
 
 	std::cout << "lower_bound(b)" << std::endl;
@@ -39,7 +39,7 @@ void	mapBound(void)
 	std::cout << "lower_bound(c)" << std::endl;
 	printPairMap(itlow2);
 	std::cout << std::endl;
-	std::cout << "upper_bound(d)" << std::endl;
+	std::cout << "upper_bound(a)" << std::endl;
 	printPairMap(itup);
 	std::cout << std::endl;
 }

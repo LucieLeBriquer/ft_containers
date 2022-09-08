@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 17:47:53 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/09/07 17:49:54 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/08 12:34:09 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@
 void    setInsert(void);
 void    setConstruction(void);
 void	setErase(void);
+void	setBound(void);
+void	setFind(void);
+void    setIterators(void);
+void	setObservers(void);
 
 template <typename T>
 void	printValue(const T &iterator)
@@ -49,5 +53,27 @@ void    printSet(Set const &set, bool showContent = true)
     }
 	std::cout << std::endl;
 }
+
+template <typename Set>
+void    printSetRev(Set const &s, bool showContent = true)
+{
+	typedef typename Set::const_iterator mapIt;
+	
+    std::cout << "[size of map] \t" << s.size() << "/" << s.max_size() << std::endl;
+    std::cout << "[reverse content] " << std::endl;
+    if (showContent)
+    {
+        mapIt	it = s.end();
+		mapIt	ite = s.begin();
+
+        while (it != ite)
+		{
+			it--;
+			printValue(it);
+		}
+    }
+	std::cout << std::endl;
+}
+
 
 #endif

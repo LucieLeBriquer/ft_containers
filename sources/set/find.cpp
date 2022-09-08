@@ -10,47 +10,47 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "testMap.hpp"
+#include "testSet.hpp"
 
-void	mapFind(void)
+void	setFind(void)
 {
-	printTitle("map find and count", BORANGE);
+	printTitle("set find and count", BORANGE);
 	
 	printSubtitle("find()", ORANGE);
-	NSP::map<char,int> mapF;
-  	NSP::map<char,int>::iterator itF; 
-	mapF['a']=50;
-	mapF['b']=100;
-	mapF['c']=150;
-	mapF['d']=200;
-	printMap(mapF);
+	NSP::set<char> setF;
+  	NSP::set<char>::iterator itF;
+	setF.insert('a'); 
+	setF.insert('b'); 
+	setF.insert('c'); 
+	setF.insert('d');
+	printSet(setF);
 
-	itF = mapF.find('b');
-	if (itF != mapF.end())
-		mapF.erase(itF);
+	itF = setF.find('b');
+	if (itF != setF.end())
+		setF.erase(itF);
 	std::cout << "erase(find('b'))" << std::endl;
 
-	std::cout << "elements in mapF:" << std::endl;
-	std::cout << "a => " << mapF.find('a')->second << std::endl;;
-	std::cout << "c => " << mapF.find('c')->second << std::endl;
-	std::cout << "d => " << mapF.find('d')->second << std::endl;
+	std::cout << "elements in setF:" << std::endl;
+	std::cout << "find(a) => " << *(setF.find('a')) << std::endl;;
+	std::cout << "find(c) => " << *(setF.find('c')) << std::endl;
+	std::cout << "find(d) => " << *(setF.find('d')) << std::endl;
 
 
 	printSubtitle("count()", ORANGE);
-	NSP::map<char,int> mapC;
-  	char				c;
+	NSP::set<char> setC;
+  	char			c;
 
-  	mapC['a']=101;
-  	mapC['c']=202;
-  	mapC['f']=303;
-	printMap(mapC);
+	setC.insert('a');
+	setC.insert('c');
+	setC.insert('f');
+	printSet(setC);
 
   	for (c = 'a'; c < 'h'; c++)
   	{
   	  	std::cout << c;
-  	  	if (mapC.count(c) > 0)
-  			std::cout << " is an element of map.\n";
+  	  	if (setC.count(c) > 0)
+  			std::cout << " is an element of set.\n";
   	  	else 
-  	  		std::cout << " is not an element of map.\n";
+  	  		std::cout << " is not an element of set.\n";
   	}
 }

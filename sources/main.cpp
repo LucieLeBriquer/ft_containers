@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/09/07 17:50:23 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/08 12:35:31 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,42 @@
 #include "testStack.hpp"
 #include "testSet.hpp"
 
+typedef void (*testFunction)(void);
+
 static void	testMap(void)
 {
 	printMainTitle("map", BORANGE);
+	mapBound();
 	mapConstruction();
 	mapElementAccess();
+	mapErase();
+	mapFind();
 	mapIterators();
 	mapInsert();
-	mapErase();
 	mapObservers();
-	mapFind();
-	mapBound();
 }
-
 
 static void	testSet(void)
 {
 	printMainTitle("set", BORANGE);
-	setInsert();
+	setBound();
 	setConstruction();
 	setErase();
+	setFind();
+	setInsert();
+	setIterators();
+	setObservers();
 }
 
 static void	testVector(void)
 {
 	printMainTitle("vector", BORANGE);
-	vectorConstruction();
-	vectorInsert();
-	vectorErase();
 	vectorAccess();
-	vectorIterators();
 	vectorCompare();
+	vectorConstruction();
+	vectorErase();
+	vectorInsert();
+	vectorIterators();
 }
 
 static void	testStack(void)
@@ -60,8 +65,6 @@ static void	testSubject(void)
 	printMainTitle("subject", BORANGE);
 	subjectTest();
 }
-
-typedef void (*testFunction)(void);
 
 static void testContainer(const std::string &str)
 {
@@ -90,7 +93,6 @@ int	main(int argc, char *argv[])
 		testVector();
 		testStack();
 		testSet();
-		//testSubject();
 	}
 	else
 	{

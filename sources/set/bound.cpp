@@ -6,40 +6,40 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 11:38:03 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/09/07 18:40:37 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/08 12:26:48 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "testMap.hpp"
+#include "testSet.hpp"
 
-void	mapBound(void)
+void	setBound(void)
 {
-	printTitle("map bound functions", BORANGE);
+	printTitle("set bound functions", BORANGE);
 	printSubtitle("upper_bound(), lower_bound()", ORANGE);
-	NSP::map<char,int>				mapB;
-  	NSP::map<char,int>::iterator	itlow,itlow2,itup,itup2;
+	NSP::set<char>				setB;
+  	NSP::set<char>::iterator	itlow,itlow2,itup,itup2;
 
-	mapB['a'] = 20;
-	mapB['b'] = 40;
-	mapB['d'] = 80;
-	mapB['e'] = 100;
-	printMap(mapB);
+	setB.insert('a');
+	setB.insert('b');
+	setB.insert('c');
+	setB.insert('d');
+	printSet(setB);
 
- 	itlow = mapB.lower_bound('b');
-	itlow2 = mapB.lower_bound('c');
-  	itup = mapB.upper_bound('d');
-	itup2 = mapB.upper_bound('b');
+ 	itlow = setB.lower_bound('b');
+	itlow2 = setB.lower_bound('c');
+  	itup = setB.upper_bound('a');
+	itup2 = setB.upper_bound('b');
 
 	std::cout << "lower_bound(b)" << std::endl;
-	printPairMap(itlow);
+	printValue(itlow);
 	std::cout << std::endl;
 	std::cout << "upper_bound(b)" << std::endl;
-	printPairMap(itup2);
+	printValue(itup2);
 	std::cout << std::endl;
 	std::cout << "lower_bound(c)" << std::endl;
-	printPairMap(itlow2);
+	printValue(itlow2);
 	std::cout << std::endl;
-	std::cout << "upper_bound(d)" << std::endl;
-	printPairMap(itup);
+	std::cout << "upper_bound(a)" << std::endl;
+	printValue(itup);
 	std::cout << std::endl;
 }

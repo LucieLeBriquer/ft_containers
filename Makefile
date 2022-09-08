@@ -22,10 +22,36 @@ MAIN_SRC	= main.cpp
 
 SRCS_DIR 	= ./sources/
 SRCS		= $(addprefix $(SRCS_DIR), \
-					$(addprefix set/, \
-						insert.cpp \
+					$(addprefix map/, \
+						access.cpp \
+						bound.cpp \
 						construct.cpp \
 						erase.cpp \
+						find.cpp \
+						insert.cpp \
+						iterators.cpp \
+						observers.cpp \
+					) \
+					$(addprefix vector/, \
+						access.cpp \
+						compare.cpp \
+						construct.cpp \
+						erase.cpp \
+						insert.cpp \
+						iterators.cpp \
+					) \
+					$(addprefix stack/, \
+						compare.cpp \
+						containers.cpp \
+					) \
+					$(addprefix set/, \
+						bound.cpp \
+						construct.cpp \
+						erase.cpp \
+						find.cpp \
+						insert.cpp \
+						iterators.cpp \
+						observers.cpp \
 					) \
 					$(addprefix utils/, \
 						print.cpp \
@@ -39,7 +65,7 @@ OBJSSTL_DIR	= ./objects/objectsSTL/
 OBJS		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJS_DIR)%.o)
 OBJSSTL		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJSSTL_DIR)%.o)
 
-SUB			= set utils
+SUB			= map vector stack set utils
 
 SUB_DIRS	= $(addprefix $(OBJS_DIR), $(SUB))
 SUBSTL_DIRS	= $(addprefix $(OBJSSTL_DIR), $(SUB))
