@@ -102,6 +102,7 @@ $(NAME_STL)	: $(OBJSSTL) $(INCS) $(MAIN)
 
 clean		:
 			@$(RM) "./objects"
+			@$(RM) "tester"
 
 fclean		: clean
 			@$(RM) $(NAME) $(NAME_STL)
