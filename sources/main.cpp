@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 17:00:13 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/09/08 12:35:31 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/23 12:03:19 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,15 @@ int	main(int argc, char *argv[])
 {
 	if (argc == 1)
 	{
-		testMap();
 		testVector();
+		testMap();
 		testStack();
 		testSet();
 	}
 	else
 	{
 		for (int i = 1; i < argc; i++)
-			testContainer(std::string(argv[i]));	
+			testContainer(std::string(argv[i]));
 	}
 	return (0);
 }

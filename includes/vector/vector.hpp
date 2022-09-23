@@ -6,7 +6,7 @@
 /*   By: lle-briq <lle-briq@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/30 18:36:29 by lle-briq          #+#    #+#             */
-/*   Updated: 2022/07/06 17:28:41 by lle-briq         ###   ########.fr       */
+/*   Updated: 2022/09/23 12:02:29 by lle-briq         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,8 @@ namespace ft
 			
 			if (_capacity >= n)
 				return ;
-			_capacity = _closestPow2(n);	
+			_capacity = _closestPow2(n);
+			_alloc.deallocate(_base, _size);
 			_base = _alloc.allocate(_capacity);
 			for (size_type i = 0; i < _size; i++)
 				_alloc.construct(_base + i, *(copy + i));
